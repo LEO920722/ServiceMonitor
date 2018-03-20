@@ -1,0 +1,114 @@
+
+<!-- saved from url=(0047)http://localhost:5555/WmRoot/stats-services.dsp -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="Pragma" content="no-cache">
+    
+    <meta http-equiv="Expires" content="-1">
+    <title>IS Service Statistics</title>
+    <link rel="stylesheet" type="text/css" href="../css/webMethods.css">
+    <!--<META http-equiv="refresh" content="90">-->
+    <script src="../txt/webMethods.js.txt"></script>
+  </head>
+
+  <body >
+       <table class="tableView">
+        <tbody><tr><td class="heading" colspan="7">Service Information</td></tr>
+        <tr>
+          <td class="oddrow" colspan="2">Description</td>
+          <td class="oddrow-l" colspan="5"><input name="description" size="40" value=""></td>
+        </tr>
+        <tr>
+          <td class="evenrow" colspan="2">folder.subfolder:service</td>
+          <td class="evenrow-l" colspan="5"><input id="service" name="service" size="40" value="">
+          
+          
+			  <input type="hidden" name="scheduleDataStr" id="scheduleDataStr" value="">
+          
+          <link rel="stylesheet" type="text/css" href="./subUserLookup.css">
+       
+          Assign Inputs
+          </td>
+        </tr>
+</table>
+                <table width="100%">
+            <tbody>
+            	
+            	
+            	<tr>
+              <td class="breadcrumb" colspan="2">
+                Logs &gt; Guaranteed Delivery &gt; Inbound
+              </td>
+            </tr>
+            <tr>
+              <td colspan="2">
+                <ul>
+                  <li class="listitem"><a href="http://localhost:5555/WmRoot/log-gd-out-full.dsp">View Guaranteed Delivery Outbound Log</a></li>
+                </ul>
+              </td>
+            </tr>
+            <tr>
+           </tr><tr>
+               <td>
+                  <table class="tableView">
+                    <tbody><tr>
+                      <td colspan="4" class="heading">Log display controls</td>
+                    </tr>
+                    <tr>
+                      <td class="oddrow" nowrap="">
+                        <table class="noborders">
+                          <tbody><tr>
+                            <td>
+                              <input type="radio" name="order" value="Ascending">
+                            </td>
+                            <td>
+                              Display Log Entries oldest to newest starting from the beginning
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>
+                              <input type="radio" name="order" value="Descending" checked="">
+                            </td>
+                            <td>
+                              Display Log Entries newest to oldest starting from the end
+                            </td>
+                          </tr>
+                        </tbody></table>
+                      </td>
+
+                      <td class="oddrow" nowrap="">
+                        Number of entries to display
+                        <input name="numlines" id="numlines" size="5" value="35">
+						<input name="oldNumlines" id="oldNumLines" type="hidden" value="35">
+                      </td>
+                      <td class="oddrow">  <input type="SUBMIT" value="Refresh" onclick="return checkEverything();"></td>
+                    </tr>       
+            </tbody></table>
+     <table width="100%">
+         <tbody><tr>
+            <td class="breadcrumb" colspan="14">Server &gt; Service Usage</td>
+         </tr>
+
+            <tr>
+               <td>
+                  <table class="tableView" width="100%" id="servicecon">
+                     <tbody>
+                     	<tr><td class="heading" colspan="5">APIS</td></tr>
+                     	<tr class="subheading2">
+                        <td class="oddcol">Name (instances currently running)</td>
+	                        <td class="oddcol">Count</td>
+	                        <td class="oddcol" nowrap="">Last Ran</td>
+	                        <td class="oddcol">Cached</td>
+	                        <td class="oddcol">Prefetched</td>
+                     	</tr>
+                     
+                     <tr id="1">
+                        <td ><a href=""> com.wm.isextdc.PkgInit:init</a></td>
+                        <td ></td>
+                        <td>1</td>
+                        <td><nobr>2018-01-24 15:05:13 CST</nobr></td>
+                        <td>1</td>
+                     </tr>
+                    
+         			</tbody>
+               </table>
+           </body></html>

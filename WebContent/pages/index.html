@@ -1,0 +1,167 @@
+<!-- saved from url=(0038)http://localhost:5555/WmRoot/index.dsp -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>USERCHI-KJIK3B4 - webMethods Integration Server</title>
+  <link rel="stylesheet" type="text/css" href="../css/layout.css">
+  <link rel="icon" href="http://localhost:5555/WmRoot/favicon.ico">
+  <script src="../js/init.js"></script>
+  <script src="../js/jquery.1.7.2.min.js"></script>
+  <style>
+   .white_content {  display:none; position: fixed; top: 25%; left: 38%; width: 20%; height: 50%; padding: 16px; padding-left:30px;border: 3px solid #5177A1; background-color: white; z-index:1002; overflow: auto; } 
+   .outDiv{
+		width:80px;
+		font-family: "Arial", "Helvetica";
+		color:#006F97;
+		height:20px;
+		font-size:14px;
+		font-weight:bold;
+		display:inline-block;
+   			
+   }
+   .inp{
+		width:170px;
+		height:25px;
+		border:1px solid #006F97;
+		font-size:13px
+	}
+   .but{
+ 		color:white;
+ 		background-color:#006F97;
+ 		width:250px;
+ 		height:50px;
+ 		font-size:15px;
+ 	}
+ 	   #load{
+ 		width:250px;
+ 		height:10px;
+ 		display:none;
+ 	}
+ 	.but:hover{
+ 	cursor:pointer;
+ 	}
+ 	#DB{
+ 	    width:70px;
+ 	    height:40px;
+ 		position:fixed;top:0px;right:0px;
+ 		font-family: "Arial", "Helvetica";
+ 		font-size:10px;
+ 		padding:10px;
+ 		color:#006F97;
+ 		display:none;
+ 	}
+ 	#DB:hover{
+ 		cursor:pointer;
+ 		text-decoration:underline;
+ 	}
+  </style>
+  <script>
+  
+  
+    		init({//首次进入会审查 db是否已经做过配置
+				data:{
+				},
+				url:"/APIPlatform/LinkTest?timestamp=" + new Date().getTime(),
+				dataType:"json",
+				showType:"return",
+			    Deferred:false,
+			    Callback:function(dta){
+			    	if(dta == 0){//表示没有配置
+			    		 document.getElementById('light').style.display='block';
+			    	}
+				}
+			})
+			
+	   
+    function dbActon(){
+    	if($("#HOST").val()==""){
+    		document.getElementById("HOST").style.border="1px solid red";
+    		$( "#HOST").shake(2, 5, 400);
+    		return false;
+    	}
+    	document.getElementById('load').style.display='block';
+   		var IPStr = $("#HOST").val()+"-"+$("#PORT").val()+"-"+$("#SID").val()+
+   		            "-"+$("#USERNAME").val()+"-"+$("#PASSWORD").val();
+		init({//首次进入会用请求admin权限的servlet，  如果请求成功 就更改显示的样式
+			data:{
+				IP:IPStr
+			},
+			url:"/APIPlatform/LinkTest?timestamp=" + new Date().getTime(),
+			dataType:"json",
+			showType:"return",
+		    Deferred:false,
+		    Callback:function(dta){
+		    	if(dta == 1){//表示配置错误
+		    		$( ".but").shake(2, 5, 400);
+		    		document.getElementById('load').style.display='none';
+		    	}
+		    	else{//配置成功
+		    		 document.getElementById('light').style.display='none';
+		    		 document.getElementById('load').style.display='none';
+		    	}
+			}
+		})
+   }
+    
+  
+  function one(id){
+			   $("#messageFont").html($("#fontLinshi"+id).html())
+			    document.getElementById('light').style.display='block';
+			   }
+			   function two(){
+			    document.getElementById('light').style.display='none';
+			   }
+	jQuery.fn.shake = function (intShakes /*Amount of shakes*/, intDistance /*Shake distance*/, intDuration /*Time duration*/) {
+	    this.each(function () {
+	        var jqNode = $(this);
+	        jqNode.css({ position: 'relative' });
+	        for (var x = 1; x <= intShakes; x++) {
+	            jqNode.animate({ left: (intDistance * -1) }, (((intDuration / intShakes) / 4)))
+	            .animate({ left: intDistance }, ((intDuration / intShakes) / 2))
+	            .animate({ left: 0 }, (((intDuration / intShakes) / 4)));
+	        }
+	    });
+	    return this;
+	}
+
+		function showLight(){
+			document.getElementById('light').style.display='block';
+		}
+		function mouseDown(){
+			document.getElementById("HOST").style.border="1px solid #006F97";
+		}
+		
+		
+		setTimeout(function(){
+	        //十秒后显示第二个按钮
+			 init({//首次进入会用请求admin权限的servlet，  如果请求成功 就更改显示的样式
+					data:{},
+					url:"/APIPlatform/JudgeRole?timestamp=" + new Date().getTime(),
+					dataType:"json",
+					showType:"return",
+				    Deferred:false,
+				    Callback:function(dta){
+				    	document.getElementById('DB').style.display='block';
+					}
+				}) 
+	    },10000);
+  </script>
+</head>
+   <div id="DB" onclick="showLight()">DB INFO</div>
+<body>
+   <div id="light" class="white_content">
+	   <img style="float:right;width:30px;height:30px"src="../img/closeRed.png"onclick="two()">
+	   <font style="font-weight:bold;font-size:20px;font-family:Arial Unicode MS;">DB INFOMATION</font><br><br>
+	   <div class="outDiv" style="">Host</div><input id="HOST" onmousedown="mouseDown()" class="inp"><br><br>
+	   <div class="outDiv" style="">Port</div><input id="PORT" value="1521" class="inp"><br><br>
+	   <div class="outDiv" style="">SID</div><input id="SID" value="ORCL" class="inp"><br><br>
+	   <div class ="outDiv" >Username</div><input id="USERNAME" class="inp"><br><br>
+	   <div class ="outDiv">Password</div><input id="PASSWORD" type="password" class="inp"><br><br>
+       <Button class="but" onclick = "dbActon()">Connect</Button>
+        <img id ="load" src="../img/load1.gif">
+  </div>
+  <div><iframe class="top" src="./top.html" id="top"></iframe></div>
+  <div class="bottom">
+    <iframe class="menuframe" name="menu" src="./menu.html" scrolling="yes" seamless="seamless"></iframe>
+    <iframe class="contentframe" name="body" id="body" src="APIRecord.html"></iframe>
+  </div>
+  <div id="footer"><center><div style="font-size:10px;font-weight:bold;color:	#A9A9A9;margin-top:10px">@ 2018 北京伊士格科技有限责任公司 版权所有</div></center></div>
+</body></html>
