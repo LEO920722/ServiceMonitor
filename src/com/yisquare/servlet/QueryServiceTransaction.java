@@ -68,8 +68,8 @@ public class QueryServiceTransaction extends HttpServlet {
 			}
 			if (batchId != "" && batchId != null && batchId.length() != 0) {
 				ht.put("BATCH_ID", batchId);
-				Hashtable<String,String> bt = new Hashtable<String, String>();
-				DBUtil.select(DBUtil.getQuerySql(ht, "EMAIL_BATCH",
+				Hashtable<String, String> bt = new Hashtable<String, String>();
+				DBUtil.select(DBUtil.getQuerySql(bt, "EMAIL_BATCH",
 						createTime1, createTime2));
 				response.getWriter().print("{\"rows\":" + "}");
 			} else {

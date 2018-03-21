@@ -1,0 +1,293 @@
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="-1">
+  <title>IS Service Statistics</title>
+  <link rel="stylesheet" type="text/css" href="../css/webMethods.css">
+  <!--<META http-equiv="refresh" content="90">-->
+  <style>
+  table td{word-break: keep-all;white-space:nowrap;} 
+  .white_content { display: none; position: fixed; top: 25%; left: 25%; width: 50%; height: 50%; padding: 16px; border: 3px solid #5177A1; background-color: white; z-index:1002; overflow: auto; } 
+  .barcon {  
+    text-align: center;  
+  }  
+  
+  .barcon1 {  
+    font-size: 10px;  
+    float: left;  
+    margin-top: 20px;  
+  }  
+  
+  .barcon2 {  
+    float: right;  
+  }  
+  
+  .barcon2 ul {  
+    margin: 20px 0;  
+    padding-left: 0;  
+    list-style: none;  
+    text-align: center;  
+  }  
+  
+  .barcon2 li {  
+    display: inline;  
+    margin: 2px;
+    padding:2px;
+  }  
+  
+  .barcon2 a {  
+    text-decoration:none;
+    font-size: 10px;  
+    font-weight: normal;  
+    display: inline-block;  
+    padding:2px;
+    color:#006F97 ;
+    border: 1px solid #ddd;  
+    background-color: #fff;  
+  }  
+  
+  .barcon2 a:hover{  
+    background-color: #eee; 
+
+  }  
+</style>
+<script src="../txt/webMethods.js.txt"></script>
+<script src="../js/init.js"></script>
+<script src="../js/jquery.1.7.2.min.js"></script>
+<script type="text/javascript" src="MyCustomDatePicker/Calendar.js"> </script>
+<script>
+	
+  function one(id){
+   $("#messageFont").html($("#fontLinshi"+id).html())
+   document.getElementById('light').style.display='block';
+ }
+ function two(){
+  document.getElementById('light').style.display='none';
+}
+function getAllRule(){
+ //  if(isNaN($("#ID").val())){
+ //   alert("Log ID should be number")
+ //   return;
+ // }
+ $("#container").html("");
+ var state = init({
+ //  data:{
+ //   NAME:$("#Name").val(),
+ //   ADDRESS:$("#Address").val(),
+ // },
+ url:"/APIPlatform/QueryRules?timestamp=" + new Date().getTime(),
+ dataType:"json",
+ showType:"model",
+ template_Name:"text/template",
+ fillType:"append",
+ container:"container",
+ Deferred:true,
+})
+ goPage(1,15)
+ $("#barcon").show();
+}
+
+function insertRule(){
+ //  if(isNaN($("#ID").val())){
+ //   alert("Log ID should be number")
+ //   return;
+ // }
+ $("#container").html("");
+ var state = init({
+  data:{
+   RULE_ID:$("#RULE_ID").val(),
+   RULE_NAME:$("#RULE_NAME").val(),
+   INTERFACE_NAME:$("#INTERFACE_NAME").val(),
+   SERVICE_NAME:$("#SERVICE_NAME").val(),
+   SERVICE_NAME:$("#SERVICE_NAME").val(),
+   ACTIVE_FLAG:$("#ACTIVE_FLAG").val(),
+ },
+ url:"/APIPlatform/InsertRule?timestamp=" + new Date().getTime(),
+ dataType:"json",
+ showType:"model",
+ template_Name:"text/template",
+ fillType:"append",
+ container:"container",
+ Deferred:true,
+})
+ goPage(1,15)
+ $("#barcon").show();
+}
+
+</script>
+
+
+<script type="text/template">
+ <tr >
+   <td >{TIME}</td>
+   <td ><font  color="#006F97">{CLASS}</font></td>
+   <td >{LEVER}</td> 
+   <td style="text-align:left;"><div id="fontLinshi{ID}" style="width:300px;display:inline-block;  overflow:hidden; white-space:nowrap; text-overflow:ellipsis;">{INFO}</div><a style="color:#006F97;float:right" href="javascript:void(0)" onclick="one({ID})">Show Detail</a></td>
+ </tr> 
+</script>
+</head>
+
+<div id="light" class="white_content">
+ <img style="float:right;"width="30px" src="../img/close.png"onclick="two()"><br>
+ <font id="messageFont">ox content. </font>
+</div>
+<body onload="getAllRule()">
+ <table class="tableView">
+  <tbody><tr><td class="heading" colspan="10">Parameters</td></tr>
+    <tr>
+      <td class="oddrow" colspan="2">Rule ID</td>
+      <td class="oddrow-l" colspan="5"><input id="RULE_ID" name="description"  size="40" value=""></td>
+      <td class="oddrow" colspan="2">Rule Name</td>
+      <td class="oddrow-l" colspan="5"><input id="RULE_NAME" name="description"  size="40" value=""></td>
+    </tr>
+    <tr>
+      <td class="oddrow" colspan="2">Interface Name</td>
+      <td class="oddrow-l" colspan="5"><input id="INTERFACE_NAME" name="description"  size="40" value=""></td>
+      <td class="oddrow" colspan="2">Service Name</td>
+      <td class="oddrow-l" colspan="5"><input id="SERVICE_NAME" name="description"  size="40" value=""></td>
+    </tr>
+    <tr>
+      <td class="oddrow" colspan="2">Content Logging</td>
+      <td class="oddrow-l" colspan="5">
+          <select id="CONTENT_LOGGING" style="color:#006F97;width:100%;height:21px">
+            <option></option>
+            <option>Y</option>
+            <option>N</option>
+          </select>
+      </td>
+      <td class="oddrow" colspan="2">Active Flag</td>
+      <td class="oddrow-l" colspan="5">
+          <select id="ACTIVE_FLAG" style="color:#006F97;width:100%;height:21px">
+            <option></option>
+            <option>Y</option>
+            <option>N</option>
+          </select>
+      </td>
+      <td><button style="color:#006F97;font-size:10px"onclick="insertRule()">Insert</button></td>
+    </tr>
+  </table>
+  <br>
+  <table width="100%">
+  </table>
+  <table class="tableView" width="100%" id="servicecon">
+   <tbody >
+    <tr><td class="heading" colspan="11">
+      Results(<font id="barcon3"></font>)</td></tr>
+      <tr class="subheading2">
+       <td class="oddcol">Rule ID</td>
+       <td class="oddcol">Rule Name</td>
+       <td class="oddcol" nowrap="">Interface Name</td>
+       <td class="oddcol" nowrap="">Service Name</td>
+       <td class="oddcol" nowrap="">Content Logging</td>
+       <td class="oddcol" nowrap="">Active Flag</td>
+     </tr>
+   </tbody>
+   <tbody id ="container">
+   </tbody>
+ </table>
+ <div id="barcon" style="width:100%" class="barcon" >  
+   <div id="barcon2" class="barcon2">  
+    <ul>  
+      <li><a href="###" id="firstPage">First</a></li>  
+      <li><a href="###" id="prePage">< Back</a></li>  
+      <li><a href="###" id="nextPage">Next ></a></li>  
+      <li><a href="###" id="lastPage">Last</a></li>  
+      <li><select id="jumpWhere"></select></li>
+      <li><a href="###" id="jumpPage" onclick="jumpPage()">Go</a></li>
+    </ul> 
+  </div>  
+</div>
+</body>
+</html>
+<script>
+/**
+ * 分页函数
+ * pno--页数
+ * psize--每页显示记录数
+ * 分页部分是从真实数据行开始，因而存在加减某个常数，以确定真正的记录数
+ * 纯js分页实质是数据行全部加载，通过是否显示属性完成分页功能
+ **/
+
+var pageSize=10;//每页显示行数
+var currentPage_=1;//当前页全局变量，用于跳转时判断是否在相同页，在就不跳，否则跳转。
+var totalPage;//总页数
+function goPage(pno,psize){
+  var itable = document.getElementById("container");
+    var num = itable.rows.length;//表格所有行数(所有记录数)
+     pageSize = psize;//每页显示行数
+    //总共分几页 
+    if(num/pageSize > parseInt(num/pageSize)){   
+      totalPage=parseInt(num/pageSize)+1;   
+    }else{   
+     totalPage=parseInt(num/pageSize);   
+   }   
+    var currentPage = pno;//当前页数
+    currentPage_=currentPage;
+    var startRow = (currentPage - 1) * pageSize+1; 
+    var endRow = currentPage * pageSize;
+    endRow = (endRow > num)? num : endRow;    
+    //遍历显示数据实现分页
+    /*for(var i=1;i<(num+1);i++){    
+        var irow = itable.rows[i-1];
+        if(i>=startRow && i<=endRow){
+            irow.style.display = "";    
+        }else{
+            irow.style.display = "none";
+        }
+      }*/
+
+      $("#container tr").hide();
+      for(var i=startRow-1;i<endRow;i++)
+      {
+        $("#container tr").eq(i).show();
+      }
+    //var tempStr = "Total"+num+" record, Ivided "+totalPage+" page(s). The current page is page "+currentPage+".";
+    var tempStr = num
+    document.getElementById("barcon3").innerHTML = tempStr;
+    if(currentPage>1){
+      $("#firstPage").on("click",function(){
+       goPage(1,psize);
+     }).removeClass("ban");
+      $("#prePage").on("click",function(){
+       goPage(currentPage-1,psize);
+     }).removeClass("ban");   
+    }else{
+      $("#firstPage").off("click").addClass("ban");
+      $("#prePage").off("click").addClass("ban");  
+    }
+
+    if(currentPage<totalPage){
+      $("#nextPage").on("click",function(){
+       goPage(currentPage+1,psize);
+     }).removeClass("ban")
+      $("#lastPage").on("click",function(){
+       goPage(totalPage,psize);
+     }).removeClass("ban")
+    }else{
+      $("#nextPage").off("click").addClass("ban");
+      $("#lastPage").off("click").addClass("ban");
+    }   
+
+    var tempOption="";  
+    for(var i=1;i<=totalPage;i++)  
+    {
+      tempOption+='<option value='+i+'>'+i+'</option>'  
+    }
+    $("#jumpWhere").html(tempOption); 
+
+
+    $("#jumpWhere").val(currentPage);
+  }
+
+
+  function jumpPage()
+  {
+   var num=parseInt($("#jumpWhere").val());
+   if(num!=currentPage_)
+   {
+    goPage(num,pageSize);
+  }
+}
+
+</script>		

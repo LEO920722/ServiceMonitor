@@ -1,74 +1,110 @@
 
-				
-				
+
+
 <!-- saved from url=(0040)http://192.168.1.20:5555/WmRoot/menu.dsp -->
 <html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<link rel="stylesheet" type="text/css" href="../css/webMethods.css">
-<meta http-equiv="Pragma" content="no-cache">
+	<link rel="stylesheet" type="text/css" href="../css/webMethods.css">
+	<meta http-equiv="Pragma" content="no-cache">
 
-<meta http-equiv="Expires" content="-1">
-<script src="../js/common-menu.js"></script>
-<script type="text/javascript">
-var selected = null;
-var menuInit = false;
+	<meta http-equiv="Expires" content="-1">
+	<script src="../js/common-menu.js"></script>
+	<script type="text/javascript">
+		var selected = null;
+		var menuInit = false;
 
-function menuSelect(object, id) {
-  selected = menuext.select(object, id, selected);
-}
+		function menuSelect(object, id) {
+			selected = menuext.select(object, id, selected);
+		}
 
-function menuMouseOver(object, id) {
-  menuext.mouseOver(object, id, selected);
-}
+		function menuMouseOver(object, id) {
+			menuext.mouseOver(object, id, selected);
+		}
 
-function menuMouseOut(object, id) {
-  menuext.mouseOut(object, id, selected);
-}
+		function menuMouseOut(object, id) {
+			menuext.mouseOut(object, id, selected);
+		}
 
-function initMenu(firstImage) {
-    menuInit = true;
-    return true;
-}
+		function initMenu(firstImage) {
+			menuInit = true;
+			return true;
+		}
 
-</script>
+	</script>
 </head>
 
 
 <body class="menu" onload="initMenu(&#39;stats\x2Dgeneral.dsp&#39;);">
-<table class="menuTable" width="100%" cellspacing="0" cellpadding="0" border="0">
+	<table class="menuTable" width="100%" cellspacing="0" cellpadding="0" border="0">
+		<tbody>
+			<tr manualhide="true" onclick="toggle(this, &#39;Logs_subMenu&#39;, &#39;Logs_twistie&#39;);" onmouseover="this.className=&#39;cursor&#39;;" class="cursor">
+				<td class="menusection menusection-expanded" id="elmt_Logs_subMenu" style="color: rgb(255, 255, 255); background-color: rgb(0, 111, 151);">
+					<img id="Logs_twistie" src="../img/expanded.gif"/>
+					&nbsp;Control panel
+				</td>
+			</tr>
+			<tr name="Logs_subMenu" style="display: table-row;">
+				<td id="ilog-server-recent.dsp" class="menuitem menuitem-selected" onmouseover="menuMouseOver(this, 'log\x2Dserver\x2Drecent.dsp');" onmouseout="menuMouseOut(this, 'log\x2Dserver\x2Drecent.dsp');" onclick="menuSelect(this, 'log\x2Dserver\x2Drecent.dsp'); document.all['alog\x2Dserver\x2Drecent.dsp'].click();" style="background-color: rgb(8, 153, 204);">
+					<span style="white-space: nowrap">
+						<a id="alog-server-recent.dsp" target="body" href="APIRecord.html" style="color: rgb(255, 255, 255);">
+						API           </a>
+					</span>
+				</td>
+			</tr>
 
-                
-                        <tbody>
-                        
-  <tr manualhide="false" onclick="toggle(this, &#39;Solutions_subMenu&#39;, &#39;Solutions_twistie&#39;);" onmouseover="this.className=&#39;cursor&#39;;" class="cursor">
-					<td class="menusection menusection-collapsed" id="elmt_Solutions_subMenu" style="color: rgb(255, 255, 255); background-color: rgb(0, 111, 151);">
-						<img id="Solutions_twistie" src="../img/expanded.gif"> &nbsp;Control Panel</td>
-				</tr> 
-   <tr name="Solutions_subMenu" style="display: table-row;">
-  <td id="istats-general.dsp" class="menuitem menuitem-selected" onmouseover="menuMouseOver(this, &#39;stats\x2Dgeneral.dsp&#39;);" onmouseout="menuMouseOut(this, &#39;stats\x2Dgeneral.dsp&#39;);" onclick="menuSelect(this, &#39;stats\x2Dgeneral.dsp&#39;); document.all[&#39;astats\x2Dgeneral.dsp&#39;].click();" style="background-color: rgb(255, 255, 255);">
-    <span style="white-space: nowrap">
-                        <a id="astats-general.dsp" target="body" href="APIRecord.html" style="color: rgb(46, 94, 131);">
-            API           </a>
-                  </span>
-  </td>
-</tr> 
+			<tr name="Logs_subMenu" style="display: table-row;">
+				<td id="ilog-gd-in-full.dsp" class="menuitem xyz" onmouseover="menuMouseOver(this, &#39;log\x2Dgd\x2Din\x2Dfull.dsp&#39;);" onmouseout="menuMouseOut(this, &#39;log\x2Dgd\x2Din\x2Dfull.dsp&#39;);" onclick="menuSelect(this, &#39;log\x2Dgd\x2Din\x2Dfull.dsp&#39;); document.all[&#39;alog\x2Dgd\x2Din\x2Dfull.dsp&#39;].click();" style="background-color: rgb(255, 255, 255);">
+					<span style="white-space: nowrap"/>
+					<a id="alog-gd-in-full.dsp" target="body" href="LogRecord.html" style="color: rgb(46, 94, 131);">
+						Logs           
+					</a>
+				</td>
+			</tr>
 
-          <tr name="Solutions_subMenu" style="display: table-row;">
-  <td id="ischeduler.dsp" class="menuitem xyz" onmouseover="menuMouseOver(this, &#39;scheduler.dsp&#39;);" onmouseout="menuMouseOut(this, &#39;scheduler.dsp&#39;);" onclick="menuSelect(this, &#39;scheduler.dsp&#39;); document.all[&#39;ascheduler.dsp&#39;].click();" style="background-color: rgb(255, 255, 255);">
-    <span style="white-space: nowrap">
-                        <a id="ascheduler.dsp" target="body" href="LogRecord.html" style="color: rgb(46, 94, 131);">
-            Logs           </a>
-                  </span>
-  </td>
-</tr>
+			<tr name="Logs_subMenu" style="display: table-row;">
+				<td id="ilog-security-recent.dsp" class="menuitem xyz" onmouseover="menuMouseOver(this, &#39;log\x2Dsecurity\x2Drecent.dsp&#39;);" onmouseout="menuMouseOut(this, &#39;log\x2Dsecurity\x2Drecent.dsp&#39;);" onclick="menuSelect(this, &#39;log\x2Dsecurity\x2Drecent.dsp&#39;); document.all[&#39;alog\x2Dsecurity\x2Drecent.dsp&#39;].click();" style="background-color: rgb(255, 255, 255);">
+					<span style="white-space: nowrap"/>
+					<a id="alog-security-recent.dsp" target="body" href="SearchTransaction.html" style="color: rgb(46, 94, 131);">
+						Search Transaction         
+					</a>
+				</td>
+			</tr>
 
-</tbody></table>
-        
-    <div style="height=0; width=0">
-        <form name="urlsaver">
-            <input type="hidden" name="helpURL" value="/WmRoot/doc/OnlineHelp/wwhelp.htm?context=is_help&amp;topic=IS_webMethodsCloud_DefineApplicationScrn">
-        </form>
-    </div>
-<script>menuSelect('', 'stats-general.dsp')</script>
+			<tr name="Logs_subMenu" style="display: table-row;">
+				<td id="ilog-error-recent.dsp" class="menuitem xyz" onmouseover="menuMouseOver(this, &#39;log\x2Derror\x2Drecent.dsp&#39;);" onmouseout="menuMouseOut(this, &#39;log\x2Derror\x2Drecent.dsp&#39;);" onclick="menuSelect(this, &#39;log\x2Derror\x2Drecent.dsp&#39;); document.all[&#39;alog\x2Derror\x2Drecent.dsp&#39;].click();" style="background-color: rgb(255, 255, 255);">
+					<span style="white-space: nowrap"/>
+					<a id="alog-error-recent.dsp" target="body" href="ScheduleBatchConf.html" style="color: rgb(46, 94, 131);">
+						Config Schedule Batch
+					</a>
+				</td>
+			</tr>
 
+			<tr name="Logs_subMenu" style="display: table-row;">
+				<td id="ilog-audit-recent.dsp" class="menuitem xyz" onmouseover="menuMouseOver(this, &#39;log\x2Daudit\x2Drecent.dsp&#39;);" onmouseout="menuMouseOut(this, &#39;log\x2Daudit\x2Drecent.dsp&#39;);" onclick="menuSelect(this, &#39;log\x2Daudit\x2Drecent.dsp&#39;); document.all[&#39;alog\x2Daudit\x2Drecent.dsp&#39;].click();" style="background-color: rgb(255, 255, 255);">
+					<span style="white-space: nowrap"/>
+					<a id="alog-audit-recent.dsp" target="body" href="MonitorRulesConf.html" style="color: rgb(46, 94, 131);">
+						Config Monitor Rules         
+					</a>
+				</td>
+			</tr>
+
+			<tr name="Logs_subMenu" style="display: table-row;">
+				<td id="ilog-session-recent.dsp" class="menuitem xyz" onmouseover="menuMouseOver(this, &#39;log\x2Dsession\x2Drecent.dsp&#39;);" onmouseout="menuMouseOut(this, &#39;log\x2Dsession\x2Drecent.dsp&#39;);" onclick="menuSelect(this, &#39;log\x2Dsession\x2Drecent.dsp&#39;); document.all[&#39;alog\x2Dsession\x2Drecent.dsp&#39;].click();" style="background-color: rgb(255, 255, 255);">
+					<span style="white-space: nowrap"/>
+					<a id="alog-session-recent.dsp" target="body" href="EmailRouterConf.html" style="color: rgb(46, 94, 131);">
+						Config Email Router         
+					</a>
+				</td>
+			</tr>			
+
+		</tbody>
+	</table>
+
+
+	<div style="height=0; width=0">
+		<form name="urlsaver">
+			<input type="hidden" name="helpURL" value="/WmRoot/doc/OnlineHelp/wwhelp.htm?context=is_help&amp;topic=IS_webMethodsCloud_DefineApplicationScrn">
+		</form>
+	</div>
+	<script>menuSelect('', 'stats-general.dsp')</script>
 
 </body></html>

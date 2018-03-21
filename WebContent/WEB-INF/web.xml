@@ -142,4 +142,14 @@
     <servlet-name>LinkTest</servlet-name>
     <url-pattern>/LinkTest</url-pattern>
   </servlet-mapping>
+    <servlet>
+    <description></description>
+    <display-name>QueryServiceTransaction</display-name>
+    <servlet-name>QueryServiceTransaction</servlet-name>
+    <servlet-class>com.yisquare.servlet.QueryServiceTransaction</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>QueryServiceTransaction</servlet-name>
+    <url-pattern>/QueryServiceTransaction</url-pattern>
+  </servlet-mapping>
 </web-app>

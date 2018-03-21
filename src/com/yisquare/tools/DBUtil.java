@@ -344,7 +344,7 @@ public class DBUtil {
 			break;
 		}
 		case ("EMAIL_BATCH"): {
-			columnStr = "SERVICE_ID,to_char(CREATE_TIME,'yyyy-MM-dd HH24:mi:ss') as FROM_DATE,to_char(CREATE_TIME,'yyyy-MM-dd HH24:mi:ss') as TO_DATE";
+			columnStr = "SERVICE_ID";
 			timeFieldName = "CREATE_TIMESTAMP";
 			break;
 		}
@@ -496,13 +496,15 @@ public class DBUtil {
 		// Date())+"','yyyy-mm-dd hh24:mi:ss')");
 		// ht.put("FILE_ID", "1");
 		// DBUtil.insert(ht,"API");
-		System.out.print(DBUtil.select("select SERVICE_ID from EMAIL_BATCH where BATCH_ID = 6"));
-		
-//		String realName = Util
-//				.Regex(".*:\"(.*)\"}]",
-//						DBUtil.select("select NAME from FILES where NOTE = '151987473112312.png'"),
-//						1);
-//		System.out.println(realName);
+		System.out
+				.print(DBUtil
+						.select("select SERVICE_ID from EMAIL_BATCH where BATCH_ID = 6"));
+
+		// String realName = Util
+		// .Regex(".*:\"(.*)\"}]",
+		// DBUtil.select("select NAME from FILES where NOTE = '151987473112312.png'"),
+		// 1);
+		// System.out.println(realName);
 	}
 
 }
