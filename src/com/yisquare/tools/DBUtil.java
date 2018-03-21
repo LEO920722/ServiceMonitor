@@ -338,8 +338,8 @@ public class DBUtil {
 			timeFieldName = "CREATE_TIME";
 			break;
 		}
-		case ("SERVICE_NAME"): {
-			columnStr = "ID,BUSINESS_ID,RULE_ID,SERVICENAME,SERVICE_STATUS,to_char(CREATE_TIME,'yyyy-MM-dd HH24:mi:ss') as FROM_DATE,to_char(CREATE_TIME,'yyyy-MM-dd HH24:mi:ss') as TO_DATE";
+		case ("SERVICE_MONITOR"): {
+			columnStr = "ID,BUSINESS_ID,RULE_ID,SERVICENAME,SERVICE_STATUS,to_char(MODIFIED_TIMESTAMP,'yyyy-MM-dd HH24:mi:ss') as LAST_CHANGETIME";
 			timeFieldName = "MODIFIED_TIMESTAMP";
 			break;
 		}
@@ -382,7 +382,7 @@ public class DBUtil {
 		} else {// 鐢ㄦ埛娌℃湁閫夋嫨鏃ユ湡灏� 榛樿鏌ヨ浠婂ぉ鐨�
 			if (!sql.contains("where")) {// 濡傛灉sql璇彞涓笉鍖呭惈where瀛楁锛堝嵆娌℃湁鍏朵粬鐨勫垽鏂潯浠讹級灏卞姞涓妛here
 				sql += " where to_char(" + timeFieldName
-						+ ",'yyyy-mm-dd')=to_char(sysdate,'yyyy-mm-dd')";
+						+ ",'yyyy-mm-dd')<to_char(sysdate,'yyyy-mm-dd')";
 			}
 		}
 		sql += " order by id desc";

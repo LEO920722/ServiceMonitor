@@ -142,7 +142,7 @@
     <servlet-name>LinkTest</servlet-name>
     <url-pattern>/LinkTest</url-pattern>
   </servlet-mapping>
-    <servlet>
+  <servlet>
     <description></description>
     <display-name>QueryServiceTransaction</display-name>
     <servlet-name>QueryServiceTransaction</servlet-name>
@@ -151,5 +151,55 @@
   <servlet-mapping>
     <servlet-name>QueryServiceTransaction</servlet-name>
     <url-pattern>/QueryServiceTransaction</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>QueryEmailRouter</display-name>
+    <servlet-name>QueryEmailRouter</servlet-name>
+    <servlet-class>com.yisquare.servlet.QueryEmailRouter</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>QueryEmailRouter</servlet-name>
+    <url-pattern>/QueryEmailRouter</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>InsertEmailRouter</display-name>
+    <servlet-name>InsertEmailRouter</servlet-name>
+    <servlet-class>com.yisquare.servlet.InsertEmailRouter</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>InsertEmailRouter</servlet-name>
+    <url-pattern>/InsertEmailRouter</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>QueryScheBatch</display-name>
+    <servlet-name>QueryScheBatch</servlet-name>
+    <servlet-class>com.yisquare.servlet.QueryScheBatch</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>QueryScheBatch</servlet-name>
+    <url-pattern>/QueryScheBatch</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>InsertRule</display-name>
+    <servlet-name>InsertRule</servlet-name>
+    <servlet-class>com.yisquare.servlet.InsertRule</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>InsertRule</servlet-name>
+    <url-pattern>/InsertRule</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>QueryRules</display-name>
+    <servlet-name>QueryRules</servlet-name>
+    <servlet-class>com.yisquare.servlet.QueryRules</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>QueryRules</servlet-name>
+    <url-pattern>/QueryRules</url-pattern>
   </servlet-mapping>
 </web-app>
