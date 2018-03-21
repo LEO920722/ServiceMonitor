@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.Writer;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Properties;
 import java.util.regex.Matcher;
@@ -16,7 +17,9 @@ import javax.servlet.ServletContext;
 import org.json.*;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
 
 public class Util {
 	public static String pathString = "";
@@ -123,22 +126,23 @@ public class Util {
 		// Util util = new Util();
 		// util.setInfo("ip", "123");
 
-		String json = "[{\"ServiceID\":\"1\"}],[{\"ServiceID\":\"2\"}],[{\"ServiceID\":\"3\"}],[{\"ServiceID\":\"4\"}]";
-		JSONArray jsonArray = new JSONArray(json);
-		for (int i = 0; i < jsonArray.length(); i++) {
-			System.out.println(JSONObject.getNames(jsonArray.get(i)));
-		}
 
 	}
 
-	public static String[] jsonToStringList(String json) {
-
-		JsonElement je = new Gson().toJsonTree(json);
-		int size = je.getAsJsonArray().size();
-		String[] list = new String[size];
-		for (int i = 0; i < size; i++) {
-			list[i] = je.getAsJsonArray().get(i).getAsString();
-		}
-		return list;
+	public static String[] getServiceIDList(String json) {
+			JsonArray jsonArray = new JsonParser().parse(json).getAsJsonArray();
+			Gson gs = new Gson();
+			ArrayList<ServiceIDBean> serviceBeanList = new ArrayList<>();
+			int size = jsonArray.size();
+			String[] list = new String[size];
+			for (int i = 0; i < size; i++) {
+				// 使用GSON，直接转成Bean对象
+				JsonElement serviceID = null;
+				ServiceIDBean serviceBean = gs.fromJson(serviceID,
+						ServiceIDBean.class);
+				list[i] = serviceBean.getServiceID();
+				serviceBeanList.add(serviceBean);
+			}
+			return list;
 	}
 }
