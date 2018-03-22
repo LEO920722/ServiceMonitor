@@ -205,6 +205,7 @@ table td {
 			<td >{RULE_ID}</td> 
 			<td >{SERVICENAME}</td>
 			<td >{SERVICE_STATUS}</td>
+			<td >{ERRORMESSAGE}</td>
 			<td >{LAST_CHANGETIME}</td>
 		</tr>      
 
@@ -215,10 +216,10 @@ table td {
 	</script>-->
 </head>
 
-<body onload="getServiceByParam(0)>
-	<!--<ul>
-		<li class="listitem" id="showCreate"><a id ="a1" href="APIApply.html">Create a new  API </a></li>
-	</ul>-->
+<body onload="getServiceByParam(0)">
+	<!-- <ul>
+	<li class="listitem" id="showCreate"><a id ="a1" href="APIApply.html">Create a new  API </a></li>
+	</ul> -->
 	<table class="tableView">
 		<tbody>
 			<tr>
@@ -283,6 +284,7 @@ table td {
 				<td class="oddcol">Rule ID</td>
 				<td class="oddcol" nowrap="">Service Name</td>
 				<td class="oddcol">Service Status</td>
+				<td class="oddcol">Error Message</td>
 				<td class="oddcol">Last Update Time</td>
 			</tr>
 		</tbody>
@@ -378,7 +380,6 @@ table td {
 			tempOption += '<option value='+i+'>' + i + '</option>'
 		}
 		$("#jumpWhere").html(tempOption);
-
 		$("#jumpWhere").val(currentPage);
 	}
 

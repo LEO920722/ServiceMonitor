@@ -126,23 +126,22 @@ public class Util {
 		// Util util = new Util();
 		// util.setInfo("ip", "123");
 
+		String json = "[{\"SERVICE_ID\":10},{\"SERVICE_ID\":9},{\"SERVICE_ID\":9},{\"SERVICE_ID\":9}]";
 
 	}
 
 	public static String[] getServiceIDList(String json) {
-			JsonArray jsonArray = new JsonParser().parse(json).getAsJsonArray();
-			Gson gs = new Gson();
-			ArrayList<ServiceIDBean> serviceBeanList = new ArrayList<>();
-			int size = jsonArray.size();
-			String[] list = new String[size];
-			for (int i = 0; i < size; i++) {
-				// 使用GSON，直接转成Bean对象
-				JsonElement serviceID = null;
-				ServiceIDBean serviceBean = gs.fromJson(serviceID,
-						ServiceIDBean.class);
-				list[i] = serviceBean.getServiceID();
-				serviceBeanList.add(serviceBean);
-			}
-			return list;
+
+		JsonParser parser = new JsonParser();
+		JsonArray jsonArray = parser.parse(json).getAsJsonArray();
+		int size = jsonArray.size(), i = 0;
+		String[] list = new String[size];
+		Gson gson = new Gson();
+		for (JsonElement serviceID : jsonArray) {
+			ServiceIDBean sBean = gson.fromJson(serviceID, ServiceIDBean.class);
+			list[i] = sBean.getServiceID();
+			i++;
+		}
+		return list;
 	}
 }

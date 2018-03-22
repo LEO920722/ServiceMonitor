@@ -270,7 +270,7 @@ public class DBUtil {
 			}
 			sql += key + "='" + value + "'";
 		}
-		System.out.println(sql);
+//		System.out.println(sql);
 		return sql;
 
 	}
@@ -339,7 +339,7 @@ public class DBUtil {
 			break;
 		}
 		case ("SERVICE_MONITOR"): {
-			columnStr = "ID,BUSINESS_ID,RULE_ID,SERVICENAME,SERVICE_STATUS,to_char(MODIFIED_TIMESTAMP,'yyyy-MM-dd HH24:mi:ss') as LAST_CHANGETIME";
+			columnStr = "ID,BUSINESS_ID,RULE_ID,SERVICENAME,SERVICE_STATUS,ERRORMESSAGE,to_char(MODIFIED_TIMESTAMP,'yyyy-MM-dd HH24:mi:ss') as LAST_CHANGETIME";
 			timeFieldName = "MODIFIED_TIMESTAMP";
 			break;
 		}
@@ -496,9 +496,9 @@ public class DBUtil {
 		// Date())+"','yyyy-mm-dd hh24:mi:ss')");
 		// ht.put("FILE_ID", "1");
 		// DBUtil.insert(ht,"API");
-		System.out
-				.print(DBUtil
-						.select("select SERVICE_ID from EMAIL_BATCH where BATCH_ID = 6"));
+//		System.out
+//				.print(DBUtil
+//						.select("select SERVICE_ID from EMAIL_BATCH where BATCH_ID = 6"));
 
 		// String realName = Util
 		// .Regex(".*:\"(.*)\"}]",

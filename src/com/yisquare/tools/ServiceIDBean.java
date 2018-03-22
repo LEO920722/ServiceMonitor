@@ -7,7 +7,7 @@ public class ServiceIDBean {
 		return SERVICE_ID;
 	}
 
-	public void setServiceID(String serviceID) {
-		SERVICE_ID = serviceID;
+	public void setServiceID(String ServiceID) {
+		this.SERVICE_ID = ServiceID;
 	}
 }

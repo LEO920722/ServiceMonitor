@@ -48,6 +48,7 @@ public class QueryServiceTransaction extends HttpServlet {
 			String serviceStatus = request.getParameter("SERVICE_STATUS");
 			String createTime1 = request.getParameter("CREATE_TIME1");
 			String createTime2 = request.getParameter("CREATE_TIME2");
+			
 			if (id != "" && id != null && id.length() != 0) {
 				ht.put("ID", id);
 			}
@@ -64,14 +65,38 @@ public class QueryServiceTransaction extends HttpServlet {
 			}
 			if (serviceStatus != "" && serviceStatus != null
 					&& serviceStatus.length() != 0) {
-				ht.put("SERVICE_STATUS", serviceStatus);
+				if (serviceStatus.equals("Error")) {
+					ht.put("SERVICE_STATUS", "E");
+				} else if (serviceStatus.equals("Success")) {
+					ht.put("SERVICE_STATUS", "S");
+				}
 			}
 			if (batchId != "" && batchId != null && batchId.length() != 0) {
 				ht.put("BATCH_ID", batchId);
-				Hashtable<String, String> bt = new Hashtable<String, String>();
-				DBUtil.select(DBUtil.getQuerySql(bt, "EMAIL_BATCH",
-						createTime1, createTime2));
-				response.getWriter().print("{\"rows\":" + "}");
+				String sql = DBUtil.getQuerySql(ht, "EMAIL_BATCH", createTime1,
+						createTime2);// Select from EMAIL_BATCH to get Service ID
+				String[] list = com.yisquare.tools.Util.getServiceIDList(DBUtil
+						.select(sql));// Get servcie and split into list
+				ht.clear();
+				String rs = "";// Initial result String
+				for (int i = 0; i < list.length; i++) {
+					ht.put("ID", list[i]);// Put Service ID into Hashtable one by one.
+					String tmp = DBUtil.select(DBUtil.getQuerySql(ht,
+							"SERVICE_MONITOR", createTime1, createTime2));// Get result String one by one
+					if (i == 0) {
+						tmp = tmp.replace("]", " ");
+						tmp = tmp.concat(",");// element,concat with ','
+					} else if (i == list.length - 1) {
+						tmp = tmp.replace("[", " ");
+					} else {
+						tmp = tmp.replace("[", " ");
+						tmp = tmp.replace("]", " ");
+						tmp = tmp.concat(",");// element,concat with ','
+					}
+					rs += tmp;
+				}
+				System.out.println(rs);
+				response.getWriter().print("{\"rows\":" + rs + "}");
 			} else {
 				response.getWriter().print(
 						"{\"rows\":"
