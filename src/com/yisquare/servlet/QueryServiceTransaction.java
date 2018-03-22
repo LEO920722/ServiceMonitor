@@ -95,7 +95,6 @@ public class QueryServiceTransaction extends HttpServlet {
 					}
 					rs += tmp;
 				}
-				System.out.println(rs);
 				response.getWriter().print("{\"rows\":" + rs + "}");
 			} else {
 				response.getWriter().print(

@@ -57,7 +57,7 @@
 <script src="../js/jquery.1.7.2.min.js"></script>
 <!--<script type="text/javascript" src="MyCustomDatePicker/Calendar.js"> </script>-->
 <script>
-	
+
   function one(id){
    $("#messageFont").html($("#fontLinshi"+id).html())
    document.getElementById('light').style.display='block';
@@ -76,7 +76,7 @@ function getAllScheBatch(){
  //   NAME:$("#Name").val(),
  //   ADDRESS:$("#Address").val(),
  // },
- url:"/APIPlatform/QueryScheBatch?timestamp=" + new Date().getTime(),
+ url:"/APIPlatform/QueryScheBatch?",
  dataType:"json",
  showType:"model",
  template_Name:"text/template",
@@ -99,9 +99,8 @@ function insertScheBatch(){
    SCHE_ID:$("#SCHE_ID").val(),
    MAIL_SUBJECT:$("#MAIL_SUBJECT").val(),
    IsActive:$("#IsActive").val(),
-
  },
- url:"/APIPlatform/InsertScheBatch?timestamp=" + new Date().getTime(),
+ url:"/APIPlatform/InsertScheBatch?",
  dataType:"json",
  showType:"model",
  template_Name:"text/template",
@@ -109,7 +108,6 @@ function insertScheBatch(){
  container:"container",
  Deferred:true,
 })
- getAllScheBatch();
  // goPage(1,15)
  // $("#barcon").show();
 }
@@ -119,10 +117,12 @@ function insertScheBatch(){
 
 <script type="text/template">
  <tr >
-   <td >{TIME}</td>
-   <td ><font  color="#006F97">{CLASS}</font></td>
-   <td >{LEVER}</td> 
-   <td style="text-align:left;"><div id="fontLinshi{ID}" style="width:300px;display:inline-block;  overflow:hidden; white-space:nowrap; text-overflow:ellipsis;">{INFO}</div><a style="color:#006F97;float:right" href="javascript:void(0)" onclick="one({ID})">Show Detail</a></td>
+      <td >{SCHE_ID}</td>
+      <td >{MAIL_SUBJECT}</td>
+      <td >{ACTIVE_FLAG}</td> 
+      <td >{LAST_RUN_TIMESTAMP}</td>
+      <td >{MAIL_ROUTER_ID}</td>
+      <td >{RULE_ID}</td>
  </tr> 
 </script>
 </head>
@@ -163,9 +163,9 @@ function insertScheBatch(){
        <td class="oddcol">Schedule ID</td>
        <td class="oddcol">Mail Subject</td>
        <td class="oddcol" nowrap="">IsActive</td>
+       <td class="oddcol" nowrap="">Last Run Time Time</td>
        <td class="oddcol" nowrap="">Mail Router ID</td>
        <td class="oddcol" nowrap="">Rule ID</td>
-       <td class="oddcol" nowrap="">Last Run Time Time</td>
      </tr>
    </tbody>
    <tbody id ="container">
@@ -275,4 +275,4 @@ function goPage(pno,psize){
   }
 }
 
-</script>		
+</script>   

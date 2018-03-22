@@ -1,4 +1,4 @@
-package com.yisquare.tools;
+package com.yisquare.bean;
 
 public class ServiceIDBean {
 	private String SERVICE_ID;

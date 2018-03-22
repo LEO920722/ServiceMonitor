@@ -20,6 +20,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
+import com.yisquare.bean.ServiceIDBean;
 
 public class Util {
 	public static String pathString = "";
@@ -126,7 +127,7 @@ public class Util {
 		// Util util = new Util();
 		// util.setInfo("ip", "123");
 
-		String json = "[{\"SERVICE_ID\":10},{\"SERVICE_ID\":9},{\"SERVICE_ID\":9},{\"SERVICE_ID\":9}]";
+		
 
 	}
 
@@ -143,5 +144,10 @@ public class Util {
 			i++;
 		}
 		return list;
+	}
+
+	public String[] getScheBatch(String json) {
+		
+		return null;
 	}
 }

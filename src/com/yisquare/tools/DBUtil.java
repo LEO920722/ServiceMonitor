@@ -270,7 +270,7 @@ public class DBUtil {
 			}
 			sql += key + "='" + value + "'";
 		}
-//		System.out.println(sql);
+		// System.out.println(sql);
 		return sql;
 
 	}
@@ -346,6 +346,11 @@ public class DBUtil {
 		case ("EMAIL_BATCH"): {
 			columnStr = "SERVICE_ID";
 			timeFieldName = "CREATE_TIMESTAMP";
+			break;
+		}
+		case ("SCHE_BATCH"): {
+			columnStr = "SCHE_ID,MAIL_SUBJECT,ACTIVE_FLAG,to_char(LAST_RUN_TIMESTAMP,'yyyy-mm-dd hh24:mi:ss') AS LAST_RUN_TIMESTAMP";
+			timeFieldName = "LAST_RUN_TIMESTAMP";
 			break;
 		}
 		default: {
@@ -496,9 +501,9 @@ public class DBUtil {
 		// Date())+"','yyyy-mm-dd hh24:mi:ss')");
 		// ht.put("FILE_ID", "1");
 		// DBUtil.insert(ht,"API");
-//		System.out
-//				.print(DBUtil
-//						.select("select SERVICE_ID from EMAIL_BATCH where BATCH_ID = 6"));
+		// System.out
+		// .print(DBUtil
+		// .select("select SERVICE_ID from EMAIL_BATCH where BATCH_ID = 6"));
 
 		// String realName = Util
 		// .Regex(".*:\"(.*)\"}]",
