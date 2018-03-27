@@ -194,12 +194,12 @@
   </servlet-mapping>
   <servlet>
     <description></description>
-    <display-name>QueryRules</display-name>
-    <servlet-name>QueryRules</servlet-name>
-    <servlet-class>com.yisquare.servlet.QueryRules</servlet-class>
+    <display-name>QueryAllRules</display-name>
+    <servlet-name>QueryAllRules</servlet-name>
+    <servlet-class>com.yisquare.servlet.QueryAllRules</servlet-class>
   </servlet>
   <servlet-mapping>
-    <servlet-name>QueryRules</servlet-name>
-    <url-pattern>/QueryRules</url-pattern>
+    <servlet-name>QueryAllRules</servlet-name>
+    <url-pattern>/QueryAllRules</url-pattern>
   </servlet-mapping>
 </web-app>

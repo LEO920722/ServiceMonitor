@@ -353,6 +353,11 @@ public class DBUtil {
 			timeFieldName = "LAST_RUN_TIMESTAMP";
 			break;
 		}
+		case ("MONITOR_CONFIG"): {
+			columnStr = "RULE_ID,RULE_NAME,INTERFACE_NAME,SERVICE_NAME,CONTENT_LOGGING,ACTIVE_FLAG";
+			timeFieldName = "CREATE_TIMESTAMP";
+			break;
+		}
 		default: {
 			columnStr = "ID,to_char(TIME,'yyyy-MM-dd HH24:mi:ss') as TIME,INFO,LEVER,CLASS";
 			timeFieldName = "TIME";

@@ -97,8 +97,23 @@ table td {
 	//		$("#light").show()
 	//    $("#TYPE_ID").val($("#selectID").val())
 	//}
+	function GetRequest() {
+		var url = location.search;
+		var theRequest = new Object();
+		if (url.indexOf("?") != -1) {
+			var str = url.substr(1);
+			strs = str.split("&");
+			for (var i = 0; i < strs.length; i++) {
+				theRequest[strs[i].split("=")[0]]= unescape(strs[i].split("=")[1]);
+			}
+		}
+		return theRequest;
+	}
+
 	function getServiceByParam(num) {
 		var data1;
+		var Request = GetRequest();
+		var BATCH_ID = Request['BATCH_ID'];
 		if (num == 1) {//用户点击了查询按钮
 			data1 = {
 				ID : $("#ID").val(),
@@ -116,7 +131,7 @@ table td {
 				BUSINESS_ID : getQueryString("BUSINESS_ID"),
 				RULE_ID : getQueryString("RULE_ID"),
 				SERVICENAME : getQueryString("SERVICENAME"),
-				BATCH_ID : getQueryString("BATCH_ID"),
+				BATCH_ID : BATCH_ID,
 				SERVICE_STATUS : getQueryString("SERVICE_STATUS"),
 				CREATE_TIME1 : getQueryString("CREATE_TIME1"),
 				CREATE_TIME2 : getQueryString("CREATE_TIME2"),
@@ -134,7 +149,7 @@ table td {
 				BUSINESS_ID : $("#BUSINESS_ID").val(),
 				RULE_ID : $("#RULE_ID").val(),
 				SERVICENAME : $("#SERVICENAME").val(),
-				BATCH_ID : $("#BATCH_ID").val(),
+				BATCH_ID : BATCH_ID,
 				SERVICE_STATUS : $("#SERVICE_STATUS").val(),
 				CREATE_TIME1 : $("#CREATE_TIME1").val(),
 				CREATE_TIME2 : $("#CREATE_TIME2").val(),
