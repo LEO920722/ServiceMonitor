@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.Hashtable;
 
 import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -12,8 +13,12 @@ import org.apache.log4j.Logger;
 import com.yisquare.tools.DBUtil;
 import com.yisquare.tools.LogCreate;
 
-public class QueryAllRules {
+public class QueryAllRules extends HttpServlet{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private static Logger logger = Logger
 			.getLogger(QueryAllRules.class);
 

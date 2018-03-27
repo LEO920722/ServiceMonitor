@@ -392,7 +392,7 @@ public class DBUtil {
 		} else {// 鐢ㄦ埛娌℃湁閫夋嫨鏃ユ湡灏� 榛樿鏌ヨ浠婂ぉ鐨�
 			if (!sql.contains("where")) {// 濡傛灉sql璇彞涓笉鍖呭惈where瀛楁锛堝嵆娌℃湁鍏朵粬鐨勫垽鏂潯浠讹級灏卞姞涓妛here
 				sql += " where to_char(" + timeFieldName
-						+ ",'yyyy-mm-dd')<to_char(sysdate,'yyyy-mm-dd')";
+						+ ",'yyyy-mm-dd')=to_char(sysdate,'yyyy-mm-dd')";
 			}
 		}
 		sql += " order by id desc";
