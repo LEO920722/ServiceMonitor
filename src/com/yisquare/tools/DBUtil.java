@@ -99,6 +99,7 @@ public class DBUtil {
 			stat = con.createStatement();// 濮濄倖鏌熷▔鏇炲灡瀵よ櫣鏁ゆ禍搴㈠⒔鐞涘矂娼ら幀涓糛L鐠囶厼褰為獮鎯扮箲閸ョ偛鐣犻幍锟芥晸閹存劗绮ㄩ弸婊呮畱鐎电锟�?
 			list.put("errorcode", stat.executeUpdate(sql) + "");// 閹垫挸宓冪紒鎾寸亯
 			list.put("errmsg", "ok");
+			con.commit();
 			con.close();
 			return gson.toJson(list);
 		} catch (SQLException e) {
@@ -358,6 +359,11 @@ public class DBUtil {
 			timeFieldName = "CREATE_TIMESTAMP";
 			break;
 		}
+		case ("MAIL_ROUTER"): {
+			columnStr = "ID,NAME,ADDRESS";
+			timeFieldName = "CREATE_TIMESTAMP";
+			break;
+		}
 		default: {
 			columnStr = "ID,to_char(TIME,'yyyy-MM-dd HH24:mi:ss') as TIME,INFO,LEVER,CLASS";
 			timeFieldName = "TIME";
@@ -392,7 +398,7 @@ public class DBUtil {
 		} else {// 鐢ㄦ埛娌℃湁閫夋嫨鏃ユ湡灏� 榛樿鏌ヨ浠婂ぉ鐨�
 			if (!sql.contains("where")) {// 濡傛灉sql璇彞涓笉鍖呭惈where瀛楁锛堝嵆娌℃湁鍏朵粬鐨勫垽鏂潯浠讹級灏卞姞涓妛here
 				sql += " where to_char(" + timeFieldName
-						+ ",'yyyy-mm-dd')=to_char(sysdate,'yyyy-mm-dd')";
+						+ ",'yyyy-mm-dd')<=to_char(sysdate,'yyyy-mm-dd')";
 			}
 		}
 		sql += " order by id desc";

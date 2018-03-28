@@ -58,13 +58,13 @@
 <script type="text/javascript" src="MyCustomDatePicker/Calendar.js"> </script>
 <script>
 	
-  function one(id){
+ /*  function one(id){
    $("#messageFont").html($("#fontLinshi"+id).html())
    document.getElementById('light').style.display='block';
  }
  function two(){
   document.getElementById('light').style.display='none';
-}
+} */
 function getAllEmialRouter(){
  //  if(isNaN($("#ID").val())){
  //   alert("Log ID should be number")
@@ -96,8 +96,8 @@ function insertEmialRouter(){
  $("#container").html("");
  var state = init({
   data:{
-   NAME:$("#Name").val(),
-   ADDRESS:$("#Address").val(),
+   NAME:$("#NAME").val(),
+   ADDRESS:$("#ADDRESS").val(),
  },
  url:"/APIPlatform/InsertEmailRouter?timestamp=" + new Date().getTime(),
  dataType:"json",
@@ -109,18 +109,18 @@ function insertEmialRouter(){
 })
  goPage(1,15)
  $("#barcon").show();
+ getAllEmialRouter();
 }
 
 </script>
 
 
 <script type="text/template">
- <tr >
-   <td >{TIME}</td>
-   <td ><font  color="#006F97">{CLASS}</font></td>
-   <td >{LEVER}</td> 
-   <td style="text-align:left;"><div id="fontLinshi{ID}" style="width:300px;display:inline-block;  overflow:hidden; white-space:nowrap; text-overflow:ellipsis;">{INFO}</div><a style="color:#006F97;float:right" href="javascript:void(0)" onclick="one({ID})">Show Detail</a></td>
- </tr> 
+<tr >
+<td >{ID}</td>
+<td >{NAME}</td>
+<td >{ADDRESS}</td>
+</tr> 
 </script>
 </head>
 
