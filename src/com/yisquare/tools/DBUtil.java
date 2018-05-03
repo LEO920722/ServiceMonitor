@@ -339,6 +339,11 @@ public class DBUtil {
 			timeFieldName = "CREATE_TIME";
 			break;
 		}
+		case ("TRANSACTION_MONITOR"):{
+			columnStr = "BUSINESS_ID,RULE_ID,BUSINESS_STATUS,to_char(CREATE_TIMESTAMP,'yyyy-MM-dd HH24:mi:ss') as CREATE_TIME,to_char(MODIFIED_TIMESTAMP,'yyyy-MM-dd HH24:mi:ss') as LAST_CHANGETIME";
+			timeFieldName = "CREATE_TIMESTAMP";
+			break;
+		}
 		case ("SERVICE_MONITOR"): {
 			columnStr = "ID,BUSINESS_ID,RULE_ID,SERVICENAME,SERVICE_STATUS,ERRORMESSAGE,to_char(MODIFIED_TIMESTAMP,'yyyy-MM-dd HH24:mi:ss') as LAST_CHANGETIME";
 			timeFieldName = "MODIFIED_TIMESTAMP";
@@ -361,6 +366,16 @@ public class DBUtil {
 		}
 		case ("MAIL_ROUTER"): {
 			columnStr = "ID,NAME,ADDRESS";
+			timeFieldName = "CREATE_TIMESTAMP";
+			break;
+		}
+		case ("SCHE_BATCH_FOR_ROUTER"): {
+			columnStr = "SCHE_ID,MAIL_ROUTER_ID,SEND,CC";
+			timeFieldName = "CREATE_TIMESTAMP";
+			break;
+		}
+		case ("SCHE_BATCH_FOR_RULE"): {
+			columnStr = "SCHE_ID,RULE_ID";
 			timeFieldName = "CREATE_TIMESTAMP";
 			break;
 		}

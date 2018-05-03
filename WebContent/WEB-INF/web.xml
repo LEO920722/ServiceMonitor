@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" id="WebApp_ID" version="2.5">
-  <display-name>APIPlatform</display-name>
+  <display-name>ServiceMonitor</display-name>
   <welcome-file-list>
     <welcome-file>index.html</welcome-file>
     <welcome-file>index.htm</welcome-file>
@@ -154,6 +154,16 @@
   </servlet-mapping>
   <servlet>
     <description></description>
+    <display-name>QueryService</display-name>
+    <servlet-name>QueryService</servlet-name>
+    <servlet-class>com.yisquare.servlet.QueryServiceDetails</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>QueryService</servlet-name>
+    <url-pattern>/QueryService</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
     <display-name>QueryEmailRouter</display-name>
     <servlet-name>QueryEmailRouter</servlet-name>
     <servlet-class>com.yisquare.servlet.QueryEmailRouter</servlet-class>
@@ -201,5 +211,15 @@
   <servlet-mapping>
     <servlet-name>QueryAllRules</servlet-name>
     <url-pattern>/QueryAllRules</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>InsertScheBatch</display-name>
+    <servlet-name>InsertScheBatch</servlet-name>
+    <servlet-class>com.yisquare.servlet.InsertScheBatch</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>InsertScheBatch</servlet-name>
+    <url-pattern>/InsertScheBatch</url-pattern>
   </servlet-mapping>
 </web-app>

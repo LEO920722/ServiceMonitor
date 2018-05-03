@@ -13,14 +13,13 @@ import org.apache.log4j.Logger;
 import com.yisquare.tools.DBUtil;
 import com.yisquare.tools.LogCreate;
 
-public class QueryAllRules extends HttpServlet{
-	
+public class QueryAllRules extends HttpServlet {
+
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private static Logger logger = Logger
-			.getLogger(QueryAllRules.class);
+	private static Logger logger = Logger.getLogger(QueryAllRules.class);
 
 	public QueryAllRules() {
 		super();
@@ -38,16 +37,26 @@ public class QueryAllRules extends HttpServlet{
 		request.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html;charset=utf-8");
 		response.setCharacterEncoding("UTF-8");
-		try{
+		try {
 			Hashtable<String, String> ht = new Hashtable<String, String>();
+			String SCHE_ID = request.getParameter("SCHE_ID");
 			String createTime1 = request.getParameter("CREATE_TIME1");
 			String createTime2 = request.getParameter("CREATE_TIME2");
-			response.getWriter().print(
-					"{\"rows\":"
-							+ DBUtil.select(DBUtil.getQuerySql(ht,
-									"MONITOR_CONFIG", createTime1,
-									createTime2)) + "}");
-		}catch(Exception e){
+			if (SCHE_ID == null || SCHE_ID == "") {
+				response.getWriter().print(
+						"{\"rows\":"
+								+ DBUtil.select(DBUtil.getQuerySql(ht,
+										"MONITOR_CONFIG", createTime1,
+										createTime2)) + "}");
+			} else {
+				ht.put("SCHE_ID", SCHE_ID);
+				String rs = DBUtil.select(DBUtil.getQuerySql(ht,
+						"SCHE_BATCH_FOR_RULE", createTime1, createTime2));
+				
+				response.getWriter().print("{\"rows\":" + rs + "}");
+			}
+
+		} catch (Exception e) {
 			e.printStackTrace();
 			logger.error("Exception:" + LogCreate.getException(e));
 		}

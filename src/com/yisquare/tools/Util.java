@@ -20,6 +20,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
+import com.yisquare.bean.RuleBean;
 import com.yisquare.bean.ServiceIDBean;
 
 public class Util {
@@ -132,7 +133,6 @@ public class Util {
 	}
 
 	public static String[] getServiceIDList(String json) {
-
 		JsonParser parser = new JsonParser();
 		JsonArray jsonArray = parser.parse(json).getAsJsonArray();
 		int size = jsonArray.size(), i = 0;
@@ -146,8 +146,19 @@ public class Util {
 		return list;
 	}
 
-	public String[] getScheBatch(String json) {
-		
-		return null;
+	public String[] getRuleIDFoeSche(String json) {
+		JsonParser parser = new JsonParser();
+		JsonArray jsonArray = parser.parse(json).getAsJsonArray();
+		int size = jsonArray.size(), i = 0;
+		String[] list = new String[size];
+		Gson gson = new Gson();
+		for (JsonElement ruleID : jsonArray) {
+			RuleBean rBean = gson.fromJson(ruleID, RuleBean.class);
+			list[i] = rBean.getRuleID();
+			i++;
+		}
+		return list;
 	}
+	
+	
 }

@@ -70,9 +70,6 @@ table td {
 </script>
 <script>
 	var role = "user";
-	function jump(id){//页面跳转，传入参数 BUSINESS_ID 作为查询条件
-		window.location.href="SearchService.html?BUSINESS_ID="+id;
-	}
 
 	init({//首次进入会用请求admin权限的servlet，  如果请求成功 就更改显示的样式
 		data : {},
@@ -102,19 +99,22 @@ table td {
 	function getServiceByParam(num) {
 		var data1;
 		var Request = GetRequest();
+		var BATCH_ID = Request['BATCH_ID'];
+		var BUSINESS_ID = Request['BUSINESS_ID'];
 		if (num == 1) {//用户点击了查询按钮
 			data1 = {
+				ID : $("#ID").val(),
 				BUSINESS_ID : $("#BUSINESS_ID").val(),
 				RULE_ID : $("#RULE_ID").val(),
-				BUSINESS_STATUS : $("#BUSINESS_STATUS").val(),
+				SERVICENAME : $("#SERVICENAME").val(),
+				BATCH_ID : BATCH_ID,
+				SERVICE_STATUS : $("#SERVICE_STATUS").val(),
 				CREATE_TIME1 : $("#CREATE_TIME1").val(),
 				CREATE_TIME2 : $("#CREATE_TIME2").val(),
 			}
 		} else if (getQueryString("state") == "1" || num == 0) {//如果state是1则表示是上个页面传过来的,num=0是本页面加载就执行的
 			data1 = {//将上个页面的值赋值给data1
-				BUSINESS_ID : getQueryString("BUSINESS_ID"),
-				RULE_ID : getQueryString("RULE_ID"),
-				BUSINESS_STATUS : getQueryString("BUSINESS_STATUS"),
+				BUSINESS_ID : BUSINESS_ID,
 				CREATE_TIME1 : getQueryString("CREATE_TIME1"),
 				CREATE_TIME2 : getQueryString("CREATE_TIME2"),
 			}
@@ -123,13 +123,16 @@ table td {
 		$("#container").html("");
 		var state = init({
 			data : {
-				BUSINESS_ID : $("#BUSINESS_ID").val(),
+				ID : $("#ID").val(),
+				BUSINESS_ID : BUSINESS_ID,
 				RULE_ID : $("#RULE_ID").val(),
-				BUSINESS_STATUS : $("#BUSINESS_STATUS").val(),
+				SERVICENAME : $("#SERVICENAME").val(),
+				BATCH_ID : BATCH_ID,
+				SERVICE_STATUS : $("#SERVICE_STATUS").val(),
 				CREATE_TIME1 : $("#CREATE_TIME1").val(),
 				CREATE_TIME2 : $("#CREATE_TIME2").val(),
-			},
-			url : "/ServiceMonitor/QueryServiceTransaction?"
+			}, 
+			url : "/ServiceMonitor/QueryService?"
 					+ new Date().getTime(),
 			dataType : "json",
 			showType : "model",
@@ -142,7 +145,6 @@ table td {
 		$("#barcon").show();
 
 	}
-	
 	jQuery.fn.shake = function(intShakes /*Amount of shakes*/,
 			intDistance /*Shake distance*/, intDuration /*Time duration*/) {
 		this.each(function() {
@@ -165,40 +167,53 @@ table td {
 </script>
 <script type="text/template">
 		<tr>
+			<td >{ID}</td>
 			<td >{BUSINESS_ID}</td>
 			<td >{RULE_ID}</td> 
-			<td >{BUSINESS_STATUS}</td>
+			<td >{SERVICENAME}</td>
+			<td >{SERVICE_STATUS}</td>
+			<td >{ERRORMESSAGE}</td>
 			<td >{LAST_CHANGETIME}</td>
-			<td ><button style="color:#006F97;font-size:10px" onclick="jump({BUSINESS_ID})">Query</button></td>
 		</tr>      
 
 	</script>
+
 </head>
 
 <body onload="getServiceByParam(0)">
+
 	<table class="tableView">
 		<tbody>
 			<tr>
 				<td class="heading" colspan="13">Query Parameters</td>
 			</tr>
 			<tr>
+				<td class="oddrow" colspan="2">Service ID</td>
+				<td class="oddrow-l" colspan="5"><input id="ID"
+					name="description" size="40" value=""></td>
+				<td class="oddrow" colspan="2">Business ID</td>
+				<td class="oddrow-l" colspan="5"><input id="BUSINESS_ID"
+					name="description" size="40" value=""></td>
+			</tr>
+			<tr>
 				<td class="oddrow" colspan="2">Rule ID</td>
 				<td class="oddrow-l" colspan="5"><input id="RULE_ID"
 					name="description" size="40" value=""></td>
-				<td class="oddrow" colspan="2">Business Status</td>
-				<td class="oddrow-l" colspan="5"><select id="BUSINESS_STATUS"
+				<td class="oddrow" colspan="2">Service Name</td>
+				<td class="oddrow-l" colspan="5"><input id="SERVICENAME"
+					name="description" size="40" value=""></td>
+			</tr>
+			<tr>
+				<td class="oddrow" colspan="2">Batch ID</td>
+				<td class="oddrow-l" colspan="5"><input id="BATCH_ID"
+					name="description" size="40" value=""></td>
+				<td class="oddrow" colspan="2">Service Status</td>
+				<td class="oddrow-l" colspan="5"><select id="SERVICE_STATUS"
 					style="color: #006F97; width: 100%; height: 21px">
 						<option></option>
 						<option>Success</option>
 						<option>Error</option>
 				</select></td>
-			</tr>
-			<tr>
-				<td class="oddrow" colspan="2">Business ID</td>
-				<td class="oddrow-l" colspan="5"><input id="BUSINESS_ID"
-					name="description" size="40" value=""></td>
-				<td class="oddrow" colspan="2"></td>
-				<td class="oddrow-l" colspan="5"></td>
 			</tr>
 			<tr>
 				<td class="evenrow" colspan="2">From Date</td>
@@ -214,6 +229,10 @@ table td {
 			</tr>
 	</table>
 	<br>
+	<!--<table width="100%">
+					<tbody >
+					</tbody>
+				</table>-->
 	<table class="tableView" width="100%" id="servicecon">
 		<tbody>
 			<tr>
@@ -222,12 +241,13 @@ table td {
 				</td>
 			</tr>
 			<tr class="subheading2">
+				<td>Service ID</td>
 				<td class="oddcol">Business ID</td>
 				<td class="oddcol">Rule ID</td>
-				<td class="oddcol">Business Status</td>
+				<td class="oddcol" nowrap="">Service Name</td>
+				<td class="oddcol">Service Status</td>
+				<td class="oddcol">Error Message</td>
 				<td class="oddcol">Last Update Time</td>
-				<td class="oddcol">Details</td>
-				
 			</tr>
 		</tbody>
 		<tbody id="container">

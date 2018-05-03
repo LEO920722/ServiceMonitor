@@ -38,18 +38,12 @@ public class QueryScheBatch extends HttpServlet {
 			Hashtable<String, String> ht = new Hashtable<String, String>();
 			String createTime1 = request.getParameter("CREATE_TIME1");
 			String createTime2 = request.getParameter("CREATE_TIME2");
-			String rs = "";
-			String ScheDetial = DBUtil.select(DBUtil.getQuerySql(ht,
+			 String rs = DBUtil.select(DBUtil.getQuerySql(ht,
 					"SCHE_BATCH", createTime1, createTime2));
 			response.getWriter().print("{\"rows\":" + rs + "}");
 		} catch (Exception e) {
 			e.printStackTrace();
 			logger.error("Exception:" + LogCreate.getException(e));
 		}
-	}
-
-	protected String Response(String json) {
-		String response = null;
-		return null;
 	}
 }

@@ -1,0 +1,256 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="-1">
+<title>IS Service Statistics</title>
+<link rel="stylesheet" type="text/css" href="../css/webMethods.css">
+<!--<META http-equiv="refresh" content="90">-->
+<style>
+table td {
+	word-break:  keep-all;
+	white-space: nowrap;
+}
+
+.file-box {
+	position: relative;
+	width: 340px
+}
+
+.txt {
+	height: 22px;
+	border: 0px solid #cdcdcd;
+	width: 180px;
+	display: none;
+}
+
+.btn {
+	background-color: #FFF;
+	border: 1px solid #CDCDCD;
+	height: 24px;
+	width: 300px;
+	color: #006F97;
+	cursor: pointer
+}
+
+.file {
+	position: absolute;
+	color: #006F97;
+	top: 0;
+	right: 80px;
+	height: 24px;
+	filter: alpha(opacity : 0);
+	opacity: 0;
+	width: 260px
+}
+
+.param {
+	display: none
+}
+</style>
+<script src="../txt/webMethods.js.txt"></script>
+<script src="../js/init.js"></script>
+<script src="../js/jquery.1.7.2.min.js"></script>
+<script type="text/javascript" src="MyCustomDatePicker/Calendar.js">
+	
+</script>
+<!--  <script type="text/template1">
+       <option>{TYPE_ID}</option>       
+ 	</script>-->
+<script>
+	var SCHE_ID = "";
+	function getScheID() {
+		var url = window.location.href;
+		var idx = url.indexOf("SCHE_ID=", 0);
+
+		if (idx <= 0) {
+			return "";
+		} else {
+			SCHE_ID = url.substring(idx + 8, url.length);
+		}
+	}
+	function getAllRule() {
+		//  if(isNaN($("#ID").val())){
+		//   alert("Log ID should be number")
+		//   return;
+		// }
+		$("#container").html("");
+		var state = init({
+			//  data:{
+			//   NAME:$("#Name").val(),
+			//   ADDRESS:$("#Address").val(),
+			// },
+			url : "/ServiceMonitor/QueryAllRules?timestamp="
+					+ new Date().getTime(),
+			dataType : "json",
+			showType : "model",
+			template_Name : "text/template",
+			fillType : "append",
+			container : "container",
+			Deferred : true,
+		})
+		goPage(1, 15)
+		$("#barcon").show();
+	}
+
+
+	init({//请求admin权限的servlet，  如果请求成功 就更改显示的样式
+		data : {},
+		url : "/ServiceMonitor/JudgeRole?timestamp=" + new Date().getTime(),
+		dataType : "json",
+		showType : "return",
+		Deferred : false,
+		Callback : function(dta) {
+			$('#sub').show();
+			$('#upt').show();
+		}
+	})
+	/* 	function gradeChange(){//当type按钮点击的时候将其中的值放在其中
+	 $("#TYPE_ID").val($("#selectID").val())
+	 } */
+	/* 	init({
+	 data : {},
+	 url : "/ServiceMonitor/QueryTypes?timestamp=" + new Date().getTime(),
+	 dataType : "json",
+	 showType : "model",
+	 template_Name : "text/template1",
+	 fillType : "append",
+	 container : "selectID",
+	 Deferred : false,
+	 }) */
+
+	function getRuleByParam() {//页面加载完成便完成的操作
+		$("#container").html("");
+		init({
+			data : {
+				SCHE_ID : getQueryString("SCHE_ID"),//上个页面传过来的FILE_ID 在file表中用‘API_ID’代替 这也是唯一的
+			},
+			url : "/ServiceMonitor/QueryAllRules?timestamp="
+					+ new Date().getTime(),
+			dataType : "json",
+			showType : "model",
+			template_Name : "text/template",
+			fillType : "append",
+			container : "container",
+			Deferred : false,
+		})
+
+		init({//根据api的id 获取该api的信息
+			data : {
+				ID : getQueryString("API_ID"),//上个页面传过来的API id 
+			},
+			url : "/ServiceMonitor/QueryApi?timestamp=" + new Date().getTime(),
+			dataType : "json",
+			showType : "return",
+			Deferred : false,
+			Callback : function(dta) {
+				if (!dta || !dta.rows || dta.rows.length <= 0) {//数据库没有数据 说明没有被爬取
+					alert("数据查询失败，请重新访问")
+				} else {
+					var data = dta.rows[0];
+					$("#ID").val(data.ID);
+					$("#CREATOR").val("Admin");
+					$("#LEADER").val(data.LEADER);
+					$("#BELONG_SYSTEM").val(data.BELONG_SYSTEM);
+					$("#CREATE_TIME").val(data.CREATE_TIME);
+					$("#LAST_CHANGETIME").val(data.LAST_CHANGETIME);
+					$("#NAME").val(data.NAME);
+					$("#TYPE_ID").val(data.TYPE_ID);
+					$("#KEYWORD").val(data.KEYWORD);
+					$("#PROJECT_NAME").val(data.PROJECT_NAME);
+					$("#MESSAGE").val(data.MESSAGE);
+					$("#Upload_API_ID").val(data.FILE_ID);
+					$("#SKIP_API_ID").val(data.ID);
+					$("#Upload_CREATOR").val(data.CREATOR);
+				}
+			}
+		})
+	}
+
+	function updateAPIInfo() {
+		if (!confirm("Are you sure to update ?")) {
+			return false;
+		}
+		init({//根据api的id 获取该ip的信息
+			data : {
+				ID : getQueryString("API_ID"),//上个页面传过来的API id
+				CREATOR : $("#CREATOR").val(),
+				LEADER : $("#LEADER").val(),
+				BELONG_SYSTEM : $("#BELONG_SYSTEM").val(),
+				CREATE_TIME : $("#CREATE_TIME").val(),
+				LAST_CHANGETIME : $("#LAST_CHANGETIME").val(),
+				NAME : $("#NAME").val(),
+				TYPE_ID : $("#TYPE_ID").val(),
+				KEYWORD : $("#KEYWORD").val(),
+				PROJECT_NAME : $("#PROJECT_NAME").val(),
+				MESSAGE : $("#MESSAGE").val(),
+			},
+			url : "/ServiceMonitor/UpdateApi?timestamp=" + new Date().getTime(),
+			dataType : "json",
+			showType : "return",
+			Deferred : false,
+			Callback : function(dta) {
+				if (dta.rows.errorcode = 1) {//数据库没有数据 说明没有被爬取
+					alert("updated success!")
+				} else {
+					alert("updated faild, plese search the log!")
+				}
+			}
+		})
+	}
+	function goTo(url) {
+		window.location.href = url;
+	}
+</script>
+<script type="text/template">
+           <tr >
+           	<td ><input id="{RULE_ID}" type="checkbox"></td>
+	        <td >{RULE_ID}</td>
+           	<td >{RULE_NAME}</td>
+	        <td >{INTERFACE_NAME}</td>
+           	<td >{SERVICE_NAME}</td>
+	        <td >{CONTENT_LOGGING}</td>
+           	<td >{ACTIVE_FLAG}</td>
+           </tr> 
+ 		</script>
+<script type="text/javascript">
+	/*         function check(){
+	 if(document.getElementById("File1").value.length==0){
+	 alert("不能为空");
+	 return false;
+	 }
+	 if(document.getElementById("File1").value.toLowerCase() != "d:\1.txt"){
+	 alert("路径不正确"+document.getElementById("File1").value.toLowerCase());
+	 return false;
+	 }
+	 } */
+</script>
+</head>
+<body onload="getAllRule()">
+	<ul>
+		<li class="listitem"><a href="#"
+			onClick="window.history.back(-1);">Return to Schedule Batch View</a></li>
+		<li class="listitem"><a href="#" onClick="ChangeStatus()">Update
+				Current Configuration</a></li>
+	</ul>
+	<table class="tableView" width="100%" id="servicecon">
+		<tbody>
+			<tr>
+				<td class="heading" colspan="11">Rule Detail</td>
+			</tr>
+			<tr class="subheading2">
+				<td>Include</td>
+				<td class="oddcol">Rule ID</td>
+				<td class="oddcol">Rule Name</td>
+				<td class="oddcol">Interface Name</td>
+				<td class="oddcol">Service Name</td>
+				<td class="oddcol">Content Logging</td>
+				<td class="oddcol">Active Flag</td>
+
+			</tr>
+		</tbody>
+		<tbody id="container">
+		</tbody>
+	</table>
+</body>
+</html>

@@ -75,13 +75,7 @@ table td {
 	
 </script>
 <script>
-	/* 	function one(id) {
-	 $("#messageFont").html($("#fontLinshi" + id).html())
-	 document.getElementById('light').style.display = 'block';
-	 }
-	 function two() {
-	 document.getElementById('light').style.display = 'none';
-	 } */
+
 	function getAllRule() {
 		//  if(isNaN($("#ID").val())){
 		//   alert("Log ID should be number")
@@ -93,7 +87,8 @@ table td {
 			//   NAME:$("#Name").val(),
 			//   ADDRESS:$("#Address").val(),
 			// },
-			url : "/APIPlatform/QueryAllRules?timestamp=" + new Date().getTime(),
+			url : "/ServiceMonitor/QueryAllRules?timestamp="
+					+ new Date().getTime(),
 			dataType : "json",
 			showType : "model",
 			template_Name : "text/template",
@@ -120,7 +115,7 @@ table td {
 				CONTENT_LOGGING : $("#CONTENT_LOGGING").val(),
 				ACTIVE_FLAG : $("#ACTIVE_FLAG").val(),
 			},
-			url : "/APIPlatform/InsertRule?timestamp=" + new Date().getTime(),
+			url : "/ServiceMonitor/InsertRule?timestamp=" + new Date().getTime(),
 			dataType : "json",
 			showType : "model",
 			template_Name : "text/template",

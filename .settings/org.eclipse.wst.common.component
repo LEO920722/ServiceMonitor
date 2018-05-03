@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
-    <wb-module deploy-name="APIPlatform">
+    <wb-module deploy-name="ServiceMonitor">
         <wb-resource deploy-path="/" source-path="/WebContent" tag="defaultRootSource"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src"/>
-        <property name="context-root" value="APIPlatform"/>
-        <property name="java-output-path" value="/APIPlatform/build/classes"/>
+        <property name="java-output-path" value="/ServiceMonitor/build/classes"/>
+        <property name="context-root" value="ServiceMonitor"/>
     </wb-module>
 </project-modules>

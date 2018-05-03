@@ -1,0 +1,310 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="-1">
+<title>IS Service Statistics</title>
+<link rel="stylesheet" type="text/css" href="../css/webMethods.css">
+<!--<META http-equiv="refresh" content="90">-->
+<style>
+table td {
+	word-break:  keep-all;
+	white-space: nowrap;
+}
+
+.file-box {
+	position: relative;
+	width: 340px
+}
+
+.txt {
+	height: 22px;
+	border: 0px solid #cdcdcd;
+	width: 180px;
+	display: none;
+}
+
+.btn {
+	background-color: #FFF;
+	border: 1px solid #CDCDCD;
+	height: 24px;
+	width: 300px;
+	color: #006F97;
+	cursor: pointer
+}
+
+.file {
+	position: absolute;
+	color: #006F97;
+	top: 0;
+	right: 80px;
+	height: 24px;
+	filter: alpha(opacity : 0);
+	opacity: 0;
+	width: 260px
+}
+
+.param {
+	display: none
+}
+</style>
+<script src="../txt/webMethods.js.txt"></script>
+<script src="../js/init.js"></script>
+<script src="../js/jquery.1.7.2.min.js"></script>
+<script type="text/javascript" src="MyCustomDatePicker/Calendar.js"> </script>
+<script type="text/template1">
+       <option>{TYPE_ID}</option>       
+ 	</script>
+<script>
+	init({//请求admin权限的servlet，  如果请求成功 就更改显示的样式
+		data:{},
+		url:"/APIPlatform/JudgeRole?timestamp=" + new Date().getTime(),
+		dataType:"json",
+		showType:"return",
+	    Deferred:false,
+	    Callback:function(dta){
+	    	$('#sub').show();
+	    	$('#upt').show();
+		}
+	})
+	function gradeChange(){//当type按钮点击的时候将其中的值放在其中
+	    $("#TYPE_ID").val($("#selectID").val())
+	}
+	init({
+		data:{},
+		url:"/APIPlatform/QueryTypes?timestamp=" + new Date().getTime(),
+		dataType:"json",
+		showType:"model",
+		template_Name:"text/template1",
+		fillType:"append",
+		container:"selectID",
+	    Deferred:false,
+	})
+	
+		function getAPIByParam(){//页面加载完成便完成的操作
+			$("#container").html("");
+		    init({
+				data:{
+					ID:getQueryString("FILE_ID"),//上个页面传过来的FILE_ID 在file表中用‘API_ID’代替 这也是唯一的
+				},
+				url:"/APIPlatform/QueryFiles?timestamp=" + new Date().getTime(),
+				dataType:"json",
+				showType:"model",
+				template_Name:"text/template",
+				fillType:"append",
+				container:"container",
+			    Deferred:false,
+			})
+			
+		   	init({//根据api的id 获取该api的信息
+			data:{
+				ID:getQueryString("API_ID"),//上个页面传过来的API id 
+			},
+			url:"/APIPlatform/QueryApi?timestamp=" + new Date().getTime(),
+			dataType:"json",
+			showType:"return",
+		    Deferred:false,
+		    Callback:function(dta){
+		    	if (!dta || !dta.rows || dta.rows.length <= 0) {//数据库没有数据 说明没有被爬取
+		    		alert("数据查询失败，请重新访问")
+		    	} 
+		    	else{
+		    		var data = dta.rows[0];
+		    		$("#ID").val(data.ID);
+		    		$("#CREATOR").val("Admin");
+		    		$("#LEADER").val(data.LEADER);
+		    		$("#BELONG_SYSTEM").val(data.BELONG_SYSTEM);
+		    		$("#CREATE_TIME").val(data.CREATE_TIME);
+		    		$("#LAST_CHANGETIME").val(data.LAST_CHANGETIME);
+		    		$("#NAME").val(data.NAME);
+		    		$("#TYPE_ID").val(data.TYPE_ID);
+		    		$("#KEYWORD").val(data.KEYWORD);
+		    		$("#PROJECT_NAME").val(data.PROJECT_NAME);
+		    		$("#MESSAGE").val(data.MESSAGE);
+		    		$("#Upload_API_ID").val(data.FILE_ID);
+		    		$("#SKIP_API_ID").val(data.ID);
+		    		$("#Upload_CREATOR").val(data.CREATOR);
+		    	}
+			}
+		})
+		}
+		
+		function updateAPIInfo(){
+			if (!confirm("Are you sure to update ?")){
+				return false;
+				}
+			init({//根据api的id 获取该ip的信息
+				data:{
+					ID:getQueryString("API_ID"),//上个页面传过来的API id
+					CREATOR:$("#CREATOR").val(),
+					LEADER:$("#LEADER").val(),
+					BELONG_SYSTEM:$("#BELONG_SYSTEM").val(),
+					CREATE_TIME:$("#CREATE_TIME").val(),
+					LAST_CHANGETIME:$("#LAST_CHANGETIME").val(),
+					NAME:$("#NAME").val(),
+			        TYPE_ID:$("#TYPE_ID").val(),
+					KEYWORD:$("#KEYWORD").val(),
+					PROJECT_NAME:$("#PROJECT_NAME").val(),
+					MESSAGE:$("#MESSAGE").val(),
+				},
+				url:"/APIPlatform/UpdateApi?timestamp=" + new Date().getTime(),
+				dataType:"json",
+				showType:"return",
+			    Deferred:false,
+			    Callback:function(dta){
+				    if (dta.rows.errorcode=1) {//数据库没有数据 说明没有被爬取
+				    		alert("updated success!")
+			    	} 
+				    else{
+				    		alert("updated faild, plese search the log!")
+				    }
+				}
+			})
+		}
+		function goTo(url){
+			window.location.href=url;
+		}
+	</script>
+<script type="text/template">
+           <tr >
+           	<td >{ID}</td>
+	        <td ><font color="#006F97">{NAME}</font></td>
+	        <td >Admin</td>
+	        <td >{CREATE_TIME}</td>
+            <td width="5%"><img style="cursor:pointer" onclick="goTo('{URL}')" width="20px" src="../img/down.png"></td>
+           </tr> 
+ 		</script>
+<script type="text/javascript">
+        function check(){
+        if(document.getElementById("File1").value.length==0){
+            alert("不能为空");
+            return false;
+        }
+        if(document.getElementById("File1").value.toLowerCase() != "d:\1.txt"){
+            alert("路径不正确"+document.getElementById("File1").value.toLowerCase());
+            return false;
+        }
+    }
+</script>
+</head>
+<body onload="getAPIByParam()">
+	<ul>
+		<li class="listitem"><a href="#"
+			onClick="window.history.back(-1);">Return to API View</a></li>
+	</ul>
+	<table class="tableView">
+		<tbody>
+			<tr>
+				<td class="heading" colspan="14">API Information</td>
+			</tr>
+			<tr>
+				<td class="oddrow" colspan="2">API ID</td>
+				<td class="oddrow-l" colspan="5"><input id="ID"
+					name="description" size="40" value="" style="color: #A8A8A8"
+					readonly="readonly"></td>
+				<td class="oddrow" colspan="2">Creator</td>
+				<td class="oddrow-l" colspan="5"><input id="CREATOR"
+					name="description" size="40" value="" style="color: #A8A8A8"
+					readonly="true"></td>
+			</tr>
+			<tr>
+				<td class="oddrow" colspan="2">API Name</td>
+				<td class="oddrow-l" colspan="5"><input id="NAME"
+					name="description" size="40" value=""></td>
+				<td class="oddrow" colspan="2">Project</td>
+				<td class="oddrow-l" colspan="5"><input id="PROJECT_NAME"
+					name="description" size="40" value=""></td>
+			</tr>
+			<tr>
+				<td class="oddrow" colspan="2">Keywords</td>
+				<td class="oddrow-l" colspan="5"><input id="KEYWORD"
+					name="description" size="40" value=""></td>
+				<td class="oddrow" colspan="2">Type</td>
+				<td class="oddrow-l" colspan="5"><input id="TYPE_ID"
+					name="description" size="20" value=""> <select
+					id="selectID" onchange="gradeChange()"
+					style="color: #006F97; width: 115px; height: 21px">
+						<option value="1" style="color: #b6b6b6" disabled selected>Select
+							Type</option>
+
+				</select></td>
+			</tr>
+			<tr>
+				<td class="oddrow" colspan="2">Owner</td>
+				<td class="oddrow-l" colspan="5"><input id="LEADER"
+					name="description" size="40" value=""></td>
+				<td class="oddrow" colspan="2">System</td>
+				<td class="oddrow-l" colspan="5"><select
+					Style="color: #006F97; width: 270px; height: 21px"
+					id="BELONG_SYSTEM" name="BELONG_SYSTEM">
+						<option></option>
+						<option>Linux</option>
+						<option>Windows</option>
+						<option>Unix</option>
+						<option>Mac OS</option>
+				</select></td>
+			</tr>
+			<tr>
+				<td class="evenrow" colspan="2">Create Date</td>
+				<td class="evenrow-l" colspan="5"><input size="40"
+					id="CREATE_TIME" style="color: #A8A8A8" readonly="true">
+				<td class="oddrow" colspan="2">Last Update Date</td>
+				<td class="oddrow-l" colspan="5"><input size="40"
+					id="LAST_CHANGETIME" readonly="readonly" style="color: #A8A8A8"></td>
+			</tr>
+			<tr>
+				<td class="oddrow" colspan="2">Description</td>
+				<td class="oddrow-l" colspan="12"><textarea
+						style="width: 100%; height: 80px" id="MESSAGE" name="MESSAGE"></textarea></td>
+				<td id="upt" style="display: none; border: none"><button
+						style="color: #006F97;" onclick="updateAPIInfo()">update</button></td>
+			</tr>
+	</table>
+
+	<table class="tableView" width="100%" id="servicecon">
+		<tbody>
+			<tr>
+				<td class="heading" colspan="11">API Attachment</td>
+			</tr>
+			<tr class="subheading2">
+				<td>File ID</td>
+				<td class="oddcol">Name</td>
+				<td class="oddcol">Creator</td>
+				<td class="oddcol">Create Date</td>
+				<td class="oddcol">Download</td>
+			</tr>
+		</tbody>
+		<tbody id="container">
+		</tbody>
+	</table>
+	<form style="display: none" id="sub" action="/APIPlatform/AddNewFiles"
+		method="post" enctype="multipart/form-data">
+		<table width="100%">
+			<tbody>
+				<tr>
+				<tr>
+					<td>&nbsp;<input id="Upload_API_ID" name="API_ID"
+						class="param"> <input id="Upload_CREATOR" name="CREATOR"
+						class="param"> <input id="SKIP_API_ID" name="SKIP_API_ID"
+						class="param">
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<div class="file-box">
+							<input type='button' id="btn" class='btn' value='File browse...' />
+							<input type="file" name="fileupload" class="file" id="fileField"
+								size="28"
+								onchange="document.getElementById('btn').value=this.value" /> <input
+								type='text' name='textfield' value="" id='textfield' class='txt' />
+							<input type="submit"
+								style="background-color: #006F97; border: none; color: #FFF; height: 24px; cursor: pointer"
+								value="Upload">
+						</div>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</form>
+</body>
+</html>

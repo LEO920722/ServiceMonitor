@@ -21,13 +21,13 @@ public class InsertRule extends HttpServlet {
 	}
 
 	/**
-	 * 上传文件的处理
+	 * 
 	 * 
 	 * @throws UnsupportedEncodingException
 	 */
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException {
-		Hashtable<String, String> ht = new Hashtable<String, String>();// 用来保存api数据
+		Hashtable<String, String> ht = new Hashtable<String, String>();// 用来保存Rul信息
 		String RULE_ID = request.getParameter("RULE_ID");
 		String RULE_NAME = request.getParameter("RULE_NAME");
 		String INTERFACE_NAME = request.getParameter("INTERFACE_NAME");
