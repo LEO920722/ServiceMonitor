@@ -70,8 +70,8 @@ table td {
 </script>
 <script>
 	var role = "user";
-	function jump(id){//页面跳转，传入参数 BUSINESS_ID 作为查询条件
-		window.location.href="SearchService.html?BUSINESS_ID="+id;
+	function jump(id) {//页面跳转，传入参数 BUSINESS_ID 作为查询条件
+		window.location.href = "SearchService.html?BUSINESS_ID=" + id;
 	}
 
 	init({//首次进入会用请求admin权限的servlet，  如果请求成功 就更改显示的样式
@@ -93,7 +93,7 @@ table td {
 			var str = url.substr(1);
 			strs = str.split("&");
 			for (var i = 0; i < strs.length; i++) {
-				theRequest[strs[i].split("=")[0]]= unescape(strs[i].split("=")[1]);
+				theRequest[strs[i].split("=")[0]] = unescape(strs[i].split("=")[1]);
 			}
 		}
 		return theRequest;
@@ -142,7 +142,7 @@ table td {
 		$("#barcon").show();
 
 	}
-	
+
 	jQuery.fn.shake = function(intShakes /*Amount of shakes*/,
 			intDistance /*Shake distance*/, intDuration /*Time duration*/) {
 		this.each(function() {
@@ -182,6 +182,16 @@ table td {
 				<td class="heading" colspan="13">Query Parameters</td>
 			</tr>
 			<tr>
+				<td class="oddrow" colspan="2">Business ID</td>
+				<td class="oddrow-l" colspan="5"><select id="SELECT_TYPE"
+					style="color: #006F97; width: 100%; height: 21px">
+						<option>=</option>
+						<option>LIKE</option>
+				</select></td>
+				<td class="oddrow-l" colspan="7"><input id="BUSINESS_ID"
+					name="description" size="58" value=""></td>
+			</tr>
+			<tr>
 				<td class="oddrow" colspan="2">Rule ID</td>
 				<td class="oddrow-l" colspan="5"><input id="RULE_ID"
 					name="description" size="40" value=""></td>
@@ -194,11 +204,12 @@ table td {
 				</select></td>
 			</tr>
 			<tr>
-				<td class="oddrow" colspan="2">Business ID</td>
-				<td class="oddrow-l" colspan="5"><input id="BUSINESS_ID"
+				<td class="oddrow" colspan="2">Business Type</td>
+				<td class="oddrow-l" colspan="5"><input id="BUSINESS_TYPE"
 					name="description" size="40" value=""></td>
-				<td class="oddrow" colspan="2"></td>
-				<td class="oddrow-l" colspan="5"></td>
+				<td class="oddrow" colspan="2">Reference ID</td>
+				<td class="oddrow-l" colspan="5"><input id="BUSINESS_TYPE"
+					name="description" size="40" value=""></td>
 			</tr>
 			<tr>
 				<td class="evenrow" colspan="2">From Date</td>
@@ -227,7 +238,7 @@ table td {
 				<td class="oddcol">Business Status</td>
 				<td class="oddcol">Last Update Time</td>
 				<td class="oddcol">Details</td>
-				
+
 			</tr>
 		</tbody>
 		<tbody id="container">
