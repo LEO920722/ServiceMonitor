@@ -104,28 +104,37 @@ table td {
 		var Request = GetRequest();
 		if (num == 1) {//用户点击了查询按钮
 			data1 = {
+				SELECT_TYPE : $("#SELECT_TYPE").val(),
 				BUSINESS_ID : $("#BUSINESS_ID").val(),
 				RULE_ID : $("#RULE_ID").val(),
 				BUSINESS_STATUS : $("#BUSINESS_STATUS").val(),
+				BUSINESS_TYPE : $("#BUSINESS_TYPE").val(),
+				REFERENCE_ID : $("#REFERENCE_ID").val(),
 				CREATE_TIME1 : $("#CREATE_TIME1").val(),
 				CREATE_TIME2 : $("#CREATE_TIME2").val(),
 			}
 		} else if (getQueryString("state") == "1" || num == 0) {//如果state是1则表示是上个页面传过来的,num=0是本页面加载就执行的
 			data1 = {//将上个页面的值赋值给data1
-				BUSINESS_ID : getQueryString("BUSINESS_ID"),
-				RULE_ID : getQueryString("RULE_ID"),
-				BUSINESS_STATUS : getQueryString("BUSINESS_STATUS"),
-				CREATE_TIME1 : getQueryString("CREATE_TIME1"),
-				CREATE_TIME2 : getQueryString("CREATE_TIME2"),
+					SELECT_TYPE : $("#SELECT_TYPE").val(),
+					BUSINESS_ID : $("#BUSINESS_ID").val(),
+					RULE_ID : $("#RULE_ID").val(),
+					BUSINESS_STATUS : $("#BUSINESS_STATUS").val(),
+					BUSINESS_TYPE : $("#BUSINESS_TYPE").val(),
+					REFERENCE_ID : $("#REFERENCE_ID").val(),
+					CREATE_TIME1 : $("#CREATE_TIME1").val(),
+					CREATE_TIME2 : $("#CREATE_TIME2").val(),
 			}
 		}
 
 		$("#container").html("");
 		var state = init({
 			data : {
+				SELECT_TYPE : $("#SELECT_TYPE").val(),
 				BUSINESS_ID : $("#BUSINESS_ID").val(),
 				RULE_ID : $("#RULE_ID").val(),
 				BUSINESS_STATUS : $("#BUSINESS_STATUS").val(),
+				BUSINESS_TYPE : $("#BUSINESS_TYPE").val(),
+				REFERENCE_ID : $("#REFERENCE_ID").val(),
 				CREATE_TIME1 : $("#CREATE_TIME1").val(),
 				CREATE_TIME2 : $("#CREATE_TIME2").val(),
 			},
@@ -168,6 +177,8 @@ table td {
 			<td >{BUSINESS_ID}</td>
 			<td >{RULE_ID}</td> 
 			<td >{BUSINESS_STATUS}</td>
+			<td >{BUSINESS_TYPE}</td>
+			<td >{REFERENCE_ID}</td>
 			<td >{LAST_CHANGETIME}</td>
 			<td ><button style="color:#006F97;font-size:10px" onclick="jump({BUSINESS_ID})">Query</button></td>
 		</tr>      
@@ -208,7 +219,7 @@ table td {
 				<td class="oddrow-l" colspan="5"><input id="BUSINESS_TYPE"
 					name="description" size="40" value=""></td>
 				<td class="oddrow" colspan="2">Reference ID</td>
-				<td class="oddrow-l" colspan="5"><input id="BUSINESS_TYPE"
+				<td class="oddrow-l" colspan="5"><input id="REFERENCE_ID"
 					name="description" size="40" value=""></td>
 			</tr>
 			<tr>
@@ -236,6 +247,8 @@ table td {
 				<td class="oddcol">Business ID</td>
 				<td class="oddcol">Rule ID</td>
 				<td class="oddcol">Business Status</td>
+				<td class="oddcol">Business Type</td>
+				<td class="oddcol">Reference ID</td>
 				<td class="oddcol">Last Update Time</td>
 				<td class="oddcol">Details</td>
 

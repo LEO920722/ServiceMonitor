@@ -40,15 +40,22 @@ public class QueryServiceTransaction extends HttpServlet {
 		response.setCharacterEncoding("UTF-8");
 		try {
 			Hashtable<String, String> ht = new Hashtable<String, String>();
+			String selectType = request.getParameter("SELECT_TYPE");
 			String businessId = request.getParameter("BUSINESS_ID");
 			String ruleId = request.getParameter("RULE_ID");
 			String businessStatus = request.getParameter("BUSINESS_STATUS");
+			String businessType = request.getParameter("BUSINESS_TYPE");
+			String referenceId = request.getParameter("REFERENCE_ID");
 			String createTime1 = request.getParameter("CREATE_TIME1");
 			String createTime2 = request.getParameter("CREATE_TIME2");
-
+			
 			if (businessId != "" && businessId != null
 					&& businessId.length() != 0) {
 				ht.put("BUSINESS_ID", businessId);
+				if (selectType != "" && selectType != null
+						&& selectType.length() != 0 && !selectType.equals("=")) {
+					ht.put("SELECT_TYPE", selectType);
+				}
 			}
 			if (ruleId != "" && ruleId != null && ruleId.length() != 0) {
 				ht.put("RULE_ID", ruleId);
@@ -63,6 +70,14 @@ public class QueryServiceTransaction extends HttpServlet {
 				} else if (businessStatus.equals("Success")) {
 					ht.put("BUSINESS_STATUS", "S");
 				}
+			}
+			if (businessType != "" && businessType != null
+					&& businessType.length() != 0) {
+				ht.put("BUSINESS_TYPE", businessType);
+			}
+			if (referenceId != "" && referenceId != null
+					&& referenceId.length() != 0) {
+				ht.put("REFERENCE_ID", referenceId);
 			}
 			response.getWriter().print(
 					"{\"rows\":"

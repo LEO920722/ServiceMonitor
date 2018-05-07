@@ -342,6 +342,11 @@ public class DBUtil {
 		case ("TRANSACTION_MONITOR"):{
 			columnStr = "BUSINESS_ID,RULE_ID,BUSINESS_STATUS,to_char(CREATE_TIMESTAMP,'yyyy-MM-dd HH24:mi:ss') as CREATE_TIME,to_char(MODIFIED_TIMESTAMP,'yyyy-MM-dd HH24:mi:ss') as LAST_CHANGETIME";
 			timeFieldName = "CREATE_TIMESTAMP";
+			if(ht.containsKey("SELECT_TYPE")){
+				String oldBuzId = "BUSINESS_ID='"+ht.get("BUSINESS_ID")+"'";
+				String newBuzId = "BUSINESS_ID LIKE '%"+ht.get("BUSINESS_ID")+"%'";
+				sql = sql.replace(oldBuzId, newBuzId).replace("and SELECT_TYPE='LIKE'", "");
+			}
 			break;
 		}
 		case ("SERVICE_MONITOR"): {
