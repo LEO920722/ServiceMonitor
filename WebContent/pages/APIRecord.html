@@ -70,7 +70,7 @@
 	$(document).ready(function(){
 		init({//首次进入会用请求admin权限的servlet，  如果请求成功 就更改显示的样式
 			data:{},
-			url:"/APIPlatform/JudgeRole?timestamp=" + new Date().getTime(),
+			url:"/ServiceMonitor/JudgeRole?timestamp=" + new Date().getTime(),
 			dataType:"json",
 			showType:"return",
 		    Deferred:false,
@@ -87,7 +87,7 @@
 
 	init({//去查询数据库有多少的type类型 然后好让用户选择
 		data:{},
-		url:"/APIPlatform/QueryTypes?timestamp=" + new Date().getTime(),
+		url:"/ServiceMonitor/QueryTypes?timestamp=" + new Date().getTime(),
 		dataType:"json",
 		showType:"model",
 		template_Name:"text/template1",
@@ -149,7 +149,7 @@
 					CREATE_TIME1:$("#CREATE_TIME1").val(),
 					CREATE_TIME2:$("#CREATE_TIME2").val(),
 			        },
-				url:"/APIPlatform/QueryApi?timestamp=" + new Date().getTime(),
+				url:"/ServiceMonitor/QueryApi?timestamp=" + new Date().getTime(),
 				dataType:"json",
 				showType:"model",
 				template_Name:"text/template",
@@ -173,7 +173,7 @@
 				data:{
 					ID:id,//上个页面传过来的API id
 				},
-				url:"/APIPlatform/DeleteApi?timestamp=" + new Date().getTime(),
+				url:"/ServiceMonitor/DeleteApi?timestamp=" + new Date().getTime(),
 				dataType:"json",
 				showType:"return",
 			    Deferred:false,

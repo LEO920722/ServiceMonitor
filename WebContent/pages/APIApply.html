@@ -27,7 +27,7 @@
 	}
 	init({
 		data:{},
-		url:"/APIPlatform/QueryTypes?timestamp=" + new Date().getTime(),
+		url:"/ServiceMonitor/QueryTypes?timestamp=" + new Date().getTime(),
 		dataType:"json",
 		showType:"model",
 		template_Name:"text/template1",
@@ -55,7 +55,7 @@
       <div style="color:#007aa3;font-size:10px;font-family:Arial Unicode MS;"  onClick="window.history.back();">
        <font id="return">&nbsp;Return to API View</font>
    </div>
-  <form action="/APIPlatform/CreateAPI" method="post" enctype="multipart/form-data"onsubmit="return check()">
+  <form action="/ServiceMonitor/CreateAPI" method="post" enctype="multipart/form-data"onsubmit="return check()">
        <table class="tableView">
         <tbody><tr><td class="heading" colspan="17">API Information(Enter the Parameter to change the API properties, some  optional)</td></tr>
         <tr>

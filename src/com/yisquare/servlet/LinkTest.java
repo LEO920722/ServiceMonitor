@@ -53,12 +53,6 @@ public class LinkTest extends HttpServlet {
 				String [] array = ipStr.split("-");
 				new DBConf().getConnection(array[0], array[1], array[2], array[3], array[4]);
 				PropertiesUtil.setDBInfo(ipStr);//注意这里ip是所有信息拼接起来的
-				
-				
-				
-				
-				
-				
 				writer.print("2");//连接成功
 			} catch (Exception e) {//连接数据库失败，前端表示为
 				// TODO: handle exception

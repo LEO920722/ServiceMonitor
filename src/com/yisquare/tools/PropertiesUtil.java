@@ -9,10 +9,12 @@ import java.io.FileInputStream;
 import java.io.FileWriter;
 
 import org.apache.log4j.Logger;
+
+import com.yisquare.servlet.DeleteApi;
 import com.yisquare.servlet.Log4jListener;
 
 public class PropertiesUtil {
-	private static Logger logger = Logger.getLogger(PropertiesUtil.class);
+	private static Logger logger = Logger.getLogger(DeleteApi.class);
 	static String path = Log4jListener.path;
 	public static String getDBInfo() throws IOException{
 		 logger.warn("读取的路径是："+path);

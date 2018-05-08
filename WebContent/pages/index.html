@@ -59,7 +59,7 @@
     		init({//首次进入会审查 db是否已经做过配置
 				data:{
 				},
-				url:"/APIPlatform/LinkTest?timestamp=" + new Date().getTime(),
+				url:"/ServiceMonitor/LinkTest?timestamp=" + new Date().getTime(),
 				dataType:"json",
 				showType:"return",
 			    Deferred:false,
@@ -84,7 +84,7 @@
 			data:{
 				IP:IPStr
 			},
-			url:"/APIPlatform/LinkTest?timestamp=" + new Date().getTime(),
+			url:"/ServiceMonitor/LinkTest?timestamp=" + new Date().getTime(),
 			dataType:"json",
 			showType:"return",
 		    Deferred:false,
@@ -92,6 +92,7 @@
 		    	if(dta == 1){//表示配置错误
 		    		$( ".but").shake(2, 5, 400);
 		    		document.getElementById('load').style.display='none';
+		    		alert("failed");
 		    	}
 		    	else{//配置成功
 		    		 document.getElementById('light').style.display='none';
@@ -134,7 +135,7 @@
 	        //十秒后显示第二个按钮
 			 init({//首次进入会用请求admin权限的servlet，  如果请求成功 就更改显示的样式
 					data:{},
-					url:"/APIPlatform/JudgeRole?timestamp=" + new Date().getTime(),
+					url:"/ServiceMonitor/JudgeRole?timestamp=" + new Date().getTime(),
 					dataType:"json",
 					showType:"return",
 				    Deferred:false,

@@ -58,7 +58,7 @@ table td {
 <script>
 	init({//请求admin权限的servlet，  如果请求成功 就更改显示的样式
 		data:{},
-		url:"/APIPlatform/JudgeRole?timestamp=" + new Date().getTime(),
+		url:"/ServiceMonitor/JudgeRole?timestamp=" + new Date().getTime(),
 		dataType:"json",
 		showType:"return",
 	    Deferred:false,
@@ -72,7 +72,7 @@ table td {
 	}
 	init({
 		data:{},
-		url:"/APIPlatform/QueryTypes?timestamp=" + new Date().getTime(),
+		url:"/ServiceMonitor/QueryTypes?timestamp=" + new Date().getTime(),
 		dataType:"json",
 		showType:"model",
 		template_Name:"text/template1",
@@ -87,7 +87,7 @@ table td {
 				data:{
 					ID:getQueryString("FILE_ID"),//上个页面传过来的FILE_ID 在file表中用‘API_ID’代替 这也是唯一的
 				},
-				url:"/APIPlatform/QueryFiles?timestamp=" + new Date().getTime(),
+				url:"/ServiceMonitor/QueryFiles?timestamp=" + new Date().getTime(),
 				dataType:"json",
 				showType:"model",
 				template_Name:"text/template",
@@ -100,7 +100,7 @@ table td {
 			data:{
 				ID:getQueryString("API_ID"),//上个页面传过来的API id 
 			},
-			url:"/APIPlatform/QueryApi?timestamp=" + new Date().getTime(),
+			url:"/ServiceMonitor/QueryApi?timestamp=" + new Date().getTime(),
 			dataType:"json",
 			showType:"return",
 		    Deferred:false,
@@ -147,7 +147,7 @@ table td {
 					PROJECT_NAME:$("#PROJECT_NAME").val(),
 					MESSAGE:$("#MESSAGE").val(),
 				},
-				url:"/APIPlatform/UpdateApi?timestamp=" + new Date().getTime(),
+				url:"/ServiceMonitor/UpdateApi?timestamp=" + new Date().getTime(),
 				dataType:"json",
 				showType:"return",
 			    Deferred:false,
@@ -277,7 +277,7 @@ table td {
 		<tbody id="container">
 		</tbody>
 	</table>
-	<form style="display: none" id="sub" action="/APIPlatform/AddNewFiles"
+	<form style="display: none" id="sub" action="/ServiceMonitor/AddNewFiles"
 		method="post" enctype="multipart/form-data">
 		<table width="100%">
 			<tbody>
