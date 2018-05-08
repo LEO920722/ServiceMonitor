@@ -1,0 +1,395 @@
+
+<!-- saved from url=(0047)http://localhost:5555/WmRoot/stats-services.dsp -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="-1">
+    <title>IS Service Statistics</title>
+    <link rel="stylesheet" type="text/css" href="../css/webMethods.css">
+    <!--<META http-equiv="refresh" content="90">-->
+    <style>
+    table td{word-break: keep-all;white-space:nowrap;text-align:center;}
+     .barcon {  
+        margin: 0 auto;  
+        text-align: center;  
+     }  
+  
+    .barcon1 {  
+        font-size: 10px;  
+        float: left;  
+        margin-top: 20px;  
+    }  
+  
+    .barcon2 {  
+        float: right;  
+    }  
+  
+    .barcon2 ul {  
+        margin: 20px 0;  
+        padding-left: 0;  
+        list-style: none;  
+        text-align: center;  
+    }  
+  
+    .barcon2 li {  
+        display: inline;  
+        margin: 2px;
+        padding:2px;
+    }  
+  
+    .barcon2 a {  
+        text-decoration:none;
+        font-size: 10px;  
+        font-weight: normal;  
+        display: inline-block;  
+         padding:2px;
+        color:#006F97 ;
+        border: 1px solid #ddd;  
+        background-color: #fff;  
+    }  
+  
+    .barcon2 a:hover{  
+        background-color: #eee; 
+        
+    }  
+    #showCreate{
+    	display:none;
+    	
+    }
+    #applyID:hover{
+	    cursor:pointer;
+	    text-decoration:underline;
+    }
+   </style>
+    <script src="../txt/webMethods.js.txt"></script>
+    <script src="../js/init.js"></script>
+    <script src="../js/jquery.1.7.2.min.js"></script>
+    <script type="text/javascript" src="MyCustomDatePicker/Calendar.js"> </script>
+	<script>
+	var role = "user";
+	
+	$(document).ready(function(){
+		init({//首次进入会用请求admin权限的servlet，  如果请求成功 就更改显示的样式
+			data:{},
+			url:"/APIPlatform/JudgeRole?timestamp=" + new Date().getTime(),
+			dataType:"json",
+			showType:"return",
+		    Deferred:false,
+		    Callback:function(dta){
+		    	document.getElementById("applyID").style.display='block';
+		    	role = "admin"
+			}
+		})
+		});
+	function jump(){
+		window.location.href='APIApply.html'
+	}
+	
+
+	init({//去查询数据库有多少的type类型 然后好让用户选择
+		data:{},
+		url:"/APIPlatform/QueryTypes?timestamp=" + new Date().getTime(),
+		dataType:"json",
+		showType:"model",
+		template_Name:"text/template1",
+		fillType:"append",
+		container:"TYPE_ID",
+	    Deferred:false,
+	})
+	//function gradeChange(){//当type按钮点击的时候将其中的值放在其中
+//		$("#light").show()
+	
+	//    $("#TYPE_ID").val($("#selectID").val())
+	    
+	//}
+		function getAPIByParam(num){
+		var data1;
+		if(num==1){//用户点击了查询按钮
+			data1 = {
+					ID:$("#ID").val(),
+					CREATOR:$("#CREATOR").val(),
+					LEADER:$("#LEADER").val(),
+					NAME:$("#NAME").val(),
+					PROJECT_NAME:$("#PROJECT_NAME").val(),
+					KEYWORD:$("#KEYWORD").val(),
+					TYPE_ID:$("#TYPE_ID").val(),
+					BELONG_SYSTEM:$("#BELONG_SYSTEM").val(),
+					CREATE_TIME1:$("#CREATE_TIME1").val(),
+					CREATE_TIME2:$("#CREATE_TIME2").val(),
+			        }
+		}else if(getQueryString("state")=="1"||num==0){//如果state是1则表示是上个页面传过来的,num=0是本页面加载就执行的
+			data1 = {//将上个页面的值赋值给data1
+					ID:getQueryString("ID"),
+					CREATOR:getQueryString("CREATOR"),
+					LEADER:getQueryString("LEADER"),
+					NAME:getQueryString("NAME"),
+					PROJECT_NAME:getQueryString("PROJECT_NAME"),
+					KEYWORD:getQueryString("KEYWORD"),
+					TYPE_ID:getQueryString("TYPE_ID"),
+					BELONG_SYSTEM:getQueryString("BELONG_SYSTEM"),
+					CREATE_TIME1:getQueryString("CREATE_TIME1"),
+					CREATE_TIME2:getQueryString("CREATE_TIME2"),
+		            }
+		}
+			
+			 if(isNaN($("#ID").val())){
+				 alert("API ID should be number")
+			     return;
+			 }
+			$("#container").html("");
+		    var state = init({
+				data: {
+					ID:$("#ID").val(),
+					CREATOR:$("#CREATOR").val(),
+					LEADER:$("#LEADER").val(),
+					NAME:$("#NAME").val(),
+					PROJECT_NAME:$("#PROJECT_NAME").val(),
+					KEYWORD:$("#KEYWORD").val(),
+					TYPE_ID:$("#TYPE_ID").val(),
+					BELONG_SYSTEM:$("#BELONG_SYSTEM").val(),
+					CREATE_TIME1:$("#CREATE_TIME1").val(),
+					CREATE_TIME2:$("#CREATE_TIME2").val(),
+			        },
+				url:"/APIPlatform/QueryApi?timestamp=" + new Date().getTime(),
+				dataType:"json",
+				showType:"model",
+				template_Name:"text/template",
+				fillType:"append",
+				container:"container",
+			    Deferred:true,
+			})
+			goPage(1,10)
+			$("#barcon").show();
+			
+		}
+		function deleteAPI(id){
+			if(role!="admin"){
+				 $( "#del"+id ).shake(2, 5, 400);
+				return false;
+			}
+			if (!confirm("Are you sure to delete ?")){
+				return false;
+				} 
+			init({//根据api的id 获取该ip的信息
+				data:{
+					ID:id,//上个页面传过来的API id
+				},
+				url:"/APIPlatform/DeleteApi?timestamp=" + new Date().getTime(),
+				dataType:"json",
+				showType:"return",
+			    Deferred:false,
+			    Callback:function(dta){
+			    	 if (dta.rows.errorcode!=0) {//数据库没有数据 说明没有被爬取
+			    		 getAPIByParam();
+			    	} 
+				    else{
+				    		alert("delete faild, plese search the log!")
+				    }
+				}
+			})
+		}
+		jQuery.fn.shake = function (intShakes /*Amount of shakes*/, intDistance /*Shake distance*/, intDuration /*Time duration*/) {
+		    this.each(function () {
+		        var jqNode = $(this);
+		        jqNode.css({ position: 'relative' });
+		        for (var x = 1; x <= intShakes; x++) {
+		            jqNode.animate({ left: (intDistance * -1) }, (((intDuration / intShakes) / 4)))
+		            .animate({ left: intDistance }, ((intDuration / intShakes) / 2))
+		            .animate({ left: 0 }, (((intDuration / intShakes) / 4)));
+		        }
+		    });
+		    return this;
+		}
+	</script>
+		<script type="text/template">
+           <tr >
+           	<td >{ID}</td>
+	        <td ><a  href="APIDetail.html?API_ID={ID}&FILE_ID={FILE_ID}"><font color="#006F97">{NAME}</font></a></td>
+	        <td >{LEADER}</td>
+	        <td >{TYPE_ID}</td> 
+	        <td >{BELONG_SYSTEM}</td>
+	        <td >{PROJECT_NAME}</td>
+	        <td >{CREATE_TIME}</td>
+	        <td >{LAST_CHANGETIME}</td>
+            <td >Admin</td>
+            <td  style="text-algin:center;cursor:pointer"><img id="del{ID}" onclick="deleteAPI({ID})" width="20px" src="../img/delete.png"></td>
+        </tr>      
+  
+ 		</script>
+ 		
+ 		<script type="text/template1">
+           <option>{TYPE_ID}</option>       
+ 		</script>
+  </head>
+  
+  <body onload="getAPIByParam(0)">
+  <div style="color:#007aa3;font-size:10px;font-family:Arial Unicode MS;"  onclick="jump()">
+       <font id="applyID" style="display:none;">&nbsp;Create New API</font>
+   </div>
+       <table class="tableView">
+        <tbody><tr><td class="heading" colspan="13">Query Parameters</td></tr>
+        <tr>
+          <td class="oddrow" colspan="2">API ID</td>
+          <td class="oddrow-l" colspan="5"><input id="ID" name="description"  size="40" value=""></td>
+            <td class="oddrow" colspan="2">Owner</td>
+          <td class="oddrow-l" colspan="5"><input id="LEADER" name="description" size="40" value=""></td>
+        </tr>
+         <tr>
+          <td class="oddrow" colspan="2">API Name</td>
+          <td class="oddrow-l" colspan="5"><input id="NAME" name="description"  size="40" value=""></td>
+          <td class="oddrow" colspan="2">Project</td>
+          <td class="oddrow-l" colspan="5"><input id="PROJECT_NAME" name="description" size="40" value=""></td>
+        </tr>
+         <tr>
+          <td class="oddrow" colspan="2">Type</td>
+          <td class="oddrow-l" colspan="5">
+          <select id="TYPE_ID"onchange="gradeChange()" style="color:#006F97;width:100%;height:21px">
+                                 <option value="" style="color: #b6b6b6"></option>
+		 </select>
+		 <td class="oddrow" colspan="2">System</td>
+          <td class="oddrow-l" colspan="5"><select Style="color:#006F97;width:100%;height:21px" id="BELONG_SYSTEM"name="BELONG_SYSTEM">
+                 <option ></option>
+                 <option>Linux</option>
+                 <option >Windows</option>
+                 <option>Unix</option>
+                 <option>Mac OS</option>
+		  </select> 
+		  </td>
+        </tr>
+        <tr>
+          <td class="evenrow" colspan="2" >From Date</td>
+          <td class="evenrow-l" colspan="5"><input size="40"id="CREATE_TIME1" onclick="fPopCalendar(event,this,this)" readonly="readonly">
+          <td class="oddrow" colspan="2">To Date</td>
+          <td class="oddrow-l" colspan="5"><input size="40" id="CREATE_TIME2" onclick="fPopCalendar(event,this,this)" readonly="readonly">
+          <td><button style="color:#006F97;font-size:10px" onclick="getAPIByParam(1)">Query</button></td>
+        </tr>
+</table>
+      <br>
+     <table width="100%">
+         <tbody ><!-- <tr>
+            <td class="breadcrumb" colspan="28">Query &gt; Query Results</td>
+         </tr> -->
+ 		</tbody>
+ 		</table>
+                  <table class="tableView" width="100%" id="servicecon">
+                     <tbody >
+                     	<tr><td class="heading" colspan="11">Query Results(<font id="barcon3"></font>)</td></tr>
+                     	<tr class="subheading2">
+                            <td >API ID</td>
+	                        <td class="oddcol">Name</td>
+	                        <td class="oddcol">Owner</td>
+	                        <td class="oddcol" nowrap="">Belong Type</td>
+	                        <td class="oddcol">System</td>
+	                        <td class="oddcol">Project Name</td>
+	                        <td class="oddcol">Create Time</td>
+	                        <td class="oddcol">Last Change Time</td>
+	                        <td class="oddcol">Creator</td>
+	                       <td>Delete</td>
+                     	</tr>
+         			</tbody>
+         			<tbody id ="container">	</tbody>
+					
+               </table>
+               	<div id="barcon" style="display:none;width:100%" class="barcon" >  
+								<div id="barcon2" class="barcon2">  
+									<ul>  
+										<li><a href="###" id="firstPage">First</a></li>  
+										<li><a href="###" id="prePage">< Back</a></li>  
+										<li><a href="###" id="nextPage">Next ></a></li>  
+										<li><a href="###" id="lastPage">Last</a></li>  
+										<li><select id="jumpWhere"></select></li>
+										<li><a href="###" id="jumpPage" onclick="jumpPage()">Go</a></li>
+									</ul>  
+								</div>  
+						</div> 
+           </body></html>
+           
+<script>
+/**
+ * 分页函数
+ * pno--页数
+ * psize--每页显示记录数
+ * 分页部分是从真实数据行开始，因而存在加减某个常数，以确定真正的记录数
+ * 纯js分页实质是数据行全部加载，通过是否显示属性完成分页功能
+**/
+
+var pageSize=10;//每页显示行数
+var currentPage_=1;//当前页全局变量，用于跳转时判断是否在相同页，在就不跳，否则跳转。
+var totalPage;//总页数
+function goPage(pno,psize){
+    var itable = document.getElementById("container");
+    var num = itable.rows.length;//表格所有行数(所有记录数)
+     pageSize = psize;//每页显示行数
+    //总共分几页 
+    if(num/pageSize > parseInt(num/pageSize)){   
+            totalPage=parseInt(num/pageSize)+1;   
+       }else{   
+           totalPage=parseInt(num/pageSize);   
+       }   
+    var currentPage = pno;//当前页数
+	currentPage_=currentPage;
+    var startRow = (currentPage - 1) * pageSize+1; 
+    var endRow = currentPage * pageSize;
+        endRow = (endRow > num)? num : endRow;    
+    //遍历显示数据实现分页
+    /*for(var i=1;i<(num+1);i++){    
+        var irow = itable.rows[i-1];
+        if(i>=startRow && i<=endRow){
+            irow.style.display = "";    
+        }else{
+            irow.style.display = "none";
+        }
+    }*/
+
+	$("#container tr").hide();
+	for(var i=startRow-1;i<endRow;i++)
+	{
+		$("#container tr").eq(i).show();
+	}
+    //var tempStr = "Total"+num+" record, Ivided "+totalPage+" page(s). The current page is page "+currentPage+".";
+    var tempStr = num
+	document.getElementById("barcon3").innerHTML = tempStr;
+    if(currentPage>1){
+		$("#firstPage").on("click",function(){
+			goPage(1,psize);
+		}).removeClass("ban");
+		$("#prePage").on("click",function(){
+			goPage(currentPage-1,psize);
+		}).removeClass("ban");   
+    }else{
+		$("#firstPage").off("click").addClass("ban");
+		$("#prePage").off("click").addClass("ban");  
+    }
+
+    if(currentPage<totalPage){
+		$("#nextPage").on("click",function(){
+			goPage(currentPage+1,psize);
+		}).removeClass("ban")
+		$("#lastPage").on("click",function(){
+			goPage(totalPage,psize);
+		}).removeClass("ban")
+    }else{
+		$("#nextPage").off("click").addClass("ban");
+		$("#lastPage").off("click").addClass("ban");
+    }   
+	
+	var tempOption="";  
+    for(var i=1;i<=totalPage;i++)  
+    {
+        tempOption+='<option value='+i+'>'+i+'</option>'  
+    }
+    $("#jumpWhere").html(tempOption); 
+	
+	
+	$("#jumpWhere").val(currentPage);
+}
+
+
+function jumpPage()
+{
+	var num=parseInt($("#jumpWhere").val());
+	if(num!=currentPage_)
+	{
+		goPage(num,pageSize);
+	}
+}
+</script>	

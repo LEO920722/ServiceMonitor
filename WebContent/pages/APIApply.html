@@ -1,0 +1,109 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="-1">
+    <title>IS Service Statistics</title>
+    <link rel="stylesheet" type="text/css" href="../css/webMethods.css">
+    <!--<META http-equiv="refresh" content="90">-->
+    <style>
+    table td{word-break: keep-all;white-space:nowrap;}
+    .file-box{ position:relative;width:340px}
+    .txt{ height:22px; border:1px solid #cdcdcd; width:180px;}
+    .file{ position:absolute; top:0; right:80px; height:24px; filter:alpha(opacity:0);opacity: 0;width:260px }
+    #selectID:visit{border:none;}
+    #return:hover{
+    	cursor:pointer;text-decoration:underline
+    }
+    </style>
+    <script src="../txt/webMethods.js.txt"></script>
+    <script src="../js/init.js"></script>
+    <script src="../js/jquery.1.7.2.min.js"></script>
+    <script type="text/javascript" src="MyCustomDatePicker/Calendar.js"> </script>
+    <script>
+    if(getQueryString("state")==0){
+    	alert("Create failed, please check your input do not enter '\ character.");
+    }
+	function gradeChange(){//当type按钮点击的时候将其中的值放在其中
+	    $("#TYPE_ID").val($("#selectID").val())
+	}
+	init({
+		data:{},
+		url:"/APIPlatform/QueryTypes?timestamp=" + new Date().getTime(),
+		dataType:"json",
+		showType:"model",
+		template_Name:"text/template1",
+		fillType:"append",
+		container:"selectID",
+	    Deferred:false,
+	})
+	function check(){
+		var nameValue=window.document.getElementById("NAME").value;  
+        if (nameValue == "") // 或者是!nameValue  
+        {  
+            window.alert("API name cannot be empty!");  
+            return false;  
+        }  
+		$("#btn").val("creating...")
+        return true;  
+	}
+	
+    </script>
+    <script type="text/template1">
+       <option>{TYPE_ID}</option>       
+ 	</script>
+  </head>
+  <body >
+      <div style="color:#007aa3;font-size:10px;font-family:Arial Unicode MS;"  onClick="window.history.back();">
+       <font id="return">&nbsp;Return to API View</font>
+   </div>
+  <form action="/APIPlatform/CreateAPI" method="post" enctype="multipart/form-data"onsubmit="return check()">
+       <table class="tableView">
+        <tbody><tr><td class="heading" colspan="17">API Information(Enter the Parameter to change the API properties, some  optional)</td></tr>
+        <tr>
+          <td class="oddrow" colspan="2"style="font-weight:bold;color:#006F97">API Name</td>
+          <td class="oddrow-l" colspan="15"><input id="NAME" name="NAME" style="width:250px;" placeholder="eg:com.yisquare.com.apiAdapter"></td>
+        </tr>
+        <tr>
+          <td class="oddrow" colspan="2"style="font-weight:bold;color:#006F97">Project Name</td>
+          <td class="oddrow-l" colspan="15"><input id="ID" name="PROJECT_NAME" style="width:250px;" placeholder="eg:Kerry"></td>
+        </tr>
+        <tr>
+          <td class="oddrow" colspan="2"style="font-weight:bold;color:#006F97">Owner</td>
+          <td class="oddrow-l" colspan="15"><input id="LEADER" name="LEADER" style="width:250px;"  placeholder="eg:Marry"></td>
+        </tr>
+        <tr>
+          <td class="oddrow" colspan="2"style="font-weight:bold;color:#006F97">System</td>
+          <td class="oddrow-l" colspan="10"><select Style="width:250px;height:21px" id="BELONG_SYSTEM"name="BELONG_SYSTEM">
+                 <option ></option>
+                 <option>Linux</option>
+                 <option >Windows</option>
+                 <option>Unix</option>
+                 <option>Mac OS</option>
+		  </select>
+		  </td>
+        </tr>
+        
+        <tr>
+          <td class="evenrow" colspan="2" style="font-weight:bold;color:#006F97">API Type</td>
+          <td class="oddrow-l" colspan="10"><input id="TYPE_ID" name="TYPE_ID" style="width:150px;"  value="" >
+          <select id="selectID"onchange="gradeChange()" style="color:#006F97;width:95px;height:21px"placeholder="choose">
+                 <option value="1" style="color: #b6b6b6" disabled selected>Select Type</option>
+		  </select> 
+        </tr>
+        <tr>
+          <td class="oddrow" colspan="2"style="font-weight:bold;color:#006F97">Description</td>
+          <td class="oddrow-l" colspan="15"><textarea placeholder="note: enter your remarks or comments"  style=" width:100%;"rows="4" id="MESSAGE"name="MESSAGE"></textarea></td>
+        </tr>
+        <tr>
+          <td class="oddrow" colspan="2"style="font-weight:bold;color:#006F97">API Attachments</td>
+          <td class="oddrow-l" colspan="5">
+          <div class="file-box">
+ 		  <input type='text' name='textfield'style="width:250px;color:#b6b6b6;font-family:arial"placeholder="Browse..." id='textfield' class='txt' />  
+ 		  <input type='button' style="display:none" class='btn' value='browse...' />
+          <input type="file" name="fileupload" class="file" id="fileField"  size="28" onchange="document.getElementById('textfield').value=this.value" />
+		</div>
+          </td>
+          <td><input type="submit" id="btn"style="background-color:#006F97;border:none;color:#FFF;height:20px;cursor:pointer"value="Create"></td>
+        </tr>
+	 </table>
+</form>
+           </body></html>
