@@ -119,7 +119,7 @@
                  <url-pattern>/JudgeRole</url-pattern>
          </web-resource-collection>
             <auth-constraint>
-                  <role-name>APIRole</role-name>
+                  <role-name>MonitorRole</role-name>
             </auth-constraint>
             <user-data-constraint>
                 <transport-guarantee>NONE</transport-guarantee>
