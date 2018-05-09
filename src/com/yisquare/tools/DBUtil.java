@@ -178,8 +178,10 @@ public class DBUtil {
 				midle_sql += key + "='" + value + "' , ";
 			}
 		}
+		after_sql += " ID = '" + id + "'";//Change into harcode id = ?
 		midle_sql = midle_sql.substring(0, midle_sql.length() - 3);
 		sql = before_sql + midle_sql + after_sql;
+		System.out.println(sql);
 		logger.warn("Update sql is--->>" + sql);//
 		System.out.println("Update sql is--->>" + sql);
 		try {

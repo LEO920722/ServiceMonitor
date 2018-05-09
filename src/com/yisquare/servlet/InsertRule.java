@@ -35,12 +35,39 @@ public class InsertRule extends HttpServlet {
 		String CONTENT_LOGGING = request.getParameter("CONTENT_LOGGING");
 		String ACTIVE_FLAG = request.getParameter("ACTIVE_FLAG");
 		try {// 将 Rule 信息写入数据库
-			ht.put("RULE_ID", RULE_ID);
-			ht.put("RULE_NAME", RULE_NAME);
-			ht.put("INTERFACE_NAME", INTERFACE_NAME);
-			ht.put("SERVICE_NAME", SERVICE_NAME);
-			ht.put("CONTENT_LOGGING", CONTENT_LOGGING);
-			ht.put("ACTIVE_FLAG", ACTIVE_FLAG);
+			if (RULE_ID != "" && RULE_ID != null && RULE_ID.length() != 0) {
+				ht.put("RULE_ID", RULE_ID);
+				if (RULE_NAME != "" && RULE_NAME != null
+						&& RULE_NAME.length() != 0) {
+					ht.put("RULE_NAME", RULE_NAME);
+				}
+				if (INTERFACE_NAME != "" && INTERFACE_NAME != null
+						&& INTERFACE_NAME.length() != 0) {
+					ht.put("INTERFACE_NAME", INTERFACE_NAME);
+				}
+				if (SERVICE_NAME != "" && SERVICE_NAME != null
+						&& SERVICE_NAME.length() != 0) {
+					ht.put("SERVICE_NAME", SERVICE_NAME);
+				}
+				if (CONTENT_LOGGING != "" && CONTENT_LOGGING != null
+						&& CONTENT_LOGGING.length() != 0) {
+					ht.put("CONTENT_LOGGING", CONTENT_LOGGING);
+				}
+				if (ACTIVE_FLAG != "" && ACTIVE_FLAG != null
+						&& ACTIVE_FLAG.length() != 0) {
+					ht.put("ACTIVE_FLAG", ACTIVE_FLAG);
+				}
+				String selectSQL = "SELECT ID FROM MONITOR_CONFIG WHERE RULE_ID = '"
+						+ RULE_ID + "'";
+				String ID = DBUtil.select(selectSQL);
+				if (ID != "" && ID != null && ID.length() != 0) {
+					ID = ID.replace("[{","").replace("}]", "").replace("\"ID\":", "");
+					DBUtil.update(ht, "MONITOR_CONFIG", ID);
+				} else {
+					DBUtil.insert(ht, "MONITOR_CONFIG");
+				}
+			}
+
 			DBUtil.insert(ht, "MONITOR_CONFIG");
 		} catch (Exception e) {
 			logger.warn("Insert new Rule", e);

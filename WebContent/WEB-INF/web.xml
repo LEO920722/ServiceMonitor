@@ -112,6 +112,16 @@
     <servlet-name>InsertScheBatch</servlet-name>
     <url-pattern>/InsertScheBatch</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>UpdateRule</display-name>
+    <servlet-name>UpdateRule</servlet-name>
+    <servlet-class>com.yisquare.servlet.UpdateRule</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>UpdateRule</servlet-name>
+    <url-pattern>/UpdateRule</url-pattern>
+  </servlet-mapping>
   <security-constraint>
              <display-name>SecurityConstraint</display-name>
          <web-resource-collection>

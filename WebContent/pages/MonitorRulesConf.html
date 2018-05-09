@@ -81,7 +81,7 @@ table td {
 		//   alert("Log ID should be number")
 		//   return;
 		// }
-		$("#container").html("");
+		$("#container").html("")
 		var state = init({
 			//  data:{
 			//   NAME:$("#Name").val(),
@@ -128,6 +128,7 @@ table td {
 		 $("#barcon").show(); */
 		getAllRule();
 	}
+
 </script>
 
 
@@ -137,17 +138,8 @@ table td {
 <td>{RULE_NAME}</td>
 <td>{INTERFACE_NAME}</td>
 <td>{SERVICE_NAME}</td>
-<td><select style="color: #006F97; width: 100%; height: 21px">
-		<option>{CONTENT_LOGGING}</option>
-		<option>Y</option>
-		<option>N</option>
-	</select></td></td>
-<td><select style="color: #006F97; width: 100%; height: 21px">
-		<option>{ACTIVE_FLAG}</option>
-		<option>Y</option>
-		<option>N</option>
-	</select></td></td>
-<td ><button style="color:#006F97;font-size:10px" onclick="update({CONTENT_LOGGING},{ACTIVE_FLAG})">Update</button></td>
+<td>{CONTENT_LOGGING}</td>
+<td>{ACTIVE_FLAG}</td>
 </tr> 
 </script>
 </head>
@@ -186,6 +178,7 @@ table td {
 						<option></option>
 						<option>Y</option>
 						<option>N</option>
+						<option>E</option>
 				</select></td>
 				<td class="oddrow" colspan="2">Active Flag</td>
 				<td class="oddrow-l" colspan="5"><select id="ACTIVE_FLAG"
@@ -195,7 +188,7 @@ table td {
 						<option>N</option>
 				</select></td>
 				<td><button style="color: #006F97; font-size: 10px"
-						onclick="insertRule()">Insert</button></td>
+						onclick="insertRule()">Insert Or Update</button></td>
 			</tr>
 	</table>
 	<br>
@@ -214,7 +207,6 @@ table td {
 				<td class="oddcol" nowrap="">Service Name</td>
 				<td class="oddcol" nowrap="">Content Logging</td>
 				<td class="oddcol" nowrap="">Active Flag</td>
-				<td class="oddcol" nowrap="">Update</td>
 			</tr>
 		</tbody>
 		<tbody id="container">
