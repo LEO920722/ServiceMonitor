@@ -82,6 +82,10 @@ table td {
 			role = "admin"
 		}
 	})
+	
+	function jump(num){
+		alert("This is content:"+num);
+	}
 
 	function GetRequest() {
 		var url = location.search;
@@ -173,6 +177,7 @@ table td {
 			<td >{SERVICENAME}</td>
 			<td >{SERVICE_STATUS}</td>
 			<td >{ERRORMESSAGE}</td>
+			<td ><button style="color:#006F97;font-size:10px" onclick="jump({ID})">Query Content</button></td>
 			<td >{LAST_CHANGETIME}</td>
 		</tr>      
 
@@ -247,6 +252,7 @@ table td {
 				<td class="oddcol" nowrap="">Service Name</td>
 				<td class="oddcol">Service Status</td>
 				<td class="oddcol">Error Message</td>
+				<td class="oddcol">Content</td>
 				<td class="oddcol">Last Update Time</td>
 			</tr>
 		</tbody>
