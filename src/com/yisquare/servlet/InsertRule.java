@@ -32,12 +32,15 @@ public class InsertRule extends HttpServlet {
 		String RULE_ID = request.getParameter("RULE_ID");
 		String RULE_NAME = request.getParameter("RULE_NAME");
 		String INTERFACE_NAME = request.getParameter("INTERFACE_NAME");
-		String SERVICE_NAME = request.getParameter("SERVICE_NAME"); 
+		String SERVICE_NAME = request.getParameter("SERVICE_NAME");
 		String CONTENT_LOGGING = request.getParameter("CONTENT_LOGGING");
 		String ACTIVE_FLAG = request.getParameter("ACTIVE_FLAG");
-		
-		SERVICE_NAME = SERVICE_NAME.replace("=", ":");//Replace "=" with "=" due to init.js has replaced this two char 
-		
+
+		SERVICE_NAME = SERVICE_NAME.replace("=", ":");// Replace "=" with "="
+														// due to init.js has
+														// replaced this two
+														// char
+
 		try {// 将 Rule 信息写入数据库
 			if (RULE_ID != "" && RULE_ID != null && RULE_ID.length() != 0) {
 				ht.put("RULE_ID", RULE_ID);
@@ -64,13 +67,13 @@ public class InsertRule extends HttpServlet {
 				String selectSQL = "SELECT ID FROM MONITOR_CONFIG WHERE RULE_ID = '"
 						+ RULE_ID + "'";
 				String ID = DBUtil.select(selectSQL);
-				if (ID != "" && ID != null && ID.length() != 0) {
+				if (!ID.equals("[]") && ID != null && ID.length() != 0) {
 					ID = ID.replace("[{", "").replace("}]", "")
 							.replace("\"ID\":", "");
 					DBUtil.update(ht, "MONITOR_CONFIG", ID);
 				} else {
 					DBUtil.insert(ht, "MONITOR_CONFIG");
-				} 
+				}
 			}
 		} catch (Exception e) {
 			logger.warn("Insert new Rule", e);
