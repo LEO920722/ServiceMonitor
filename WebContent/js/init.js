@@ -1,31 +1,31 @@
 
-var result;// 返回结果
+var result;// 杩斿洖缁撴灉
 /**
  * 
  */
 
 /**
- * 初始化入口
+ * 鍒濆鍖栧叆鍙�
  * 
  * @param options
- *            初始化选项
- * @returns 返回结果（仅showType为return时才有返回值）
+ *            鍒濆鍖栭�夐」
+ * @returns 杩斿洖缁撴灉锛堜粎showType涓簉eturn鏃舵墠鏈夎繑鍥炲�硷級
  */
 function init(options) {
 
-	var data = "";// 请求参数
-	var dataType = "json";// 后台返回的数据类型（默认为json）
-	var showType = "model";// 返回数据的展现形式（默认为model） model 模板类填充，适用于多行   bind 数据绑定到元素中，适用于一行
-	var template_Name = "text/template";// 模板类名（默认为text/template）仅showType为model时需要设置
-	var fillType = "html";// 数据填充方式，append追加填充 html覆盖填充（默认） 仅showType为model时需要设置
-	var container = "content";// 数据展现容器id名 （默认为content）仅showType为model时需要设置
-	var url = "";// 请求URL
+	var data = "";// 璇锋眰鍙傛暟
+	var dataType = "json";// 鍚庡彴杩斿洖鐨勬暟鎹被鍨嬶紙榛樿涓簀son锛�
+	var showType = "model";// 杩斿洖鏁版嵁鐨勫睍鐜板舰寮忥紙榛樿涓簃odel锛� model 妯℃澘绫诲～鍏咃紝閫傜敤浜庡琛�   bind 鏁版嵁缁戝畾鍒板厓绱犱腑锛岄�傜敤浜庝竴琛�
+	var template_Name = "text/template";// 妯℃澘绫诲悕锛堥粯璁や负text/template锛変粎showType涓簃odel鏃堕渶瑕佽缃�
+	var fillType = "html";// 鏁版嵁濉厖鏂瑰紡锛宎ppend杩藉姞濉厖 html瑕嗙洊濉厖锛堥粯璁わ級 浠卻howType涓簃odel鏃堕渶瑕佽缃�
+	var container = "content";// 鏁版嵁灞曠幇瀹瑰櫒id鍚� 锛堥粯璁や负content锛変粎showType涓簃odel鏃堕渶瑕佽缃�
+	var url = "";// 璇锋眰URL
 	var async=false;
-	var Deferred = true; //延时加载标识，默认不使用
+	var Deferred = true; //寤舵椂鍔犺浇鏍囪瘑锛岄粯璁や笉浣跨敤
 	var Callback;
 	var finallyFun;
 	console.log("init");
-	/*初始化配置参数，将data中的数据拼接成字符串*/
+	/*鍒濆鍖栭厤缃弬鏁帮紝灏哾ata涓殑鏁版嵁鎷兼帴鎴愬瓧绗︿覆*/
 	if (options.data != null && options.data != "") {
 		data = JSON.stringify(options.data);
 		data = data.substring(1, data.length - 1);
@@ -54,23 +54,23 @@ function init(options) {
 	if (options.finallyFun != null )
 		finallyFun = options.finallyFun;
 	
-	if(Deferred){//当请求直接返回数据时
+	if(Deferred){//褰撹姹傜洿鎺ヨ繑鍥炴暟鎹椂
 		postRequest_Return(url,data,dataType,showType,template_Name,fillType,container);
 		
 		return result;
 	}else{
-		/*发出请求，请求URL*/
+		/*鍙戝嚭璇锋眰锛岃姹俇RL*/
 		$.when(postRequest(url,data,dataType)).done(function(dta){ 
-			/* 根据展现形式确定返回何种结果 */
+			/* 鏍规嵁灞曠幇褰㈠紡纭畾杩斿洖浣曠缁撴灉 */
 			switch (showType) {
 			case "return":
 				Callback(dta);
 				break;
 			case "model":
-				ModelFilling(dta, template_Name,fillType,container);// 使用模板类填充
+				ModelFilling(dta, template_Name,fillType,container);// 浣跨敤妯℃澘绫诲～鍏�
 				break;
 			case "bind":
-				BoundData(dta.rows[0]);// 绑定数据到相应的容器中
+				BoundData(dta.rows[0]);// 缁戝畾鏁版嵁鍒扮浉搴旂殑瀹瑰櫒涓�
 				break;
 			default:
 				;
@@ -86,15 +86,15 @@ function init(options) {
 }
 
 /**
- * 异步请求方式
+ * 寮傛璇锋眰鏂瑰紡
  * @param para
- *            请求参数
+ *            璇锋眰鍙傛暟
  * @param request_url
- *            请求URL
+ *            璇锋眰URL
  * @param dataType
- *            返回数据类型
+ *            杩斿洖鏁版嵁绫诲瀷
  * @param showType
- *            数据展现形式
+ *            鏁版嵁灞曠幇褰㈠紡
  */
 function postRequest(url,data,dataType) {
 	console.log("asynchronous Request:" + url);
@@ -107,7 +107,7 @@ function postRequest(url,data,dataType) {
 		dataType : dataType,
 		success : function(dta){
 			console.log("asynchronous request data length is---"+JSON.stringify(dta));
-			defer.resolve(dta);//将defer对象的执行状态从"未完成"改为"已完成"
+			defer.resolve(dta);//灏哾efer瀵硅薄鐨勬墽琛岀姸鎬佷粠"鏈畬鎴�"鏀逛负"宸插畬鎴�"
 		}
 	});
 	return defer.promise();
@@ -134,16 +134,16 @@ function postRequest_Return(url,data,dataType,showType,template_Name,fillType,co
 		dataType : dataType,
 		success : function(dta){
 			console.log("synchronous request data is---"+JSON.stringify(dta) );
-			/* 根据展现形式确定返回何种结果 */
+			/* 鏍规嵁灞曠幇褰㈠紡纭畾杩斿洖浣曠缁撴灉 */
 			switch (showType) {
 			case "return":
 				result = dta;
 				break;
 			case "model":
-				result = ModelFilling(dta, template_Name,fillType,container);// 使用模板类填充
+				result = ModelFilling(dta, template_Name,fillType,container);// 浣跨敤妯℃澘绫诲～鍏�
 				break;
 			case "bind":
-				result = BoundData(dta.rows[0]);// 绑定数据到相应的容器中
+				result = BoundData(dta.rows[0]);// 缁戝畾鏁版嵁鍒扮浉搴旂殑瀹瑰櫒涓�
 				break;
 			default:
 				;
@@ -153,11 +153,11 @@ function postRequest_Return(url,data,dataType,showType,template_Name,fillType,co
 }
 
 /**
- * 使用模板类填充展现数据
+ * 浣跨敤妯℃澘绫诲～鍏呭睍鐜版暟鎹�
  * 
  * @param dta
- *            待展示数据
- * @returns {String}类型的错误信息
+ *            寰呭睍绀烘暟鎹�
+ * @returns {String}绫诲瀷鐨勯敊璇俊鎭�
  */
 function ModelFilling(dta,template_Name,fillType,container) {
 	console.log(dta);
@@ -165,32 +165,32 @@ function ModelFilling(dta,template_Name,fillType,container) {
 		console.log("dta is null");
 		return "dta is null";
 	}
-	// 获取模板上的HTML
+	// 鑾峰彇妯℃澘涓婄殑HTML
 	var html = $('script[type="' + template_Name + '"]').html();
-	// 定义一个数组，用来接收格式化合的数据
+	// 瀹氫箟涓�涓暟缁勶紝鐢ㄦ潵鎺ユ敹鏍煎紡鍖栧悎鐨勬暟鎹�
 	var arr = [];
-	// `1对数据进行遍历
+	// `1瀵规暟鎹繘琛岄亶鍘�
 
 	var count=1;
 	$.each(dta.rows, function(i, o) {
-		// 这里取到o就是上面rows数组中的值, formatTemplate是最开始定义的方法.
+		// 杩欓噷鍙栧埌o灏辨槸涓婇潰rows鏁扮粍涓殑鍊�, formatTemplate鏄渶寮�濮嬪畾涔夌殑鏂规硶.
 		arr.push(formatTemplate(o, html,count));
 		count++;
 	});
-	// 好了，最后把数组化成字符串，并添加到table中去。
+	// 濂戒簡锛屾渶鍚庢妸鏁扮粍鍖栨垚瀛楃涓诧紝骞舵坊鍔犲埌table涓幓銆�
 	if (fillType == "html")
 		$('#' + container).html(arr.join(''));
 	else if (fillType == "append")
 		$('#' + container).append(arr.join(''));
-	// 走完这一步其实就完成了，不会吧，这么简单，不错，就是这么简单!! 不信就自己动手去试试!
+	// 璧板畬杩欎竴姝ュ叾瀹炲氨瀹屾垚浜嗭紝涓嶄細鍚э紝杩欎箞绠�鍗曪紝涓嶉敊锛屽氨鏄繖涔堢畝鍗�!! 涓嶄俊灏辫嚜宸卞姩鎵嬪幓璇曡瘯!
 	return "ok";
 }
 
 /**
- * 将数据绑定到相应的元素中
+ * 灏嗘暟鎹粦瀹氬埌鐩稿簲鐨勫厓绱犱腑
  * 
  * @param dta
- *            待绑定的数据
+ *            寰呯粦瀹氱殑鏁版嵁
  */
 function BoundData(dta) {
 	console.log(dta);
@@ -199,21 +199,21 @@ function BoundData(dta) {
 		return "dta is null";
 	}
 	var html = $("html").html();
-	/*在当前页面，匹配所有被{}括起来的内容，将匹配结果以数组形式存储*/
+	/*鍦ㄥ綋鍓嶉〉闈紝鍖归厤鎵�鏈夎{}鎷捣鏉ョ殑鍐呭锛屽皢鍖归厤缁撴灉浠ユ暟缁勫舰寮忓瓨鍌�*/
 	var name = html.match(/{(\w+)}/g);
 	var count = 0;
 	var temp = "";
-	/*如果匹配结果不为空，则根据括号中的名称从dta中取出相应数据，绑定到该元素*/
+	/*濡傛灉鍖归厤缁撴灉涓嶄负绌猴紝鍒欐牴鎹嫭鍙蜂腑鐨勫悕绉颁粠dta涓彇鍑虹浉搴旀暟鎹紝缁戝畾鍒拌鍏冪礌*/
 	if (name != null) {
 		console.log(name.length);
 		while (count < name.length) {
 			temp = name[count] + "";
-			/*取出括号中的内容*/
+			/*鍙栧嚭鎷彿涓殑鍐呭*/
 			var attr = temp.substring(1, temp.length - 1);
 			console.log(temp + " " + attr);
-			/*根据括号中内容获取dom元素*/
+			/*鏍规嵁鎷彿涓唴瀹硅幏鍙杁om鍏冪礌*/
 			var dom = document.getElementById(temp);
-			/*如果存在该dom元素，则绑定数据*/
+			/*濡傛灉瀛樺湪璇om鍏冪礌锛屽垯缁戝畾鏁版嵁*/
 			if (dom != null&&dta[attr]!=null)
 				{
 				dom.innerHTML = dta[attr];
@@ -228,15 +228,15 @@ function BoundData(dta) {
 }
 
 /**
- * 模板类填充的工具类，用数据快速填充模板类
+ * 妯℃澘绫诲～鍏呯殑宸ュ叿绫伙紝鐢ㄦ暟鎹揩閫熷～鍏呮ā鏉跨被
  * 
  * @param dta
- *            待填充数据
+ *            寰呭～鍏呮暟鎹�
  * @param tmpl
- *            模板类
+ *            妯℃澘绫�
  * @param count
- *            填充计数器
- * @returns 返回数据填充后最终的模板类
+ *            濉厖璁℃暟鍣�
+ * @returns 杩斿洖鏁版嵁濉厖鍚庢渶缁堢殑妯℃澘绫�
  */
 function formatTemplate(dta, tmpl,count) {
 	var format = {
@@ -258,10 +258,10 @@ function formatTemplate(dta, tmpl,count) {
 
 
 /**
- * 获取当前url后的参数值
- * @param url 当前的url
- * @param name 参数的名字
- * @returns 参数的值
+ * 鑾峰彇褰撳墠url鍚庣殑鍙傛暟鍊�
+ * @param url 褰撳墠鐨剈rl
+ * @param name 鍙傛暟鐨勫悕瀛�
+ * @returns 鍙傛暟鐨勫��
  */
 function getUrlParam(url,name){
 	
@@ -284,9 +284,9 @@ function getUrlParam(url,name){
 }
 
 /**
- * 获得URL中的参数
- * @param name 参数名
- * @returns 参数值
+ * 鑾峰緱URL涓殑鍙傛暟
+ * @param name 鍙傛暟鍚�
+ * @returns 鍙傛暟鍊�
  */
 function getQueryString(name) {
 	var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
