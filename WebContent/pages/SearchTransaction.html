@@ -70,8 +70,8 @@ table td {
 </script>
 <script>
 	var role = "user";
-	function jump(_id) {//页面跳转，传入参数 BUSINESS_ID 作为查询条件
-		window.location.href = "SearchService.html?BUSINESS_ID=" + _id;
+	function jump(businessId,ruleId) {//页面跳转，传入参数 BUSINESS_ID 作为查询条件
+		window.location.href = "SearchService.html?BUSINESS_ID=" + businessId + "&RULE_ID=" + ruleId;
 	}
 
 	init({//首次进入会用请求admin权限的servlet，  如果请求成功 就更改显示的样式
@@ -180,7 +180,7 @@ table td {
 			<td >{BUSINESS_TYPE}</td>
 			<td >{REFERENCE_ID}</td>
 			<td >{LAST_CHANGETIME}</td>
-			<td ><button style="color:#006F97;font-size:10px" onclick="jump('{BUSINESS_ID}')">Query</button></td>
+			<td ><button style="color:#006F97;font-size:10px" onclick="jump('{BUSINESS_ID}','{RULE_ID}')">Query</button></td>
 		</tr>      
 
 	</script>

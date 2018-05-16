@@ -28,5 +28,6 @@ Version 1.41
 1. 增加版本记录 /WebContent/META-INF/ReadMe.txt
 2. 还原 /WebContent/META-INF/MANIFEST.MF
 
-
+Version 1.42
+1. 修复查询逻辑 -- 增加匹配条件：Rule ID 
 
