@@ -31,3 +31,8 @@ Version 1.41
 Version 1.42
 1. 修复查询逻辑 -- 增加匹配条件：Rule ID 
 
+Version 1.5
+1. 增加 getContent 页面跳转逻辑及直接重推逻辑
+
+
+
