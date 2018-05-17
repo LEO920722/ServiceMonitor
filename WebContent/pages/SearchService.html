@@ -83,12 +83,8 @@ table td {
 		}
 	})
 	
-	function getContent(server,num){
-		window.location.href="http://" + server + "/invoke/ServiceMonitor.Monitor.Content/getContent?ServiceID="+num;
-	}
-	
-	function resubmit(server,num){
-		window.location.href="http://" + server + "/invoke/ServiceMonitor.Monitor.Resubmit/resubmit?ServiceID="+num;
+	function jump(num){
+		alert("This is content:"+num);
 	}
 
 	function GetRequest() {
@@ -179,14 +175,12 @@ table td {
 		<tr>
 			<td >{ID}</td>
 			<td >{BUSINESS_ID}</td>
-			<td >{RULE_ID}</td>
-			<td >{SERVERID}</td> 
+			<td >{RULE_ID}</td> 
 			<td >{SERVICENAME}</td>
 			<td >{SERVICE_STATUS}</td>
 			<td >{ERRORMESSAGE}</td>
+			<td ><button style="color:#006F97;font-size:10px" onclick="jump({ID})">Query Content</button></td>
 			<td >{LAST_CHANGETIME}</td>
-			<td ><button style="color:#006F97;font-size:10px" onclick="getContent('{SERVERID}','{ID}')">Query Content</button></td>
-			<td ><button style="color:#006F97;font-size:10px" onclick="resubmit('{SERVERID}','{ID}')">Resubmit</button></td>
 		</tr>      
 
 	</script>
@@ -257,13 +251,11 @@ table td {
 				<td>Service ID</td>
 				<td class="oddcol">Business ID</td>
 				<td class="oddcol">Rule ID</td>
-				<td class="oddcol">Server ID</td>
 				<td class="oddcol" nowrap="">Service Name</td>
 				<td class="oddcol">Service Status</td>
 				<td class="oddcol">Error Message</td>
-				<td class="oddcol">Last Update Time</td>
 				<td class="oddcol">Content</td>
-				<td class="oddcol">Resubmit</td>
+				<td class="oddcol">Last Update Time</td>
 			</tr>
 		</tbody>
 		<tbody id="container">
