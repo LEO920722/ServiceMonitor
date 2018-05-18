@@ -43,16 +43,16 @@ public class QueryAllRules extends HttpServlet {
 			String createTime1 = request.getParameter("CREATE_TIME1");
 			String createTime2 = request.getParameter("CREATE_TIME2");
 			if (SCHE_ID == null || SCHE_ID == "") {
+				String sql = DBUtil.getQuerySql(ht, "MONITOR_CONFIG",
+						createTime1, createTime2).replace("order by id desc",
+						"order by RULE_ID asc");
 				response.getWriter().print(
-						"{\"rows\":"
-								+ DBUtil.select(DBUtil.getQuerySql(ht,
-										"MONITOR_CONFIG", createTime1,
-										createTime2)) + "}");
+						"{\"rows\":" + DBUtil.select(sql) + "}");
 			} else {
 				ht.put("SCHE_ID", SCHE_ID);
 				String rs = DBUtil.select(DBUtil.getQuerySql(ht,
 						"SCHE_BATCH_FOR_RULE", createTime1, createTime2));
-				
+
 				response.getWriter().print("{\"rows\":" + rs + "}");
 			}
 

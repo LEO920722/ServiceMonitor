@@ -35,4 +35,5 @@ Version 1.5
 1. 增加 getContent 页面跳转逻辑及直接重推逻辑
 
 
-
+Version 1.51
+1. 调整 QueryAllRules Select 逻辑，改为根据 RULE_ID 升序排列
