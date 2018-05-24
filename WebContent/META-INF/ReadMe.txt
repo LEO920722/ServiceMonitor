@@ -37,3 +37,6 @@ Version 1.5
 
 Version 1.51
 1. 调整 QueryAllRules Select 逻辑，改为根据 RULE_ID 升序排列
+
+Version 1.52
+1. 修复查询bug -- 无法查询 BUSINESS_TYPE 和 REFERENCE_ID

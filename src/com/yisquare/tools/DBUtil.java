@@ -342,7 +342,7 @@ public class DBUtil {
 			break;
 		}
 		case ("TRANSACTION_MONITOR"):{
-			columnStr = "BUSINESS_ID,RULE_ID,BUSINESS_STATUS,to_char(CREATE_TIMESTAMP,'yyyy-MM-dd HH24:mi:ss') as CREATE_TIME,to_char(MODIFIED_TIMESTAMP,'yyyy-MM-dd HH24:mi:ss') as LAST_CHANGETIME";
+			columnStr = "BUSINESS_ID,RULE_ID,BUSINESS_STATUS,BUSINESS_TYPE,REFERENCE_ID,to_char(CREATE_TIMESTAMP,'yyyy-MM-dd HH24:mi:ss') as CREATE_TIME,to_char(MODIFIED_TIMESTAMP,'yyyy-MM-dd HH24:mi:ss') as LAST_CHANGETIME";
 			timeFieldName = "CREATE_TIMESTAMP";
 			if(ht.containsKey("SELECT_TYPE")){
 				String oldBuzId = "BUSINESS_ID='"+ht.get("BUSINESS_ID")+"'";
