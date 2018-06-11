@@ -70,8 +70,9 @@ table td {
 </script>
 <script>
 	var role = "user";
-	function jump(businessId,ruleId) {//页面跳转，传入参数 BUSINESS_ID 作为查询条件
-		window.location.href = "SearchService.html?BUSINESS_ID=" + businessId + "&RULE_ID=" + ruleId;
+	function jump(businessId, ruleId) {//页面跳转，传入参数 BUSINESS_ID 作为查询条件
+		window.location.href = "SearchService.html?BUSINESS_ID=" + businessId
+				+ "&RULE_ID=" + ruleId;
 	}
 
 	init({//首次进入会用请求admin权限的servlet，  如果请求成功 就更改显示的样式
@@ -111,18 +112,22 @@ table td {
 				BUSINESS_TYPE : $("#BUSINESS_TYPE").val(),
 				REFERENCE_ID : $("#REFERENCE_ID").val(),
 				CREATE_TIME1 : $("#CREATE_TIME1").val(),
+				CREATE_TIMESTAMP1 : $("#CREATE_TIMESTAMP1").val(),
 				CREATE_TIME2 : $("#CREATE_TIME2").val(),
+				CREATE_TIMESTAMP2 : $("#CREATE_TIMESTAMP2").val(),
 			}
 		} else if (getQueryString("state") == "1" || num == 0) {//如果state是1则表示是上个页面传过来的,num=0是本页面加载就执行的
 			data1 = {//将上个页面的值赋值给data1
-					SELECT_TYPE : $("#SELECT_TYPE").val(),
-					BUSINESS_ID : $("#BUSINESS_ID").val(),
-					RULE_ID : $("#RULE_ID").val(),
-					BUSINESS_STATUS : $("#BUSINESS_STATUS").val(),
-					BUSINESS_TYPE : $("#BUSINESS_TYPE").val(),
-					REFERENCE_ID : $("#REFERENCE_ID").val(),
-					CREATE_TIME1 : $("#CREATE_TIME1").val(),
-					CREATE_TIME2 : $("#CREATE_TIME2").val(),
+				SELECT_TYPE : $("#SELECT_TYPE").val(),
+				BUSINESS_ID : $("#BUSINESS_ID").val(),
+				RULE_ID : $("#RULE_ID").val(),
+				BUSINESS_STATUS : $("#BUSINESS_STATUS").val(),
+				BUSINESS_TYPE : $("#BUSINESS_TYPE").val(),
+				REFERENCE_ID : $("#REFERENCE_ID").val(),
+				CREATE_TIME1 : $("#CREATE_TIME1").val(),
+				CREATE_TIMESTAMP1 : $("#CREATE_TIMESTAMP1").val(),
+				CREATE_TIME2 : $("#CREATE_TIME2").val(),
+				CREATE_TIMESTAMP2 : $("#CREATE_TIMESTAMP2").val(),
 			}
 		}
 
@@ -136,7 +141,9 @@ table td {
 				BUSINESS_TYPE : $("#BUSINESS_TYPE").val(),
 				REFERENCE_ID : $("#REFERENCE_ID").val(),
 				CREATE_TIME1 : $("#CREATE_TIME1").val(),
+				CREATE_TIMESTAMP1 : $("#CREATE_TIMESTAMP1").val(),
 				CREATE_TIME2 : $("#CREATE_TIME2").val(),
+				CREATE_TIMESTAMP2 : $("#CREATE_TIMESTAMP2").val(),
 			},
 			url : "/ServiceMonitor/QueryServiceTransaction?"
 					+ new Date().getTime(),
@@ -186,7 +193,8 @@ table td {
 	</script>
 </head>
 
-<body><!-- onload="getServiceByParam(0)" Cancel query while enter page -->
+<body>
+	<!-- onload="getServiceByParam(0)" Cancel query while enter page -->
 	<table class="tableView">
 		<tbody>
 			<tr>
@@ -227,10 +235,18 @@ table td {
 				<td class="evenrow-l" colspan="5"><input size="40"
 					id="CREATE_TIME1" onclick="fPopCalendar(event,this,this)"
 					readonly="readonly">
-				<td class="oddrow" colspan="2">To Date</td>
-				<td class="oddrow-l" colspan="5"><input size="40"
+				<td class="oddrow" colspan="2">From Time</td>
+				<td class="oddrow-l" colspan="5"><input id="CREATE_TIMESTAMP1"
+					name="CREATE_TIMESTAMP1" size="40" value="00:00"></td>
+			</tr>
+			<tr>
+				<td class="evenrow" colspan="2">To Date</td>
+				<td class="evenrow-l" colspan="5"><input size="40"
 					id="CREATE_TIME2" onclick="fPopCalendar(event,this,this)"
 					readonly="readonly">
+				<td class="oddrow" colspan="2">To Time</td>
+				<td class="oddrow-l" colspan="5"><input id="CREATE_TIMESTAMP2"
+					name="CREATE_TIMESTAMP2" size="40" value="23:59"></td>
 				<td><button style="color: #006F97; font-size: 10px"
 						onclick="getServiceByParam(1)">Query</button></td>
 			</tr>
@@ -261,10 +277,10 @@ table td {
 	<div id="barcon" style="display: none; width: 100%" class="barcon">
 		<div id="barcon2" class="barcon2">
 			<ul>
-				<li><a href="###" id="firstPage">First</a></li>
-				<li><a href="###" id="prePage">< Back</a></li>
-				<li><a href="###" id="nextPage">Next ></a></li>
-				<li><a href="###" id="lastPage">Last</a></li>
+				<li><a href="###" id="firstPage">&lt;&lt; First</a></li>
+				<li><a href="###" id="prePage">&lt; Back</a></li>
+				<li><a href="###" id="nextPage">Next &gt;</a></li>
+				<li><a href="###" id="lastPage">Last &gt;&gt;</a></li>
 				<li><select id="jumpWhere"></select></li>
 				<li><a href="###" id="jumpPage" onclick="jumpPage()">Go</a></li>
 			</ul>

@@ -40,3 +40,9 @@ Version 1.51
 
 Version 1.52
 1. 修复查询bug -- 无法查询 BUSINESS_TYPE 和 REFERENCE_ID
+
+Version 1.6 -- 20180611
+1. 修改 SearchTrasaction 页面，增加 From Time 和 To Time 选项
+2. 修改 SearchTrasaction 页面结果展示，按照 MODIFIED_TIMESTAMP 倒序展示
+3. 增加数据查询最大 10000 条限制
+4. 删除 order by id desc限制

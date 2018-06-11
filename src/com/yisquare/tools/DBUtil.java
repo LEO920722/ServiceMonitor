@@ -343,7 +343,8 @@ public class DBUtil {
 		}
 		case ("TRANSACTION_MONITOR"):{
 			columnStr = "BUSINESS_ID,RULE_ID,BUSINESS_STATUS,BUSINESS_TYPE,REFERENCE_ID,to_char(CREATE_TIMESTAMP,'yyyy-MM-dd HH24:mi:ss') as CREATE_TIME,to_char(MODIFIED_TIMESTAMP,'yyyy-MM-dd HH24:mi:ss') as LAST_CHANGETIME";
-			timeFieldName = "CREATE_TIMESTAMP";
+			// Change time field into MODIFIED_TIMESTAMP -- 20180611
+			timeFieldName = "MODIFIED_TIMESTAMP";
 			if(ht.containsKey("SELECT_TYPE")){
 				String oldBuzId = "BUSINESS_ID='"+ht.get("BUSINESS_ID")+"'";
 				String newBuzId = "BUSINESS_ID LIKE '%"+ht.get("BUSINESS_ID")+"%'";
@@ -398,7 +399,7 @@ public class DBUtil {
 				|| create_time2 != null && create_time2.length() != 0) {
 			if (create_time1 == "" || create_time1 == null
 					|| create_time1.length() == 0) {// 寮�濮嬫椂闂翠负绌哄氨璁剧疆寮�濮嬫椂闂翠负寰堟棭鐨勬椂闂�
-				create_time1 = "2018-01-01 00:00:00";
+				create_time1 = "2001-01-01 00:00:00";
 			}
 			if (create_time2 == "" || create_time2 == null
 					|| create_time2.length() == 0) {// 缁撴潫鏃堕棿涓虹┖灏辫缃负褰撳墠鐨勬椂闂�
@@ -423,7 +424,9 @@ public class DBUtil {
 						+ ",'yyyy-mm-dd')<=to_char(sysdate,'yyyy-mm-dd')";
 			}
 		}
-		sql += " order by id desc";
+		
+		//Remove order by id desc and add rows constraint in 10000 -- 20180611
+		sql += " and rownum <= 10000";
 		return sql;
 	}
 

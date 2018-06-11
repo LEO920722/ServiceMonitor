@@ -1,6 +1,8 @@
 package com.yisquare.servlet;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Hashtable;
 
 import javax.servlet.ServletException;
@@ -38,6 +40,8 @@ public class QueryServiceTransaction extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html;charset=utf-8");
 		response.setCharacterEncoding("UTF-8");
+		Date d = new Date();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		try {
 			Hashtable<String, String> ht = new Hashtable<String, String>();
 			String selectType = request.getParameter("SELECT_TYPE");
@@ -47,8 +51,12 @@ public class QueryServiceTransaction extends HttpServlet {
 			String businessType = request.getParameter("BUSINESS_TYPE");
 			String referenceId = request.getParameter("REFERENCE_ID");
 			String createTime1 = request.getParameter("CREATE_TIME1");
+			String createTimestamp1 = request.getParameter("CREATE_TIMESTAMP1")
+					.replace('=', ':');
 			String createTime2 = request.getParameter("CREATE_TIME2");
-			
+			String createTimestamp2 = request.getParameter("CREATE_TIMESTAMP2")
+					.replace('=', ':');
+
 			if (businessId != "" && businessId != null
 					&& businessId.length() != 0) {
 				ht.put("BUSINESS_ID", businessId);
@@ -79,11 +87,31 @@ public class QueryServiceTransaction extends HttpServlet {
 					&& referenceId.length() != 0) {
 				ht.put("REFERENCE_ID", referenceId);
 			}
+
+			// Add function to select data in time field -- 20180611
+			if (createTime1 == null || createTime1 == "") {
+				if (createTime2 == null || createTime2 == "") {
+					createTime1 = sdf.format(d) + " " + createTimestamp1
+							+ ":00";
+					createTime2 = sdf.format(d) + " " + createTimestamp2
+							+ ":59";
+				} else {
+					createTime1 = null;
+					createTime2 += " " + createTimestamp2 + ":59";
+				}
+			} else {
+				createTime1 += " " + createTimestamp1 + ":00";
+				createTime2 = null;
+			}
+			
+			// Add function to change selected data order by MODIFIED_TIMESTAMP -- 20180611
 			response.getWriter().print(
 					"{\"rows\":"
-							+ DBUtil.select(DBUtil
-									.getQuerySql(ht, "TRANSACTION_MONITOR",
-											createTime1, createTime2)) + "}");
+							+ DBUtil.select(DBUtil.getQuerySql(ht,
+									"TRANSACTION_MONITOR", createTime1,
+									createTime2).replace("10000",
+									"10000 order by MODIFIED_TIMESTAMP desc"))
+							+ "}");
 		} catch (Exception e) {
 			e.printStackTrace();
 			logger.error("Exception:" + LogCreate.getException(e));
