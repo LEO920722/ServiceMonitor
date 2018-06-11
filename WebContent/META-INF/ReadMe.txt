@@ -46,3 +46,8 @@ Version 1.6 -- 20180611
 2. 修改 SearchTrasaction 页面结果展示，按照 MODIFIED_TIMESTAMP 倒序展示
 3. 增加数据查询最大 10000 条限制
 4. 删除 order by id desc限制
+
+Version 1.61
+1. 修改 CREATE_TIME1 和 CREATE_TIME2 readonly 属性未非只读
+2. 暂时移除 ScheduleBatchConf 页面跳转到 MAIL_ROUTER_ID 和 RULE_ID 入口
+
