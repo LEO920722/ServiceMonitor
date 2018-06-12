@@ -100,8 +100,16 @@ public class QueryServiceTransaction extends HttpServlet {
 					createTime2 += " " + createTimestamp2 + ":59";
 				}
 			} else {
-				createTime1 += " " + createTimestamp1 + ":00";
-				createTime2 = null;
+				if (createTime2 == null || createTime2 == "") {
+					createTime1 += " " + createTimestamp1 + ":00";
+					createTime2 = null;
+				}else{
+					createTime1 += " " + createTimestamp1
+							+ ":00";
+					createTime2 += " " + createTimestamp2
+							+ ":59";
+				}
+				
 			}
 			
 			// Add function to change selected data order by MODIFIED_TIMESTAMP -- 20180611
