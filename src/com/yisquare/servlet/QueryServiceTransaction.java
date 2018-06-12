@@ -23,6 +23,7 @@ public class QueryServiceTransaction extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private static Logger logger = Logger
 			.getLogger(QueryServiceTransaction.class);
+	static String path = Log4jListener.path;
 
 	public QueryServiceTransaction() {
 		super();
@@ -89,8 +90,9 @@ public class QueryServiceTransaction extends HttpServlet {
 			}
 
 			// Add function to select data in time field -- 20180611
-			if (createTime1 == null || createTime1 == "") {
-				if (createTime2 == null || createTime2 == "") {
+			// Change condition from "==" into ".eqauls()"
+			if (createTime1 == null || createTime1.equals("")) {
+				if (createTime2 == null || createTime2.equals("")) {
 					createTime1 = sdf.format(d) + " " + createTimestamp1
 							+ ":00";
 					createTime2 = sdf.format(d) + " " + createTimestamp2
@@ -100,18 +102,17 @@ public class QueryServiceTransaction extends HttpServlet {
 					createTime2 += " " + createTimestamp2 + ":59";
 				}
 			} else {
-				if (createTime2 == null || createTime2 == "") {
+				if (createTime2 == null || createTime2.equals("")) {
 					createTime1 += " " + createTimestamp1 + ":00";
 					createTime2 = null;
-				}else{
-					createTime1 += " " + createTimestamp1
-							+ ":00";
-					createTime2 += " " + createTimestamp2
-							+ ":59";
+				} else {
+					createTime1 += " " + createTimestamp1 + ":00";
+					createTime2 += " " + createTimestamp2 + ":59";
 				}
-				
+
 			}
-			
+
+
 			// Add function to change selected data order by MODIFIED_TIMESTAMP -- 20180611
 			response.getWriter().print(
 					"{\"rows\":"
