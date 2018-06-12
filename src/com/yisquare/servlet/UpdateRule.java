@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.log4j.Logger;
 
 import com.yisquare.tools.DBUtil;
+import com.yisquare.tools.LogCreate;
 
 public class UpdateRule extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -31,21 +32,27 @@ public class UpdateRule extends HttpServlet {
 		String ruleId = request.getParameter("RULE_ID");
 		String contentLogging = request.getParameter("CONTENT_LOGGING");
 		String activeFlag = request.getParameter("ACTIVE_FLAG");
-
-		if (ruleId != "" && ruleId != null && ruleId.length() != 0) {
-			if (contentLogging != "" && contentLogging != null
-					&& contentLogging.length() != 0) {
-				String sql = "UPDATE MONITOR_CONFIG SET CONTENT_LOGGING = '"
-						+ contentLogging + "'";
-				DBUtil.update(sql);
+		try{
+			if (ruleId != "" && ruleId != null && ruleId.length() != 0) {
+				if (contentLogging != "" && contentLogging != null
+						&& contentLogging.length() != 0) {
+					String sql = "UPDATE MONITOR_CONFIG SET CONTENT_LOGGING = '"
+							+ contentLogging + "'";
+					DBUtil.update(sql);
+				}
+				if (activeFlag != "" && activeFlag != null
+						&& activeFlag.length() != 0) {
+					String sql = "UPDATE MONITOR_CONFIG SET CONTENT_LOGGING = '"
+							+ activeFlag + "'";
+					DBUtil.update(sql);
+				}
 			}
-			if (activeFlag != "" && activeFlag != null
-					&& activeFlag.length() != 0) {
-				String sql = "UPDATE MONITOR_CONFIG SET CONTENT_LOGGING = '"
-						+ activeFlag + "'";
-				DBUtil.update(sql);
-			}
+		}catch(Exception e){
+			logger.error("Exception:" + LogCreate.getException(e));
 		}
+
+		
+		
 
 	}
 }

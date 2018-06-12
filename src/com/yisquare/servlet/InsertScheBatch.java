@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.log4j.Logger;
 
 import com.yisquare.tools.DBUtil;
+import com.yisquare.tools.LogCreate;
 
 public class InsertScheBatch extends HttpServlet {
 
@@ -36,7 +37,7 @@ public class InsertScheBatch extends HttpServlet {
 			ht.put("ACTIVE_FLAG", ACTIVE_FLAG);
 			DBUtil.insert(ht, "SCHE_BATCH");
 		} catch (Exception e) {
-			logger.warn("Insert new schedule batch ", e);
+			logger.error("Exception:" + LogCreate.getException(e));
 		}
 	}
 

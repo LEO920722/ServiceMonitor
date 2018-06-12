@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.log4j.Logger;
 
 import com.yisquare.tools.DBUtil;
+import com.yisquare.tools.LogCreate;
 
 public class InsertEmailRouter extends HttpServlet{
 
@@ -37,7 +38,7 @@ public class InsertEmailRouter extends HttpServlet{
 			ht.put("ADDRESS", ADDRESS);
 			DBUtil.insert(ht, "MAIL_ROUTER");
 		} catch (Exception e) {
-			logger.warn("Insert new Rule", e);
+			logger.error("Exception:" + LogCreate.getException(e));
 		}
 	}
 

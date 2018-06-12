@@ -83,7 +83,8 @@ public class Util {
 
 	public static void writeDBInfo(String str, String path) {
 		// TODO Auto-generated constructor stub
-		System.out.println("需要打印的是" + str);
+		// Remove print console -- 20180612
+		//System.out.println("需要打印的是" + str);
 		try {
 			SimpleDateFormat df = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");// 设置日期格式
 			Writer writer = new FileWriter(path + "/log/log.html", true);// true表示

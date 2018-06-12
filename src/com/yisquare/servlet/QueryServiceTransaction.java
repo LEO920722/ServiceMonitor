@@ -112,7 +112,6 @@ public class QueryServiceTransaction extends HttpServlet {
 
 			}
 
-
 			// Add function to change selected data order by MODIFIED_TIMESTAMP -- 20180611
 			response.getWriter().print(
 					"{\"rows\":"

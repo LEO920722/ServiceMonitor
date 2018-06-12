@@ -41,7 +41,8 @@ public class DBUtil {
 			json = new JSONValidatingWriter().write(new QueryRunner().query(
 					con, sql, new MapListHandler()));
 			con.close();
-			System.out.println("鏌ヨ鐨勮鍙ユ槸锛�" + sql + ";鏈鏌ヨ鐨勭粨鏋滄槸锛�" + json);
+			// Remove print console -- 20180612
+			//System.out.println("鏌ヨ鐨勮鍙ユ槸锛�" + sql + ";鏈鏌ヨ鐨勭粨鏋滄槸锛�" + json);
 			return json;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -94,7 +95,8 @@ public class DBUtil {
 		sql = sql.replaceAll("'to_date", "to_date");
 		sql = sql.replaceAll("'yyyy-mm-dd hh24:mi:ss'\\)'",
 				"'yyyy-mm-dd hh24:mi:ss'\\)");
-		System.out.println(sql);
+		// Remove print console -- 20180612
+		//System.out.println(sql);
 		try {
 			stat = con.createStatement();// 濮濄倖鏌熷▔鏇炲灡瀵よ櫣鏁ゆ禍搴㈠⒔鐞涘矂娼ら幀涓糛L鐠囶厼褰為獮鎯扮箲閸ョ偛鐣犻幍锟芥晸閹存劗绮ㄩ弸婊呮畱鐎电锟�?
 			list.put("errorcode", stat.executeUpdate(sql) + "");// 閹垫挸宓冪紒鎾寸亯
@@ -132,7 +134,8 @@ public class DBUtil {
 		}
 		// sql += " order by id desc";
 		try {
-			System.out.println("鏌ヨ鐨勮鍙ユ槸锛�" + sql);
+			// Remove print console -- 20180612
+			//System.out.println("鏌ヨ鐨勮鍙ユ槸锛�" + sql);
 			logger.warn("Query sql is--->>" + sql);//
 			String json = new JSONValidatingWriter().write(new QueryRunner()
 					.query(con, sql, new MapListHandler()));
@@ -181,9 +184,11 @@ public class DBUtil {
 		after_sql += " ID = '" + id + "'";//Change into harcode id = ?
 		midle_sql = midle_sql.substring(0, midle_sql.length() - 3);
 		sql = before_sql + midle_sql + after_sql;
-		System.out.println(sql);
+		// Remove print console -- 20180612
+		//System.out.println(sql);
 		logger.warn("Update sql is--->>" + sql);//
-		System.out.println("Update sql is--->>" + sql);
+		// Remove print console -- 20180612
+		//System.out.println("Update sql is--->>" + sql);
 		try {
 			stat = con.createStatement();
 			list.put("errorcode", stat.executeUpdate(sql) + "");
@@ -236,7 +241,8 @@ public class DBUtil {
 			}
 			sql += key + "='" + value + "'";
 		}
-		System.out.println("delete sql:" + sql);
+		// Remove print console -- 20180612
+		//System.out.println("delete sql:" + sql);
 
 		try {
 			stat = new DBConf().getConn().createStatement();
@@ -311,7 +317,8 @@ public class DBUtil {
 					pre.close();
 				if (con != null)
 					con.close();
-				System.out.println("鏁版嵁搴撹繛鎺ュ凡鍏抽棴锛�");
+				// Remove print console -- 20180612
+				//System.out.println("鏁版嵁搴撹繛鎺ュ凡鍏抽棴锛�");
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

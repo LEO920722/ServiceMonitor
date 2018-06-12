@@ -31,7 +31,8 @@ public class PropertiesUtil {
 	}
 	public static void setDBInfo(String ip) throws IOException{
 		/* 写入Txt文件 */
-		System.out.println("设置的内容是："+ip);
+		// Remove print console -- 20180612
+		//System.out.println("设置的内容是："+ip);
 		File writename = new File(path); // 相对路径，如果没有则要建立一个新的output。txt文件
 		BufferedWriter out = new BufferedWriter(new FileWriter(writename));
 		

@@ -53,3 +53,9 @@ Version 1.61
 
 Version 1.62
 1. bug 修復：选择时间条件查询结果错误
+
+Version 1.63
+1. 移除 Console 打印记录
+2. 统一 Log 打印条件 -- 在 Catch 步骤记录
+
+

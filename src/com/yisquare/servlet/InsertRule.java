@@ -3,12 +3,16 @@ package com.yisquare.servlet;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.Hashtable;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import org.apache.log4j.Logger;
+
 import com.yisquare.tools.DBUtil;
+import com.yisquare.tools.LogCreate;
 
 public class InsertRule extends HttpServlet {
 
@@ -76,7 +80,7 @@ public class InsertRule extends HttpServlet {
 				}
 			}
 		} catch (Exception e) {
-			logger.warn("Insert new Rule", e);
+			logger.error("Exception:" + LogCreate.getException(e));
 		}
 	}
 

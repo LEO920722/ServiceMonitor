@@ -34,7 +34,8 @@ public class DBConf {
   public void getConnection(String ip,String port, String sid, String username, String  password) throws SQLException, ClassNotFoundException{
 	  Class.forName(name); 
 	  String string = "jdbc:oracle:thin:@"+ip+":"+port+":"+sid;
-	  System.out.println(string);
+	// Remove print console -- 20180612
+	  //System.out.println(string);
       DriverManager.getConnection(string, username, password);
       
   }
