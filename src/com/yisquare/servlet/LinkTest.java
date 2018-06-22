@@ -46,12 +46,12 @@ public class LinkTest extends HttpServlet {
 		// TODO Auto-generated method stub 
 		PrintWriter writer= response.getWriter();
 		String ipStr=request.getParameter("IP");
-		System.out.println("传入进来的ipStr是："+ipStr);
+		//System.out.println("传入进来的ipStr是："+ipStr);
 		if (ipStr!=""&&ipStr!=null&&ipStr.length()!=0) {//当用户输入参数后 将访问该模块
 			//首先测试连接是否正常
 			try {
 				String [] array = ipStr.split("-");
-				new DBConf().getConnection(array[0], array[1], array[2], array[3], array[4]);
+				new DBConf().getConnection(array[0], array[1], array[2], array[3], array[4],array[5]);
 				PropertiesUtil.setDBInfo(ipStr);//注意这里ip是所有信息拼接起来的
 				writer.print("2");//连接成功
 			} catch (Exception e) {//连接数据库失败，前端表示为

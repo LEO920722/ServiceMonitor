@@ -78,8 +78,9 @@
     		return false;
     	}
     	document.getElementById('load').style.display='block';
+    	//Add entrance of service name
    		var IPStr = $("#HOST").val()+"-"+$("#PORT").val()+"-"+$("#SID").val()+
-   		            "-"+$("#USERNAME").val()+"-"+$("#PASSWORD").val();
+   		            "-"+$("#SERVICENAME").val()+"-"+$("#USERNAME").val()+"-"+$("#PASSWORD").val();
 		init({//首次进入会用请求admin权限的servlet，  如果请求成功 就更改显示的样式
 			data:{
 				IP:IPStr
@@ -152,7 +153,8 @@
 	   <font style="font-weight:bold;font-size:20px;font-family:Arial Unicode MS;">DB INFOMATION</font><br><br>
 	   <div class="outDiv" style="">Host</div><input id="HOST" onmousedown="mouseDown()" class="inp"><br><br>
 	   <div class="outDiv" style="">Port</div><input id="PORT" value="1521" class="inp"><br><br>
-	   <div class="outDiv" style="">SID</div><input id="SID" value="ORCL" class="inp"><br><br>
+	   <div class="outDiv" style="">SID</div><input id="SID" value="" class="inp"><br><br>
+	   <div class="outDiv" style="">SvcName</div><input id="SERVICENAME" value="" class="inp"><br><br>
 	   <div class ="outDiv" >Username</div><input id="USERNAME" class="inp"><br><br>
 	   <div class ="outDiv">Password</div><input id="PASSWORD" type="password" class="inp"><br><br>
        <Button class="but" onclick = "dbActon()">Connect</Button>
