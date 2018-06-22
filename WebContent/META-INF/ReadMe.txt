@@ -67,3 +67,8 @@ Version 1.63
 Version 1.7
 1. 增加 DB 配置 ServiceName 入口
 
+Version 1.71
+1. bug 修复：修复无法解析域名错误
+
+
+

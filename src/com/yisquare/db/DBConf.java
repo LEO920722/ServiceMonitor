@@ -21,7 +21,7 @@ public class DBConf {
 		try {
 			Class.forName(name);
 			String ipString = PropertiesUtil.getDBInfo();// 获取相关的db信息
-			String ipArray[] = ipString.split("-");
+			String ipArray[] = ipString.split("&");
 			// 2018-06-22 Add url type for servicename
 			if (ipArray[2].equals("") || ipArray[2] == null) {
 				conn = DriverManager.getConnection("jdbc:oracle:thin:@//"
@@ -50,7 +50,7 @@ public class DBConf {
 		Class.forName(name);
 		String url = null;
 		if (sid.equals("") || sid == null) {
-			url = "jdbc:oracle:thin:@" + ip + ":" + port + "/" + serviceName;
+			url = "jdbc:oracle:thin:@//" + ip + ":" + port + "/" + serviceName;
 		} else {
 			url = "jdbc:oracle:thin:@" + ip + ":" + port + ":" + sid;
 		}

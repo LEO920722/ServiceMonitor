@@ -79,8 +79,8 @@
     	}
     	document.getElementById('load').style.display='block';
     	//Add entrance of service name
-   		var IPStr = $("#HOST").val()+"-"+$("#PORT").val()+"-"+$("#SID").val()+
-   		            "-"+$("#SERVICENAME").val()+"-"+$("#USERNAME").val()+"-"+$("#PASSWORD").val();
+   		var IPStr = $("#HOST").val()+"%26"+$("#PORT").val()+"%26"+$("#SID").val()+
+   		            "%26"+$("#SERVICENAME").val()+"%26"+$("#USERNAME").val()+"%26"+$("#PASSWORD").val();
 		init({//首次进入会用请求admin权限的servlet，  如果请求成功 就更改显示的样式
 			data:{
 				IP:IPStr
