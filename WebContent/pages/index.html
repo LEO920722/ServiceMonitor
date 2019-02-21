@@ -1,0 +1,354 @@
+<!-- saved from url=(0038)http://localhost:5555/WmRoot/index.dsp -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>USERCHI-KJIK3B4 - webMethods Integration Server</title>
+  <link rel="stylesheet" type="text/css" href="../css/layout.css">
+  <link rel="icon" href="http://10.143.169.73:7474/WmRoot/favicon.ico">
+  <script src="../js/init.js"></script>
+  <script src="../js/jquery.1.7.2.min.js"></script>
+  <style>
+   .white_content {  display:none; position: fixed; top: 25%; left: 38%; width: 20%; height: 50%; padding: 16px; padding-left:30px;border: 3px solid #5177A1; background-color: white; z-index:1002; overflow: auto; } 
+   .outDiv{
+		width:80px;
+		font-family: "Arial", "Helvetica";
+		color:#006F97;
+		height:20px;
+		font-size:14px;
+		font-weight:bold;
+		display:inline-block;
+   			
+   }
+   .inp{
+		width:170px;
+		height:25px;
+		border:1px solid #006F97;
+		font-size:13px
+	}
+   .but{
+ 		color:white;
+ 		background-color:#006F97;
+ 		width:250px;
+ 		height:50px;
+ 		font-size:15px;
+ 	}
+ 	   #load{
+ 		width:250px;
+ 		height:10px;
+ 		display:none;
+ 	}
+ 	.but:hover{
+ 	cursor:pointer;
+ 	}
+ 	#DB{
+ 	    width:70px;
+ 	    height:40px;
+ 		position:fixed;top:0px;right:0px;
+ 		font-family: "Arial", "Helvetica";
+ 		font-size:10px;
+ 		padding:10px;
+ 		color:#006F97;
+ 		display:none;
+ 	}
+ 	#DB:hover{
+ 		cursor:pointer;
+ 		text-decoration:underline;
+ 	}
+  </style>
+  <script>
+  
+  
+  init({//首次进入会审查 db是否已经做过配置
+	  data:{
+		  
+	  },
+	  url:"/ServiceMonitor/LinkTest?timestamp=" + new Date().getTime(),
+			  dataType:"json",
+			  showType:"return",
+			  Deferred:false,
+			  Callback:function(dta){
+				  dta = 0;
+				  if(dta == 0){//表示没有配置
+					  document.getElementById('light').style.display='block';
+				  }
+				  }
+	  })
+	  
+	  function dbActon(){
+	  if($("#HOST").val()==""){
+		  document.getElementById("HOST").style.border="1px solid red";
+		  $( "#HOST").shake(2, 5, 400);
+		  return false;
+		  }
+	  document.getElementById('load').style.display='block';
+	  //Add entrance of service name
+	  var dbType = $("#CHANGE").find("option:selected").text();
+	  if(dbType == "Oracle"){
+		  var IPStr = $("#HOST").val()+"%26"+$("#PORT").val()+"%26"+$("#SID").val()+
+	            "%26"+$("#SERVICENAME").val()+"%26"+$("#USERNAME").val()+"%26"+$("#PASSWORD").val();
+	  }else{
+		  var IPStr = $("#HOST").val()+"%26"+$("#PORT").val()+"%26"+$("#DBName").val()+"%26"+""
+		  +"%26"+$("#USERNAME").val()+"%26"+$("#PASSWORD").val();
+	  }
+	  
+	  
+	  init({//首次进入会用请求admin权限的servlet，  如果请求成功 就更改显示的样式
+		  data:{
+			  dbType:dbType,
+			  IP:IPStr
+			  },
+			  url:"/ServiceMonitor/LinkTest?timestamp=" + new Date().getTime(),
+					  dataType:"json",
+					  showType:"return",
+					  Deferred:false,
+					  Callback:function(dta){
+						  if(dta == 1){//表示配置错误
+							  $( ".but").shake(2, 5, 400);
+						  document.getElementById('load').style.display='none';
+						  }
+						  else{//配置成功
+							  document.getElementById('light').style.display='none';
+						  document.getElementById('load').style.display='none';
+						  }
+						  }
+			  })
+			  }
+  function one(id){
+	  $("#messageFont").html($("#fontLinshi"+id).html())
+	  document.getElementById('light').style.display='block';
+	  }
+  
+  function two(){
+	  document.getElementById('light').style.display='none';
+	  }
+  
+  jQuery.fn.shake = function (intShakes /*Amount of shakes*/, intDistance /*Shake distance*/, intDuration /*Time duration*/) {
+	  this.each(function () {
+		  var jqNode = $(this);
+		  jqNode.css({ position: 'relative' });
+		  for (var x = 1; x <= intShakes; x++) {
+			  jqNode.animate({ left: (intDistance * -1) }, (((intDuration / intShakes) / 4))).animate({ left: intDistance }, ((intDuration / intShakes) / 2)).animate({ left: 0 }, (((intDuration / intShakes) / 4)));
+			  }
+		  });
+	  return this;
+	  }
+  
+  function showLight(){
+	  document.getElementById('light').style.display='block';
+	  }
+  
+  function mouseDown(){
+	  document.getElementById("HOST").style.border="1px solid #006F97";
+	  }
+  
+  setTimeout(function(){
+	  //十秒后显示第二个按钮
+	  init({//首次进入会用请求admin权限的servlet，  如果请求成功 就更改显示的样式
+		  data:{},
+		  url:"/ServiceMonitor/JudgeRole?timestamp=" + new Date().getTime(),
+		  dataType:"json",
+		  showType:"return",
+		  Deferred:false,
+		  Callback:function(dta){
+			  document.getElementById('DB').style.display='block';
+			  }
+		  }) 
+	  },1000);
+  
+  function changeInputModel(){
+	  var model_Oracle=new Array("Host","Port","SID","SvcName","Username","Password");
+	  var model_MySQL=new Array("Host","Port","DBName","Username","Password");
+	  var model_DB2=new Array("Host","Port","DBName","Username","Password");
+	  var model_SqlServer2005=new Array("Host","Port","DBName","Username","Password");
+	  var model_SqlServer2008=new Array("Host","Port","DBName","Username","Password");
+	  var main=document.getElementById("CHANGE");
+	  var next=document.getElementById("DbMsg");
+	  var child=next.childNodes;
+	  var value=main.selectedIndex;		
+	  
+	  switch(value){
+	  case 0:
+		  var childLength=child.length;//提前获取select的length属性
+		  for(var i=childLength-1 ; i>=0 ; i--){
+			  next.removeChild(child[i]);//从后往前删除节点
+			  }
+		  for(var j=0;j<model_Oracle.length;j++){
+			  var div=document.createElement("div");
+			  div.setAttribute("class", "outDiv");
+			  //div.setAttribute("style", "");
+			  div.innerHTML=model_Oracle[j];
+			  
+			  var input=document.createElement("input");
+			  input.setAttribute("id", model_Oracle[j].toUpperCase());
+			  input.setAttribute("class", "inp");
+			  if(model_Oracle[j] == "Password"){
+				  input.setAttribute("type", "password");
+			  }
+			  
+			  var br1=document.createElement("br");
+			  var br2=document.createElement("br");
+			  
+			  next.appendChild(div);
+			  next.appendChild(input);
+			  next.appendChild(br1);
+			  next.appendChild(br2);
+			  }
+		  break;
+	  case 1:
+		  var childLength=child.length;//提前获取select的length属性
+		  for(var i=childLength-1 ; i>=0 ; i--){
+			  next.removeChild(child[i]);//从后往前删除节点
+			  }
+		  for(var j=0;j<model_MySQL.length;j++){
+			  var div=document.createElement("div");
+			  div.setAttribute("class", "outDiv");
+			  //div.setAttribute("style", "");
+			  div.innerHTML=model_MySQL[j];
+			  
+			  var input=document.createElement("input");
+			  input.setAttribute("id", model_DB2[j].toUpperCase());
+			  input.setAttribute("class", "inp");
+			  if(model_MySQL[j] == "Password"){
+				  input.setAttribute("type", "password");
+			  }
+			  
+			  var br1=document.createElement("br");
+			  var br2=document.createElement("br");
+			  
+			  next.appendChild(div);
+			  next.appendChild(input);
+			  next.appendChild(br1);
+			  next.appendChild(br2);
+			  }
+		  break;
+	  case 2:
+		  var childLength=child.length;//提前获取select的length属性
+		  for(var i=childLength-1 ; i>=0 ; i--){
+			  next.removeChild(child[i]);//从后往前删除节点
+			  }
+		  for(var j=0;j<model_DB2.length;j++){
+			  var div=document.createElement("div");
+			  div.setAttribute("class", "outDiv");
+			  //div.setAttribute("style", "");
+			  div.innerHTML=model_DB2[j];
+			  
+			  var input=document.createElement("input");
+			  input.setAttribute("id", model_DB2[j].toUpperCase());
+			  input.setAttribute("class", "inp");
+			  if(model_DB2[j] == "Password"){
+				  input.setAttribute("type", "password");
+			  }
+			  
+			  var br1=document.createElement("br");
+			  var br2=document.createElement("br");
+			  
+			  next.appendChild(div);
+			  next.appendChild(input);
+			  next.appendChild(br1);
+			  next.appendChild(br2);
+			  }
+		  break;
+	  case 3:
+		  var childLength=child.length;//提前获取select的length属性
+		  for(var i=childLength-1 ; i>=0 ; i--){
+			  next.removeChild(child[i]);//从后往前删除节点
+			  }
+		  for(var j=0;j<model_SqlServer2005.length;j++){
+			  var div=document.createElement("div");
+			  div.setAttribute("class", "outDiv");
+			  //div.setAttribute("style", "");
+			  div.innerHTML=model_SqlServer2005[j];
+			  
+			  
+			  var input=document.createElement("input");
+			  input.setAttribute("id", model_SqlServer2005[j].toUpperCase());
+			  input.setAttribute("class", "inp");
+			  if(model_SqlServer2005[j] == "Password"){
+				  input.setAttribute("type", "password");
+			  }
+			  
+			  var br1=document.createElement("br");
+			  var br2=document.createElement("br");
+			  
+			  next.appendChild(div);
+			  next.appendChild(input);
+			  next.appendChild(br1);
+			  next.appendChild(br2);
+			  }
+		  break;
+	  case 4:
+		  var childLength=child.length;//提前获取select的length属性
+		  for(var i=childLength-1 ; i>=0 ; i--){
+			  next.removeChild(child[i]);//从后往前删除节点
+			  }
+		  for(var j=0;j<model_SqlServer2008.length;j++){
+			  var div=document.createElement("div");
+			  div.setAttribute("class", "outDiv");
+			  //div.setAttribute("style", "");
+			  div.innerHTML=model_SqlServer2008[j];
+			  
+			  var input=document.createElement("input");
+			  input.setAttribute("id", model_SqlServer2008[j].toUpperCase());
+			  input.setAttribute("class", "inp");
+			  if(model_SqlServer2008[j] == "Password"){
+				  input.setAttribute("type", "password");
+			  }
+			  
+			  var br1=document.createElement("br");
+			  var br2=document.createElement("br");
+			  
+			  next.appendChild(div);
+			  next.appendChild(input);
+			  next.appendChild(br1);
+			  next.appendChild(br2);
+			  }
+		  break;
+	  default:break;
+	  }
+  }
+
+  </script>
+</head>
+   <div id="DB" onclick="showLight()">DB INFO</div>
+<body>
+   <div id="light" class="white_content">
+	   <img style="float:right;width:30px;height:30px"src="../img/closeRed.png"onclick="two()">
+	   <font style="font-weight:bold;font-size:20px;font-family:Arial Unicode MS;">DB INFOMATION</font><br><br>
+	   <div id="DBTYPE" class="outDiv" style="">DB Type</div>
+	   <select id="CHANGE" onchange="changeInputModel()" class="inp">
+	   <option value="Oracle">Oracle</option>
+	   <option value="MySQL">MySQL</option>
+	   <option value="DB2">DB2</option>
+	   <option value="SQL Server 2005">SQL Server 2005</option>
+	   <option value="SQL Server 2008">SQL Server 2008</option>
+	   </select>
+	   <br><br>
+	   <div id="DbMsg">
+	   <div class="outDiv" style="">Host</div>
+	   <input id="HOST" onmousedown="mouseDown()" class="inp">
+	   <br><br>
+	   <div class="outDiv" style="">Port</div>
+	   <input id="PORT" value="1521" class="inp">
+	   <br><br>
+	   <div class="outDiv" style="">SID</div>
+	   <input id="SID" value="" class="inp">
+	   <br><br>
+	   <div class="outDiv" style="">SvcName</div>
+	   <input id="SERVICENAME" value="" class="inp">
+	   <br><br>
+	   <div class ="outDiv" >Username</div>
+	   <input id="USERNAME" class="inp">
+	   <br><br>
+	   <div class ="outDiv">Password</div>
+	   <input id="PASSWORD" type="password" class="inp">
+	   <br><br>
+	   </div>
+	   
+       <Button class="but" onclick = "dbActon()">Connect</Button>
+        <img id ="load" src="../img/load1.gif">
+  </div>
+  <div><iframe class="top" src="./top.html" id="top"></iframe></div>
+  <div class="bottom">
+    <iframe class="menuframe" name="menu" src="./menu.html" scrolling="yes" seamless="seamless"></iframe>
+    <iframe class="contentframe" name="body" id="body" src="SearchTransaction.html"></iframe>
+  </div>
+  <div id="footer"><center><div style="font-size:10px;font-weight:bold;color:	#A9A9A9;margin-top:10px">@ 2018 北京伊士格科技有限责任公司 版权所有</div></center></div>
+</body></html>

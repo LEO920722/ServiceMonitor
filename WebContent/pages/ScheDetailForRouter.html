@@ -1,0 +1,363 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="-1">
+<title>IS Service Statistics</title>
+<link rel="stylesheet" type="text/css" href="../css/webMethods.css">
+<!--<META http-equiv="refresh" content="90">-->
+<style>
+table td {
+	word-break:  keep-all;
+	white-space: nowrap;
+}
+
+
+.white_content {
+	display: none;
+	position: fixed;
+	top: 25%;
+	left: 25%;
+	width: 50%;
+	height: 50%;
+	padding: 16px;
+	border: 3px solid #5177A1;
+	background-color: white;
+	z-index: 1002;
+	overflow: auto;
+}
+
+.barcon {
+	text-align: center;
+}
+
+.barcon1 {
+	font-size: 10px;
+	float: left;
+	margin-top: 20px;
+}
+
+.barcon2 {
+	float: right;
+}
+
+.barcon2 ul {
+	margin: 20px 0;
+	padding-left: 0;
+	list-style: none;
+	text-align: center;
+}
+
+.barcon2 li {
+	display: inline;
+	margin: 2px;
+	padding: 2px;
+}
+
+.barcon2 a {
+	text-decoration: none;
+	font-size: 10px;
+	font-weight: normal;
+	display: inline-block;
+	padding: 2px;
+	color: #006F97;
+	border: 1px solid #ddd;
+	background-color: #fff;
+}
+
+.barcon2 a:hover {
+	background-color: #eee;
+}
+
+.file-box {
+	position: relative;
+	width: 340px
+}
+
+.txt {
+	height: 22px;
+	border: 0px solid #cdcdcd;
+	width: 180px;
+	display: none;
+}
+
+.btn {
+	background-color: #FFF;
+	border: 1px solid #CDCDCD;
+	height: 24px;
+	width: 300px;
+	color: #006F97;
+	cursor: pointer
+}
+
+.file {
+	position: absolute;
+	color: #006F97;
+	top: 0;
+	right: 80px;
+	height: 24px;
+	filter: alpha(opacity : 0);
+	opacity: 0;
+	width: 260px
+}
+
+.param {
+	display: none
+}
+</style>
+<script src="../txt/webMethods.js.txt"></script>
+<script src="../js/init.js"></script>
+<script src="../js/jquery.1.7.2.min.js"></script>
+<script type="text/javascript" src="MyCustomDatePicker/Calendar.js"> </script>
+<script>
+
+	var SCHE_ID = "";
+
+	//拿到上一个页面的schedule id
+	function getScheID() {
+		var url = window.location.href;
+		var idx = url.indexOf("SCHE_ID=", 0);
+		if (idx <= 0) {
+			return "";
+		} else {
+			SCHE_ID = url.substring(idx + 8, url.length);
+		}
+	}
+
+	function getDetailForRouter(){
+		$("#container").html("");
+		var state = init({
+		    data:{
+		    	SCHE_ID : getQueryString("SCHE_ID"),//拿到上一个页面的SCHE_ID
+			},
+			url : "/ServiceMonitor/QueryScheDetailForRouter?timestamp="
+					+ new Date().getTime(),
+			dataType : "json",
+			showType : "model",
+			template_Name : "text/template",
+			fillType : "append",
+			container : "container",
+			Deferred : true,
+		})
+		goPage(1, 15)
+		$("#barcon").show();	
+	}
+	
+	function insertScheForRouter(){
+		$("#container").html("");
+		
+		var state = init({
+		    data:{
+		    	SCHE_ID : $("#SCHE_ID").val(),
+		    	Email_ID : $("#Email_ID").val(),
+		    	Send_Flag : $("#SEND_FLAG").val(),
+		    	CC_Flag : $("#CC_FLAG").val(),
+			},
+			url : "/ServiceMonitor/InsertScheForRouter?timestamp=" + new Date().getTime(),
+			dataType : "json",
+			showType : "model",
+			template_Name : "text/template",
+			fillType : "append",
+			container : "container",
+			Deferred : true,
+		})
+		getDetailForRouter();
+	}
+	
+	
+	function deleteScheBatchRouter(ID){
+		$("#container").html("");
+		
+		var state = init({
+		    data:{
+		    	SCHE_ID : ID,
+			},
+			url : "/ServiceMonitor/DeleteScheRouter?timestamp="
+					+ new Date().getTime(),
+			dataType : "json",
+			showType : "model",
+			template_Name : "text/template",
+			fillType : "append",
+			container : "container",
+			Deferred : true,
+		})
+		goPage(1, 15)
+		$("#barcon").show();
+		getDetailForRouter();
+	}
+	
+		
+</script>
+	
+<script type="text/template">
+<tr >
+      <!-- <td >{ID}</td> -->
+      <td >{SCHE_ID}</td>
+      <td >{MAIL_ROUTER_ID}</td>
+      <td >{SEND}</td>
+	  <td >{CC}</td> 
+      <!-- <td >{REMARK}</td> -->
+	  <td style="text-algin:center;cursor:pointer">
+			<img id="del{ID}" onclick="deleteScheBatchRouter('{ID}')" 
+				      width="20px" src="../img/delete.png"></td> 
+ </tr> 
+</script>
+</head>
+
+<body onload="getDetailForRouter()">
+	<ul>
+		<li class="listitem"><a href="#"
+			onClick="window.history.back(-1);">Return to Schedule Batch View</a></li>
+	</ul>
+	<table class="tableView">
+		<tbody>
+			<tr>
+				<td class="heading" colspan="10">Parameters</td>
+			</tr>
+			<tr>
+				<td class="oddrow" colspan="2">Schedule ID</td>
+				<td class="oddrow-l" colspan="3"><input id="SCHE_ID"
+					name="description" size="40" value=""></td>
+				<td class="oddrow" colspan="2">Email Router ID</td>
+				<td class="oddrow-l" colspan="3"><input id="Email_ID"
+					name="description" size="40" value=""></td>	
+			</tr>
+			<tr>
+				<td class="oddrow" colspan="2">Is Send Active</td>
+				<td class="oddrow-l" colspan="3"><select id="SEND_FLAG"
+					style="color: #006F97; width: 100%; height: 21px">
+						<option></option>
+						<option>Y</option>
+						<option>N</option>
+				</select></td>
+				<td class="oddrow" colspan="2">Is CC Active</td>
+				<td class="oddrow-l" colspan="3"><select id="CC_FLAG"
+					style="color: #006F97; width: 100%; height: 21px">
+						<option></option>
+						<option>Y</option>
+						<option>N</option>
+				</select></td>
+				<td class="oddrow"><button
+						style="color: #006F97; font-size: 10px"
+						onclick="insertScheForRouter()">Insert</button></td>
+			</tr>	
+	</table>
+
+	<table class="tableView" width="100%" id="servicecon">
+		<tbody>
+			<tr>
+				<td class="heading" colspan="11">Results(<font id="barcon3"></font>)
+				</td>
+			</tr>
+			<tr class="subheading2">
+				<!-- <td>ID</td> -->
+				<td class="oddcol">Schedule ID</td>
+				<td class="oddcol">MAIL ROUTER ID</td>
+				<td class="oddcol">SEND FLAG</td>
+				<td class="oddcol">CC FLAG</td>
+				<!-- <td class="oddcol">REMARK</td> -->
+			</tr>
+		</tbody>
+		<tbody id="container">
+		</tbody>
+	</table>
+		<div id="barcon" style="width: 100%" class="barcon">
+		<div id="barcon2" class="barcon2">
+			<ul>
+				<li><a href="###" id="firstPage">First</a></li>
+				<li><a href="###" id="prePage">< Back</a></li>
+				<li><a href="###" id="nextPage">Next ></a></li>
+				<li><a href="###" id="lastPage">Last</a></li>
+				<li><select id="jumpWhere"></select></li>
+				<li><a href="###" id="jumpPage" onclick="jumpPage()">Go</a></li>
+			</ul>
+		</div>
+	</div>
+</body>
+</html>
+
+
+<script>
+	/**
+	 * 分页函数
+	 * pno--页数
+	 * psize--每页显示记录数
+	 * 分页部分是从真实数据行开始，因而存在加减某个常数，以确定真正的记录数
+	 * 纯js分页实质是数据行全部加载，通过是否显示属性完成分页功能
+	 **/
+
+	var pageSize = 10;//每页显示行数
+	var currentPage_ = 1;//当前页全局变量，用于跳转时判断是否在相同页，在就不跳，否则跳转。
+	var totalPage;//总页数
+	function goPage(pno, psize) {
+		var itable = document.getElementById("container");
+		var num = itable.rows.length;//表格所有行数(所有记录数)
+		pageSize = psize;//每页显示行数
+		//总共分几页 
+		if (num / pageSize > parseInt(num / pageSize)) {
+			totalPage = parseInt(num / pageSize) + 1;
+		} else {
+			totalPage = parseInt(num / pageSize);
+		}
+		var currentPage = pno;//当前页数
+		currentPage_ = currentPage;
+		var startRow = (currentPage - 1) * pageSize + 1;
+		var endRow = currentPage * pageSize;
+		endRow = (endRow > num) ? num : endRow;
+		//遍历显示数据实现分页
+		/*for(var i=1;i<(num+1);i++){    
+		    var irow = itable.rows[i-1];
+		    if(i>=startRow && i<=endRow){
+		        irow.style.display = "";    
+		    }else{
+		        irow.style.display = "none";
+		    }
+		  }*/
+
+		$("#container tr").hide();
+		for (var i = startRow - 1; i < endRow; i++) {
+			$("#container tr").eq(i).show();
+		}
+		//var tempStr = "Total"+num+" record, Ivided "+totalPage+" page(s). The current page is page "+currentPage+".";
+		var tempStr = num
+		document.getElementById("barcon3").innerHTML = tempStr;
+		if (currentPage > 1) {
+			$("#firstPage").on("click", function() {
+				goPage(1, psize);
+			}).removeClass("ban");
+			$("#prePage").on("click", function() {
+				goPage(currentPage - 1, psize);
+			}).removeClass("ban");
+		} else {
+			$("#firstPage").off("click").addClass("ban");
+			$("#prePage").off("click").addClass("ban");
+		}
+
+		if (currentPage < totalPage) {
+			$("#nextPage").on("click", function() {
+				goPage(currentPage + 1, psize);
+			}).removeClass("ban")
+			$("#lastPage").on("click", function() {
+				goPage(totalPage, psize);
+			}).removeClass("ban")
+		} else {
+			$("#nextPage").off("click").addClass("ban");
+			$("#lastPage").off("click").addClass("ban");
+		}
+
+		var tempOption = "";
+		for (var i = 1; i <= totalPage; i++) {
+			tempOption += '<option value='+i+'>' + i + '</option>'
+		}
+		$("#jumpWhere").html(tempOption);
+
+		$("#jumpWhere").val(currentPage);
+	}
+
+	function jumpPage() {
+		var num = parseInt($("#jumpWhere").val());
+		if (num != currentPage_) {
+			goPage(num, pageSize);
+		}
+	}
+</script>

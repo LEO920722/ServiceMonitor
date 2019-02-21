@@ -1,0 +1,372 @@
+
+<!-- saved from url=(0047)http://localhost:5555/WmRoot/stats-services.dsp -->
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="-1">
+<title>IS Service Statistics</title>
+<link rel="stylesheet" type="text/css" href="../css/webMethods.css">
+<!--<META http-equiv="refresh" content="90">-->
+<style>
+table td {
+	word-break:  keep-all;
+	white-space: nowrap;
+	text-align: center;
+}
+
+.barcon {
+	margin: 0 auto;
+	text-align: center;
+}
+
+.barcon1 {
+	font-size: 10px;
+	float: left;
+	margin-top: 20px;
+}
+
+.barcon2 {
+	float: right;
+}
+
+.barcon2 ul {
+	margin: 20px 0;
+	padding-left: 0;
+	list-style: none;
+	text-align: center;
+}
+
+.barcon2 li {
+	display: inline;
+	margin: 2px;
+	padding: 2px;
+}
+
+.barcon2 a {
+	text-decoration: none;
+	font-size: 10px;
+	font-weight: normal;
+	display: inline-block;
+	padding: 2px;
+	color: #006F97;
+	border: 1px solid #ddd;
+	background-color: #fff;
+}
+
+.barcon2 a:hover {
+	background-color: #eee;
+}
+
+#showCreate {
+	display: none;
+}
+</style>
+<script src="../txt/webMethods.js.txt"></script>
+<script src="../js/init.js"></script>
+<script src="../js/jquery.1.7.2.min.js"></script>
+<script type="text/javascript" src="MyCustomDatePicker/Calendar.js">
+	
+</script>
+<script>
+	var role = "user";
+	function jump(businessId, ruleId) {//页面跳转，传入参数 BUSINESS_ID 作为查询条件
+		window.location.href = "SearchService.html?BUSINESS_ID=" + businessId
+				+ "&RULE_ID=" + ruleId;
+	}
+
+	init({//首次进入会用请求admin权限的servlet，  如果请求成功 就更改显示的样式
+		data : {},
+		url : "/ServiceMonitor/JudgeRole?timestamp=" + new Date().getTime(),
+		dataType : "json",
+		showType : "return",
+		Deferred : false,
+		Callback : function(dta) {
+			document.getElementById("showCreate").style.display = 'block';
+			role = "admin"
+		}
+	})
+
+	function GetRequest() {
+		var url = location.search;
+		var theRequest = new Object();
+		if (url.indexOf("?") != -1) {
+			var str = url.substr(1);
+			strs = str.split("&");
+			for (var i = 0; i < strs.length; i++) {
+				theRequest[strs[i].split("=")[0]] = unescape(strs[i].split("=")[1]);
+			}
+		}
+		return theRequest;
+	}
+
+	function getServiceByParam(num) {
+		var data1;
+		var Request = GetRequest();
+		if (num == 1) {//用户点击了查询按钮
+			data1 = {
+				SELECT_TYPE : $("#SELECT_TYPE").val(),
+				BUSINESS_ID : $("#BUSINESS_ID").val(),
+				RULE_ID : $("#RULE_ID").val(),
+				BUSINESS_STATUS : $("#BUSINESS_STATUS").val(),
+				BUSINESS_TYPE : $("#BUSINESS_TYPE").val(),
+				REFERENCE_ID : $("#REFERENCE_ID").val(),
+				CREATE_TIME1 : $("#CREATE_TIME1").val(),
+				CREATE_TIMESTAMP1 : $("#CREATE_TIMESTAMP1").val(),
+				CREATE_TIME2 : $("#CREATE_TIME2").val(),
+				CREATE_TIMESTAMP2 : $("#CREATE_TIMESTAMP2").val(),
+			}
+		} else if (getQueryString("state") == "1" || num == 0) {//如果state是1则表示是上个页面传过来的,num=0是本页面加载就执行的
+			data1 = {//将上个页面的值赋值给data1
+				SELECT_TYPE : $("#SELECT_TYPE").val(),
+				BUSINESS_ID : $("#BUSINESS_ID").val(),
+				RULE_ID : $("#RULE_ID").val(),
+				BUSINESS_STATUS : $("#BUSINESS_STATUS").val(),
+				BUSINESS_TYPE : $("#BUSINESS_TYPE").val(),
+				REFERENCE_ID : $("#REFERENCE_ID").val(),
+				CREATE_TIME1 : $("#CREATE_TIME1").val(),
+				CREATE_TIMESTAMP1 : $("#CREATE_TIMESTAMP1").val(),
+				CREATE_TIME2 : $("#CREATE_TIME2").val(),
+				CREATE_TIMESTAMP2 : $("#CREATE_TIMESTAMP2").val(),
+			}
+		}
+
+		$("#container").html("");
+		var state = init({
+			data : {
+				SELECT_TYPE : $("#SELECT_TYPE").val(),
+				BUSINESS_ID : $("#BUSINESS_ID").val(),
+				RULE_ID : $("#RULE_ID").val(),
+				BUSINESS_STATUS : $("#BUSINESS_STATUS").val(),
+				BUSINESS_TYPE : $("#BUSINESS_TYPE").val(),
+				REFERENCE_ID : $("#REFERENCE_ID").val(),
+				CREATE_TIME1 : $("#CREATE_TIME1").val(),
+				CREATE_TIMESTAMP1 : $("#CREATE_TIMESTAMP1").val(),
+				CREATE_TIME2 : $("#CREATE_TIME2").val(),
+				CREATE_TIMESTAMP2 : $("#CREATE_TIMESTAMP2").val(),
+			},
+			url : "/ServiceMonitor/QueryServiceTransaction?"
+					+ new Date().getTime(),
+			dataType : "json",
+			showType : "model",
+			template_Name : "text/template",
+			fillType : "append",
+			container : "container",
+			Deferred : true,
+		})
+		goPage(1, 10)
+		$("#barcon").show();
+
+	}
+
+	jQuery.fn.shake = function(intShakes /*Amount of shakes*/,
+			intDistance /*Shake distance*/, intDuration /*Time duration*/) {
+		this.each(function() {
+			var jqNode = $(this);
+			jqNode.css({
+				position : 'relative'
+			});
+			for (var x = 1; x <= intShakes; x++) {
+				jqNode.animate({
+					left : (intDistance * -1)
+				}, (((intDuration / intShakes) / 4))).animate({
+					left : intDistance
+				}, ((intDuration / intShakes) / 2)).animate({
+					left : 0
+				}, (((intDuration / intShakes) / 4)));
+			}
+		});
+		return this;
+	}
+</script>
+<script type="text/template">
+		<tr>
+			<td >{BUSINESS_ID}</td>
+			<td >{RULE_ID}</td> 
+			<td >{BUSINESS_STATUS}</td>
+			<td >{BUSINESS_TYPE}</td>
+			<td >{REFERENCE_ID}</td>
+			<td >{LAST_CHANGETIME}</td>
+			<td ><button style="color:#006F97;font-size:10px" onclick="jump('{BUSINESS_ID}','{RULE_ID}')">Query</button></td>
+		</tr>      
+
+	</script>
+</head>
+
+<body>
+	<!-- onload="getServiceByParam(0)" Cancel query while enter page -->
+	<table class="tableView">
+		<tbody>
+			<tr>
+				<td class="heading" colspan="13">Query Parameters</td>
+			</tr>
+			<tr>
+				<td class="oddrow" colspan="2">Business ID</td>
+				<td class="oddrow-l" colspan="5"><select id="SELECT_TYPE"
+					style="color: #006F97; width: 100%; height: 21px">
+						<option>=</option>
+						<option>LIKE</option>
+				</select></td>
+				<td class="oddrow-l" colspan="7"><input id="BUSINESS_ID"
+					name="description" size="58" value=""></td>
+			</tr>
+			<tr>
+				<td class="oddrow" colspan="2">Rule ID</td>
+				<td class="oddrow-l" colspan="5"><input id="RULE_ID"
+					name="description" size="40" value=""></td>
+				<td class="oddrow" colspan="2">Business Status</td>
+				<td class="oddrow-l" colspan="5"><select id="BUSINESS_STATUS"
+					style="color: #006F97; width: 100%; height: 21px">
+						<option></option>
+						<option>Success</option>
+						<option>Error</option>
+				</select></td>
+			</tr>
+			<tr>
+				<td class="oddrow" colspan="2">Business Type</td>
+				<td class="oddrow-l" colspan="5"><input id="BUSINESS_TYPE"
+					name="description" size="40" value=""></td>
+				<td class="oddrow" colspan="2">Reference ID</td>
+				<td class="oddrow-l" colspan="5"><input id="REFERENCE_ID"
+					name="description" size="40" value=""></td>
+			</tr>
+			<tr>
+				<td class="evenrow" colspan="2">From Date</td>
+				<td class="evenrow-l" colspan="5"><input size="40"
+					id="CREATE_TIME1" onclick="fPopCalendar(event,this,this)">
+				<td class="oddrow" colspan="2">From Time</td>
+				<td class="oddrow-l" colspan="5"><input id="CREATE_TIMESTAMP1"
+					name="CREATE_TIMESTAMP1" size="40" value="00:00"></td>
+			</tr>
+			<tr>
+				<td class="evenrow" colspan="2">To Date</td>
+				<td class="evenrow-l" colspan="5"><input size="40"
+					id="CREATE_TIME2" onclick="fPopCalendar(event,this,this)">
+				<td class="oddrow" colspan="2">To Time</td>
+				<td class="oddrow-l" colspan="5"><input id="CREATE_TIMESTAMP2"
+					name="CREATE_TIMESTAMP2" size="40" value="23:59"></td>
+				<td><button style="color: #006F97; font-size: 10px"
+						onclick="getServiceByParam(1)">Query</button></td>
+			</tr>
+	</table>
+	<br>
+	<table class="tableView" width="100%" id="servicecon">
+		<tbody>
+			<tr>
+				<td class="heading" colspan="11">Query Results(<font
+					id="barcon3"></font>)
+				</td>
+			</tr>
+			<tr class="subheading2">
+				<td class="oddcol">Business ID</td>
+				<td class="oddcol">Rule ID</td>
+				<td class="oddcol">Business Status</td>
+				<td class="oddcol">Business Type</td>
+				<td class="oddcol">Reference ID</td>
+				<td class="oddcol">Last Update Time</td>
+				<td class="oddcol">Details</td>
+
+			</tr>
+		</tbody>
+		<tbody id="container">
+		</tbody>
+
+	</table>
+	<div id="barcon" style="display: none; width: 100%" class="barcon">
+		<div id="barcon2" class="barcon2">
+			<ul>
+				<li><a href="###" id="firstPage">&lt;&lt; First</a></li>
+				<li><a href="###" id="prePage">&lt; Back</a></li>
+				<li><a href="###" id="nextPage">Next &gt;</a></li>
+				<li><a href="###" id="lastPage">Last &gt;&gt;</a></li>
+				<li><select id="jumpWhere"></select></li>
+				<li><a href="###" id="jumpPage" onclick="jumpPage()">Go</a></li>
+			</ul>
+		</div>
+	</div>
+</body>
+</html>
+
+<script>
+	/**
+	 * 分页函数
+	 * pno--页数
+	 * psize--每页显示记录数
+	 * 分页部分是从真实数据行开始，因而存在加减某个常数，以确定真正的记录数
+	 * 纯js分页实质是数据行全部加载，通过是否显示属性完成分页功能
+	 **/
+
+	var pageSize = 10;//每页显示行数
+	var currentPage_ = 1;//当前页全局变量，用于跳转时判断是否在相同页，在就不跳，否则跳转。
+	var totalPage;//总页数
+	function goPage(pno, psize) {
+		var itable = document.getElementById("container");
+		var num = itable.rows.length;//表格所有行数(所有记录数)
+		pageSize = psize;//每页显示行数
+		//总共分几页 
+		if (num / pageSize > parseInt(num / pageSize)) {
+			totalPage = parseInt(num / pageSize) + 1;
+		} else {
+			totalPage = parseInt(num / pageSize);
+		}
+		var currentPage = pno;//当前页数
+		currentPage_ = currentPage;
+		var startRow = (currentPage - 1) * pageSize + 1;
+		var endRow = currentPage * pageSize;
+		endRow = (endRow > num) ? num : endRow;
+		//遍历显示数据实现分页
+		/*for(var i=1;i<(num+1);i++){    
+		    var irow = itable.rows[i-1];
+		    if(i>=startRow && i<=endRow){
+		        irow.style.display = "";    
+		    }else{
+		        irow.style.display = "none";
+		    }
+		}*/
+
+		$("#container tr").hide();
+		for (var i = startRow - 1; i < endRow; i++) {
+			$("#container tr").eq(i).show();
+		}
+		//var tempStr = "Total"+num+" record, Ivided "+totalPage+" page(s). The current page is page "+currentPage+".";
+		var tempStr = num
+		document.getElementById("barcon3").innerHTML = tempStr;
+		if (currentPage > 1) {
+			$("#firstPage").on("click", function() {
+				goPage(1, psize);
+			}).removeClass("ban");
+			$("#prePage").on("click", function() {
+				goPage(currentPage - 1, psize);
+			}).removeClass("ban");
+		} else {
+			$("#firstPage").off("click").addClass("ban");
+			$("#prePage").off("click").addClass("ban");
+		}
+
+		if (currentPage < totalPage) {
+			$("#nextPage").on("click", function() {
+				goPage(currentPage + 1, psize);
+			}).removeClass("ban")
+			$("#lastPage").on("click", function() {
+				goPage(totalPage, psize);
+			}).removeClass("ban")
+		} else {
+			$("#nextPage").off("click").addClass("ban");
+			$("#lastPage").off("click").addClass("ban");
+		}
+
+		var tempOption = "";
+		for (var i = 1; i <= totalPage; i++) {
+			tempOption += '<option value='+i+'>' + i + '</option>'
+		}
+		$("#jumpWhere").html(tempOption);
+		$("#jumpWhere").val(currentPage);
+	}
+
+	function jumpPage() {
+		var num = parseInt($("#jumpWhere").val());
+		if (num != currentPage_) {
+			goPage(num, pageSize);
+		}
+	}
+</script>
